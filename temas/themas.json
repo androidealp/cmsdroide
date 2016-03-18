@@ -1,0 +1,30 @@
+{
+  "frontend":{
+    "bootstrapdroide":{
+      "default":true,
+      "layout":"main",
+      "pages":{
+          "institucional.contato":"main2"
+      }
+    }
+  },
+  "admin":{
+    "purephoenix":{
+      "default":true,
+      "layout":"main",
+      "pages":{
+        "painel.login":"login"
+      }
+    },
+    "teste":{
+      "default":false,
+      "layout":"barao"
+    }
+  },
+  "instalador":{
+    "niceinstall":{
+      "default":true,
+      "layout":"main"
+    }
+  }
+}
