@@ -4,11 +4,14 @@ use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use \app\components\helpers\LayoutHelper;
-
+/**
+ * Manager main controller
+ * @author André Luiz Pereira <andre@next4.com.br>
+ */
 class ControllerHelper extends Controller
 {
     public $instalador = false;
-    
+
     public function init(){
      if(file_exists(\Yii::$app->basePath.'/instalador')){
          \Yii::$app->setModules([
@@ -16,10 +19,16 @@ class ControllerHelper extends Controller
             'class'=>'app\modules\painel\Modules',
             ]
         ]);
-     } 
+     }
         $this->instalador = \Yii::$app->hasModule('instalador');
         return parent::init();
     }
+
+    /**
+     * Behavior for acess implement layout
+     * @author André Luiz Pereira <andre@next4.com.br>
+     * @return array - aceess rulers
+     */
     public function behaviors()
     {
         $this->layout = LayoutHelper::loadThemesJson()->front();
@@ -43,6 +52,5 @@ class ControllerHelper extends Controller
             ],
         ];
     }
-    
-}
 
+}

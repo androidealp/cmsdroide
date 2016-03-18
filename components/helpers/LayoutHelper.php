@@ -2,7 +2,8 @@
 namespace app\components\helpers;
 use \Yii;
 /**
- * Controla o layout para admin e frontend
+ * Manipulate layout
+ * @author André Luiz Pereira <andre@next4.com.br>
  */
 class LayoutHelper {
 
@@ -12,7 +13,7 @@ class LayoutHelper {
    public static $editavel = 0;
 
    /**
-    * Carrega p json e verifica se o arquivo pode ser escrito
+    * Load json check if is_writable
     * @return Objetct LayoutHelper
     */
     public function loadThemesJson(){
@@ -25,7 +26,7 @@ class LayoutHelper {
     }
 
     /**
-     * Retorna o file em array tratdo no loadthemeasjson
+     * return file array loadthemeasjson
      * @return array;
      */
     public function getFile(){
@@ -33,7 +34,7 @@ class LayoutHelper {
     }
 
     /**
-     * Converte os dados para json
+     * Convert for json
      * @return string json
      */
     public function getFileJson(){
@@ -41,7 +42,7 @@ class LayoutHelper {
     }
 
     /**
-     * Lista todos os diretorios que não estão definidos no json
+     * List directorys defined in json
      * @param string $folder admin/frontend/instalador
      * @return array list
      */
@@ -78,7 +79,7 @@ class LayoutHelper {
 
 
     /**
-     * retorna o layout para front
+     * Return layout frontend
      * @return string
      */
     public function front(){
@@ -88,7 +89,7 @@ class LayoutHelper {
     }
 
     /**
-     * retorna o layout para admin
+     * return layout backend
      * @return string
      */
     public function admin(){
@@ -98,7 +99,7 @@ class LayoutHelper {
     }
 
      /**
-     * retorna o layout para instalador
+     * return layout of instalador
      * @return string
      */
     public function instalador(){
@@ -108,7 +109,7 @@ class LayoutHelper {
     }
 
     /**
-     * insere a view do widget estilizado no tema
+     * insert view widget view layout
      * @param string $module  tipo admin / frontend / outro...
      * @param string $widget // view widget que está no html e que tenha o mesmo nome do widget
      * @return string // retorna a url da view.
@@ -161,7 +162,7 @@ class LayoutHelper {
     }
 
     /**
-     * Detecta visualização de widgets
+     * detect Views layouts get url
      * @param type $base // layout tipo admin / frontend
      * @param type $listpage // lista array onde do tipo selecionado
      * @return string // retorna a url layout.
