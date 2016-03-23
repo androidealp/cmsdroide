@@ -4,6 +4,7 @@ use yii\widgets\Pjax;
 $listthemes = $jsonfileLayout->getFile();
 $countli = 0;
 $countcontent = 0;
+
 ?>
 <!-- {formulário} -->
 <div class="row">
@@ -63,6 +64,10 @@ $countcontent = 0;
 
                               <!-- bloco md-4-->
                             <?php foreach ($themes as $theme => $params):?>
+                              <?php
+                              $checkErrors = $jsonfileLayout->checkFolderTheme($area,$theme);
+
+                              ?>
                             <div class="col-md-4">
                            <div class="box box-widget widget-user">
                                 <!-- Add the bg color to the header using any of the bg-* classes -->
@@ -96,6 +101,21 @@ $countcontent = 0;
                                               <?php endif;?>
                                               </a>
                                               </li>
+                                              <li>
+                                                <a href="#">
+                                                  Detect Errors:
+                                                  <?php
+                                                    if(count($checkErrors['error'])):
+                                                   ?>
+                                                   <span class="pull-right badge bg-danger"><i class="fa fa-exclamation"></i></span>
+                                                 <?php endif; ?>
+                                                 <?php
+                                                   if(count($checkErrors['warning'])):
+                                                  ?>
+                                                  <span class="pull-right badge bg-warning"><i class="fa fa-warning"></i></span>
+                                                <?php endif; ?>
+                                                </a>
+                                                <li>
 
                                           <li>
                                             <!-- action box -->
@@ -103,7 +123,7 @@ $countcontent = 0;
                                                     'custom'=>[
                                                         'text'=>'<span class="fa fa-edit"></span> Editar',
                                                         'params'=>[
-                                                          'data-btaddurl'=>'index.php?r=_adm/Confmanager/editartema',
+                                                          'data-btedturl'=>'index.php?r=_adm/confmanager/editartema&area='.$area.'&theme='.$theme,
                                                           'data-formid'=>'form-themejson',
                                                           'data-pajaxid'=>'list-themes',
                                                           'class'=>'btn btn-block btn-info',
@@ -112,7 +132,7 @@ $countcontent = 0;
                                                     ]
                                                  ]]); ?>
                                             <!-- fim action box -->
-                                          
+
                                           </li>
 
                                         </ul>

@@ -27,7 +27,7 @@ use yii\bootstrap\ActiveForm;
     </div>
 
     <div class="form-group">
-      <?=$form->field($modeljson, 'area')->textInput(['class'=>'form-control', 'placeholder'=>'Area de atuação: adm, front ou instalador']);?>
+      <?= $form->field($modeljson, 'area')->dropDownList($modeljson->listarea,['class'=>'form-control']); ?>
     </div>
     <div class="form-group">
       <?=$form->field($modeljson, 'tema')->textInput(['class'=>'form-control', 'placeholder'=>'Nome do tema']);?>

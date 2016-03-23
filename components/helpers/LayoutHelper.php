@@ -42,6 +42,37 @@ class LayoutHelper {
     }
 
     /**
+     * Detect in folder files errors
+     * @author André Luiz Pereira
+     * @param string $area - área de atuação do tema admin / frontend / instalador
+     * @param string $theme - Theme for verification
+     * @return array - Retorna vazio se não localizar erros, caso contrario retorna os array separado por importancia error | warning
+     */
+    public function checkFolderTheme($area,$theme){
+      $errors = array('error'=>array(),'warning'=>array());
+      $themesPath = Yii::getAlias(self::$urlBase.$area.'/'.$theme);
+      $filesPHP = yii\helpers\FileHelper::findFiles($themesPath,['only'=>['*.php']]);
+      $filesAssets = yii\helpers\FileHelper::findFiles($themesPath,['only'=>['*Asset*']]);
+      if(!count($filesPHP)){
+        $errors['error'][] = "Não localizou nenhum arquivo PHP no tema $theme.";
+      }
+
+      if(!count($filesAssets)){
+        $errors['error'][] = "Não localizou nenhum arquivo com a terminologia {Asset} importante para estilização no tema $theme.";
+      }
+
+      if(!is_dir($themesPath.'/htmls')){
+        $errors['warning'][] = "Atenção Não localizou a pasta [htmls] dentro do tena $theme, esta pasta é utilizada para customização de components, porém isso não impede de usar o tema";
+      }
+
+      if(!is_dir($themesPath.'/depends')){
+        $errors['warning'][] = "Atenção Não localizou a pasta [depends] dentro do tema $theme, esta pasta é utilizada para criar subvinculos de css, porém isso não impede de usar o tema";
+      }
+
+      return $errors;
+    }
+
+    /**
      * List directorys defined in json
      * @param string $folder admin/frontend/instalador
      * @return array list
@@ -75,6 +106,17 @@ class LayoutHelper {
 
         return   $getListNotDefined;
 
+    }
+    /**
+     * Check path exits in tema
+     * @author André Luiz Pereira
+     * @param string $path - url desejada para checkin no tema
+     * @return bool true/false
+     */
+    public function CheckLayoutExists($path){
+      $layoutPath = Yii::getAlias(self::$urlBase.$path);
+
+      return is_file($layoutPath) && file_exists($layoutPath);
     }
 
 
