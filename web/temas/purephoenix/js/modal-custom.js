@@ -115,6 +115,25 @@ $(document).ready(function(){
       eModal.ajax(options);
   });
 
+  $(document).on('click','[data-btalert]',function(e){
+    e.preventDefault();
+    mensagems = $(this).data('btalert');
+    titulo    = $(this).prop('title');
+
+    var options = {
+        message: mensagems,
+        title: titulo,
+        useBin: true,
+        buttons: [
+            {text: 'Fechar', style: 'danger', close: true}
+        ],
+    };
+
+
+    eModal.alert(options);
+
+  });
+
 	$(document).on('click','[data-btaddurl]',function(e){
 		e.preventDefault();
 

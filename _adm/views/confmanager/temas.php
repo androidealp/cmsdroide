@@ -102,22 +102,40 @@ $countcontent = 0;
                                               </a>
                                               </li>
                                               <li>
-                                                <a href="#">
-                                                  Detect Errors:
-                                                  <?php
-                                                    if(count($checkErrors['error'])):
-                                                   ?>
-                                                   <span class="pull-right badge bg-danger"><i class="fa fa-exclamation"></i></span>
-                                                 <?php endif; ?>
-                                                 <?php
-                                                   if(count($checkErrors['warning'])):
-                                                  ?>
-                                                  <span class="pull-right badge bg-warning"><i class="fa fa-warning"></i></span>
-                                                <?php endif; ?>
+                                                <?php if(count($checkErrors['error'])):?>
+                                                  <a href="#" data-btalert="<?=implode('<br />',$checkErrors['error']);?>" title="Erros encontrados">
+                                                <?php else:?>
+                                                  <a href="#">
+                                                <?php endif;?>
+
+                                                  Erros Encontrados:
+                                                  <?php if(count($checkErrors['error'])):?>
+                                                   <span class="pull-right badge bg-red"><?=count($checkErrors['error'])?> <i class="fa fa-exclamation"></i> </span>
+                                                 <?php else: ?>
+                                                 <span class="pull-right badge bg-green">Nenhum</span>
+                                               <?php endif;?>
                                                 </a>
-                                                <li>
+                                              </li>
 
                                           <li>
+                                            <?php if(count($checkErrors['warning'])):?>
+                                              <a href="#" data-btalert="<?=implode('<br />',$checkErrors['warning']);?>" title="Alertas encontrados">
+                                            <?php else:?>
+                                              <a href="#">
+                                            <?php endif;?>
+                                            Alertas Encontrados:
+                                            <?php
+                                              if(count($checkErrors['warning'])):
+                                             ?>
+                                             <span class="pull-right badge bg-yellow"><?=count($checkErrors['warning'])?> <i class="fa fa-warning"></i> </span>
+                                           <?php else: ?>
+                                              <span class="pull-right badge bg-green">Nenhum</span>
+                                            <?php endif;?>
+                                                </a>
+                                          </li>
+                                          <?php if(count($checkErrors['error'])):?>
+                                            <button  data-btalert="Foram detectados erros criticos, que precisam ser resolvidos antes de editar o tema." title="Edição indisponivel" class="btn btn-block btn-danger" type="button" name="button"><?='Editar '.$theme; ?></button>
+                                            <?php else:?>
                                             <!-- action box -->
                                                  <?=ActionsBox::widget(['buttons'=>[
                                                     'custom'=>[
@@ -132,6 +150,7 @@ $countcontent = 0;
                                                     ]
                                                  ]]); ?>
                                             <!-- fim action box -->
+                                            <?php endif;?>
 
                                           </li>
 
