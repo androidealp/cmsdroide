@@ -183,10 +183,39 @@ $countcontent = 0;
                                             <th>Nome</th>
                                             <th>Edicao</th>
                                           </tr>
-                                          <?php foreach ($listNaoAplicados as $k => $area): ?>
+                                          <?php foreach ($listNaoAplicados as $k => $theme): ?>
+                                            <?php
+                                            $checkErrors = $jsonfileLayout->checkFolderTheme($area,$theme);
+                                             ?>
                                           <tr>
-                                            <td><?=$area;?></td>
-                                            <td><button class="btn btn-xs btn-info"><span class="fa fa-edit"></span></button></td>
+                                            <td><?=$theme;?></td>
+                                            <td>
+                                              <?php if(count($checkErrors['error'])):?>
+                                                <?php
+
+                                                  $checkErrors['error'] = '<div class="alert alert-danger"><div><i class="fa fa-exclamation text-danger"></i> Erro Crítico:</div> '.implode('<br/>',$checkErrors['error']).'</div>';
+                                                  if(count($checkErrors['warning'])){
+                                                      $checkErrors['warning'] =  '<div class="alert alert-warning"><div><i class="fa fa-warning text-warning"></i> Alertas:</div> '.implode('<br/>',$checkErrors['warning']).'</div>';
+                                                  }
+                                                 ?>
+                                                <button  data-btalert='<p>Foram detectados erros criticos, que precisam ser resolvidos antes de editar o tema.</p> <?=implode('<br/>',$checkErrors)?>' title="Edição indisponivel" class="btn btn-xs btn-danger" type="button" name="button"><span class="fa fa-edit"></span></button>
+                                                <?php else:?>
+                                                <!-- action box -->
+                                                     <?=ActionsBox::widget(['buttons'=>[
+                                                        'custom'=>[
+                                                            'text'=>'<span class="fa fa-edit"></span>',
+                                                            'params'=>[
+                                                              'data-btedturl'=>'index.php?r=_adm/confmanager/editartema&area='.$area.'&theme='.$theme,
+                                                              'data-formid'=>'form-themejson',
+                                                              'data-pajaxid'=>'list-themes',
+                                                              'class'=>'btn btn-xs btn-info',
+                                                              'title'=>'Editar '.$theme,
+                                                            ]
+                                                        ]
+                                                     ]]); ?>
+                                                <!-- fim action box -->
+                                                <?php endif;?>
+                                            </td>
                                           </tr>
                                           <?php endforeach;?>
                                           </tbody>

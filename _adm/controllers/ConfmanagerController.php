@@ -51,14 +51,24 @@ public function actionEditartema($area, $theme){
   $modeljson = new \app\_adm\models\ThemeJson();
   $layoutfile = \app\components\helpers\LayoutHelper::loadThemesJson()->getFile();
   if ($modeljson->load(Yii::$app->request->post())){
-   $edit = $modeljson->edit($area, $theme, $layoutfile);
-   \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    $return = ['msn'=>[
-     'message'=>'<pre>'.$edit.'</pre>'
-     ],
-     'type'=>[
-     'type'=>'danger'
-     ]];
+    \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    $edit = $modeljson->edit($area, $theme, $layoutfile);
+
+     if($edit){
+       $return = ['msn'=>[
+           'message'=>'Arquivo Tema editado, arquivos escritos '.$edit.' bytes'
+           ],
+           'type'=>[
+               'type'=>'success'
+           ]];
+     }else{
+         $return = ['msn'=>[
+          'message'=>'Não foi possivel salvar por algum erro inesperado.'
+          ],
+          'type'=>[
+          'type'=>'danger'
+          ]];
+     }
 
      return $return;
 
