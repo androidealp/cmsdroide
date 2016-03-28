@@ -9,11 +9,11 @@ use app\components\helpers\ControllerHelper;
 
 class InstitucionalController extends ControllerHelper
 {
-    
+
 
     public function actions()
     {
-        
+
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -27,11 +27,11 @@ class InstitucionalController extends ControllerHelper
 
     public function actionIndex()
     {
-       $instalador = ($this->instalador)?'Existe':'Não Existe';
-        
-        return $this->render('index',[
-            'installexiste'=>$instalador,   
-        ]);
+       if($this->instalador){
+         return $this->redirect(['/instalador'],302);
+       }
+
+        return $this->render('index');
     }
 
     public function actionLogin()

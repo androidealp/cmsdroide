@@ -17,12 +17,22 @@ class LayoutHelper {
     * @return Objetct LayoutHelper
     */
     public function loadThemesJson(){
-        $pathurl = Yii::getAlias(self::$urlBase.'themas.json');
         $dataFile =$this->renderFile(self::$urlBase.'themas.json');
-        self::$editavel =(is_writable($pathurl))?1:0;
+        self::$editavel =self::CheckWritable(self::$urlBase.'themas.json');
         self::$Filedata = json_decode($dataFile, true);
 
           return new LayoutHelper;
+    }
+
+    /**
+     * Verifica se o arquivo é editavel
+     * @author André Luiz Pereira
+     * @param string $url - pega o path do arquivo  ex: @app/arquivo
+     * @return bool retorna 0 ou 1 caso verdadeiro
+     */
+    public function CheckWritable($url){
+      $pathurl = Yii::getAlias($url);
+      return (is_writable($pathurl))?1:0;
     }
 
     /**

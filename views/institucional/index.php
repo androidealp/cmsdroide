@@ -2,8 +2,8 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
-echo "Instalador ".$installexiste;
+$this->title = 'Home - CMS Droide';
+
 echo "<br />";
 $hash = Yii::$app->getSecurity()->generatePasswordHash('and4563');
 echo $hash;

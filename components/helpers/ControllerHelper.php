@@ -16,7 +16,7 @@ class ControllerHelper extends Controller
      if(file_exists(\Yii::$app->basePath.'/instalador')){
          \Yii::$app->setModules([
         'instalador'=>[
-            'class'=>'app\modules\painel\Modules',
+            'class'=>'app\instalador\Module',
             ]
         ]);
      }

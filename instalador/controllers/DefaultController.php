@@ -3,44 +3,27 @@
 namespace app\instalador\controllers;
 use \app\components\helpers\LayoutHelper;
 use yii\web\Controller;
+use app\instalador\models\Instalador;
 
 class DefaultController extends Controller
 {
 	public function actionIndex()
 	{
-
 		$this->layout = LayoutHelper::loadThemesJson()->instalador();
-		return $this->render('index');
-	}
-
-
-	 public static function import($file = '')
-	{
-		$pdo = Yii::app()->db->pdoInstance;
-		try 
-		{ 
-			if (file_exists($file)) 
-			{
-				$sqlStream = file_get_contents($file);
-				$sqlStream = rtrim($sqlStream);
-				$newStream = preg_replace_callback("/\((.*)\)/", create_function('$matches', 'return str_replace(";"," $$$ ",$matches[0]);'), $sqlStream); 
-				$sqlArray = explode(";", $newStream); 
-				foreach ($sqlArray as $value) 
-				{ 
-					if (!empty($value))
-					{
-						$sql = str_replace(" $$$ ", ";", $value) . ";";
-						$pdo->exec($sql);
-					} 
-				} 
-				//echo "succeed to import the sql data!";
-				return true;
-			} 
-		} 
-		catch (PDOException $e) 
-		{ 
-			echo $e->getMessage();
-			exit; 
+		$editavel =  LayoutHelper::CheckWritable('@app/config/db.php');
+		$model = new Instalador;
+		$retorno_save = 0;
+		if($model->load(\Yii::$app->request->post())){
+			$retorno_save = $model->instalar('@app/config/db.php',$editavel);
 		}
+
+		return $this->render('index',[
+			'model'=>$model,
+			'editavel'=>$editavel,
+			'retorno_save'=>$retorno_save
+		]);
 	}
+
+
+
 }
