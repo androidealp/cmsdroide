@@ -76,7 +76,7 @@ class Conteudo extends ModelHelper
     }
 
       public function Categorias(){
-        $cats = CategoriasConteudo::find()->asArray()->all(); 
+        $cats = CategoriasConteudo::find()->asArray()->all();
 
         return yii\helpers\ArrayHelper::map($cats, 'id', 'nome');
     }
@@ -95,8 +95,8 @@ class Conteudo extends ModelHelper
             'alias' => 'Alias',
             'texto_introdutorio' => 'Texto Introdutorio',
             'texto_completo' => 'Texto completo',
-            'imagem_pre' => 'Imagem Pre',
-            'imagem_pos' => 'Imagem Pos',
+            'imagem_pre' => 'Imagem de introdução',
+            'imagem_pos' => 'Imagem de conteúdo',
             'autor' => 'Autor',
             'parametros_extra' => 'Parametros Extra',
             'dt_publicacao' => 'Publicado em',
@@ -105,7 +105,7 @@ class Conteudo extends ModelHelper
     }
 
     public function ListLanguage(){
-        $langs = Linguagem::find()->asArray()->all(); 
+        $langs = Linguagem::find()->asArray()->all();
 
         return yii\helpers\ArrayHelper::map($langs, 'id', 'nome');
     }

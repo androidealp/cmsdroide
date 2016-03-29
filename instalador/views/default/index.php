@@ -22,7 +22,7 @@ if ($editavel) {
   </div>
 <div class="row">
 <div class="col-md-6">
-
+<?php if(!$retorno_save): ?>
   <div class="panel panel-<?=$editavelreturn['type'];?>">
     <div class="panel-heading">
       <h3 class="panel-title">Arquivo config/DB</h3>
@@ -36,7 +36,6 @@ if ($editavel) {
         </pre>
       <?php endif; ?>
     </div>
-
   </div>
   <?php
   $form = ActiveForm::begin([
@@ -72,6 +71,7 @@ if ($editavel) {
 
 <?php ActiveForm::end(); ?>
 
+<?php endif; ?>
 </div>
 </div>
 

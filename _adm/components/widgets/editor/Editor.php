@@ -9,6 +9,7 @@ class Editor extends Widget{
 public $id;
 public $model;
 public $ajaxSave = true;
+public $options = [];
 
 public function init(){
 
@@ -17,15 +18,15 @@ EditorAssets::register($this->view);
 }
 
 public function run(){
-
+			$options = json_encode($this->options);
 			$js ="
 			 $(function () {
 
-    			CKEDITOR.replace('{$this->id}');
+    			CKEDITOR.replace('{$this->id}',{$options});
   });
 ";
 
-$this->getView()->registerJs($js, \yii\web\View::POS_END, 'editor');	
+$this->getView()->registerJs($js, \yii\web\View::POS_END, 'editor');
 
 $options = [];
 
@@ -37,7 +38,7 @@ if($this->ajaxSave){
 
 
 		return BaseHtml::activeTextarea($this->model,$this->id,$options);
-	
+
 
 }
 

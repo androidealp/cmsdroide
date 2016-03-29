@@ -12,8 +12,8 @@ use yii\jui\DatePicker;
   <!-- action box -->
        <?=ActionsBox::widget(['buttons'=>[
           'default'=>[
-              'add'=>['url'=>'index.php?r=_adm/gerenciadorconteudo/ajaxcriarusuarioadm','title'=>'Adicionar um usuário','modalsize'=>'md','formid'=>'form-usersave','pajaxid'=>'list-user'],
-              'del'=>['url'=>'index.php?r=_adm/gerenciadorconteudo/ajaxdeletarusuarioadm','confirm'=>'Deseja deletar o(s) usuário(s)?', 'title'=>'Deletar Usuario(s)','gridid'=>'grid-user','pajaxid'=>'list-user'],
+              'add'=>['url'=>'index.php?r=_adm/usermanager/ajaxcriarusuarioadm','title'=>'Adicionar um usuário','modalsize'=>'md','formid'=>'form-admcriar','pajaxid'=>'list-user'],
+              'del'=>['url'=>'index.php?r=_adm/usermanager/ajaxdeletarusuarioadm','confirm'=>'Deseja deletar o(s) usuário(s)?', 'title'=>'Deletar Usuario(s)','gridid'=>'grid-user','pajaxid'=>'list-user'],
           ]
        ]]); ?>
   <!-- fim action box -->
@@ -44,7 +44,7 @@ use yii\jui\DatePicker;
                         'attribute' => 'nome',
                         'format' => 'html',
                         'value'=>function($data){
-                          return Html::a(Html::encode($data->nome),['gerenciadorconteudo/editarusuarioadm','id'=>$data->id]);
+                          return Html::a(Html::encode($data->nome),['usermanager/editarusuarioadm','id'=>$data->id]);
                         }
 
                     ],
@@ -86,13 +86,11 @@ use yii\jui\DatePicker;
                         }
                     ],
                     [
-                      'class' => 'yii\grid\CheckboxColumn', 
+                      'class' => 'yii\grid\CheckboxColumn',
                     ]
                 ],
               ]);?>
         <?php Pjax::end(); ?>
       </div>
-        
+
 </div>
-
-

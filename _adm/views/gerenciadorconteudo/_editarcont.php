@@ -2,6 +2,9 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use app\_adm\components\widgets\editor\Editor;
+use mihaildev\elfinder\ElFinder;
+use mihaildev\elfinder\InputFile;
+$ckeditorOptions = ElFinder::ckeditorOptions('_adm/elfinder',[/* Some CKEditor Options */]);
 ?>
 
 <?php
@@ -28,6 +31,33 @@ $form = ActiveForm::begin([
 </div>
 
 <div class="form-group">
+  <?= $form->field($model, 'imagem_pre')->widget(InputFile::className(),[
+    'language'      => 'pt-BR',
+    'controller'    => '_adm/elfinder',
+    'path' => 'image',
+    'filter'        => 'image',
+    'template'      => '<div class="input-group">{input}<span class="input-group-btn">{button}</span></div>',
+    'options'       => ['class' => 'form-control'],
+    'buttonOptions' => ['class' => 'btn btn-default'],
+    'multiple'      => false
+  ]); ?>
+
+</div>
+
+<div class="form-group">
+  <?= $form->field($model, 'imagem_pos')->widget(InputFile::className(),[
+    'language'      => 'pt-BR',
+    'controller'    => '_adm/elfinder',
+    'path' => 'image',
+    'filter'        => 'image',
+    'template'      => '<div class="input-group">{input}<span class="input-group-btn">{button}</span></div>',
+    'options'       => ['class' => 'form-control'],
+    'buttonOptions' => ['class' => 'btn btn-default'],
+    'multiple'      => false
+  ]); ?>
+</div>
+
+<div class="form-group">
 <?= $form->field($model, 'titulo')->textInput(['class'=>'form-control']);?>
 </div>
 
@@ -43,14 +73,14 @@ $form = ActiveForm::begin([
     <div class="col-lg-6">
         <?=$form->field($model, 'destaque')->dropDownList([0=>'inativo',1=>'ativo'],['class'=>'form-control']); ?>
     </div>
-    
+
 </div>
 <div class="form-group">
 
      <div class="col-lg-12">
     <?= $form->field($model, 'texto_introdutorio')->textArea(['class'=>'form-control','placeholder'=>'Limite máximo 250 caracteres']);?>
     </div>
-    
+
 </div>
 <div class="form-group">
     <?=$form->field($model, 'status')->checkBox(['label'=>'Publicado']);?>
@@ -62,7 +92,8 @@ $form = ActiveForm::begin([
   echo Editor::widget([
     'model'=>$model,
     'id'=>'texto_completo',
-    'ajaxSave'=>false
+    'ajaxSave'=>false,
+    'options'=>$ckeditorOptions
     ]);
      ?>
 </div>

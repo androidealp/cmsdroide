@@ -12,8 +12,8 @@ use yii\jui\DatePicker;
   <!-- action box -->
        <?=ActionsBox::widget(['buttons'=>[
           'default'=>[
-              'add'=>['url'=>'index.php?r=_adm/gerenciadorconteudo/ajaxcriarassinante','title'=>'Adicionar um assinante','modalsize'=>'md','formid'=>'form-usersave','pajaxid'=>'list-user'],
-              'del'=>['url'=>'index.php?r=_adm/gerenciadorconteudo/ajaxdeletarassinante','confirm'=>'Deseja deletar o(s) assinante(s)?', 'title'=>'Deletar assinante(s)','gridid'=>'grid-user','pajaxid'=>'list-user'],
+              'add'=>['url'=>'index.php?r=_adm/usermanager/ajaxcriarassinante','title'=>'Adicionar um assinante','modalsize'=>'md','formid'=>'form-usersave','pajaxid'=>'list-user'],
+              'del'=>['url'=>'index.php?r=_adm/usermanager/ajaxdeletarassinante','confirm'=>'Deseja deletar o(s) assinante(s)?', 'title'=>'Deletar assinante(s)','gridid'=>'grid-user','pajaxid'=>'list-user'],
           ]
        ]]); ?>
   <!-- fim action box -->
@@ -36,7 +36,7 @@ use yii\jui\DatePicker;
                         'attribute' => 'nome',
                         'format' => 'html',
                         'value'=>function($data){
-                          return Html::a(Html::encode($data->nome),['gerenciadorconteudo/editarusuarioassinantes','id'=>$data->id]);
+                          return Html::a(Html::encode($data->nome),['usermanager/editarusuarioassinantes','id'=>$data->id]);
                         }
 
                     ],
@@ -48,7 +48,7 @@ use yii\jui\DatePicker;
                         }
 
                     ],
-                   
+
                     [
                         'attribute' => 'status_acesso',
                         'format' => 'html',
@@ -71,13 +71,11 @@ use yii\jui\DatePicker;
                         }
                     ],
                     [
-                      'class' => 'yii\grid\CheckboxColumn', 
+                      'class' => 'yii\grid\CheckboxColumn',
                     ]
                 ],
               ]);?>
         <?php Pjax::end(); ?>
       </div>
-        
+
 </div>
-
-
