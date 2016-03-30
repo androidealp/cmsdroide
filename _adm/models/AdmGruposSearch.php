@@ -1,9 +1,9 @@
 <?php
 
 namespace app\_adm\models;
-use app\_adm\components\helpers\ModelHelper;
-use Yii;
 
+use Yii;
+use yii\data\ActiveDataProvider;
 /**
  * This is the model class for table "csdm_adm_grupos".
  *
@@ -13,35 +13,14 @@ use Yii;
  *
  * @property CsdmAdmUser[] $csdmAdmUsers
  */
-class AdmGrupos extends ModelHelper
+class AdmGruposSearch extends \yii\db\ActiveRecord
 {
-
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return 'csdm_adm_grupos';
-    }
-
-    public function getPermissoes() {
-
-        $menus = \app\_adm\models\AdmMenu::find([ 'id', 'item_nome'])
-        ->where(['and','status = 1', "url <> '#'"])
-        ->asArray()
-        ->all();
-
-        return yii\helpers\ArrayHelper::map($menus, 'id', 'item_nome');
-
-    }
-
-    public function beforeValidate($insert)
-    {
-          if(count($this->atrib_permissoes)){
-            $this->atrib_permissoes = json_encode($this->atrib_permissoes);
-          }
-
-        return parent::beforeValidate($insert);
     }
 
     /**
@@ -64,7 +43,7 @@ class AdmGrupos extends ModelHelper
         return [
             'id' => 'ID',
             'nome' => 'Nome',
-            'atrib_permissoes' => 'Permissões',
+            'atrib_permissoes' => 'Atrib Permissoes',
         ];
     }
 
@@ -75,4 +54,27 @@ class AdmGrupos extends ModelHelper
     {
         return $this->hasMany(CsdmAdmUser::className(), ['grupos_id' => 'id']);
     }
+
+
+    public function search($params){
+        $query = AdmGrupos::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if (!($this->load($params) && $this->validate())) {
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere(
+            [
+              'and',
+                ['like','nome',$this->nome],
+            ]
+                        );
+
+        return $dataProvider;
+    }
+
 }

@@ -62,7 +62,15 @@ class ActionsBox extends Widget {
 
 		if(isset($this->buttons['custom'])){
 
-			$this->insertInView['buttons'][] = Html::button($this->buttons['custom']['text'], $this->buttons['custom']['params']);
+			if(isset($this->buttons['custom']['type']) && $this->buttons['custom']['type'] == 'link'){
+				$this->insertInView['buttons'][] = Html::a(
+				$this->buttons['custom']['text'],
+				$this->buttons['custom']['url'], 
+				$this->buttons['custom']['params']);
+			}else{
+				$this->insertInView['buttons'][] = Html::button($this->buttons['custom']['text'], $this->buttons['custom']['params']);
+			}
+
 
 
 

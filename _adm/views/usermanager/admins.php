@@ -11,9 +11,29 @@ use yii\jui\DatePicker;
 <div class="box box-default color-palette-box">
   <!-- action box -->
        <?=ActionsBox::widget(['buttons'=>[
+         'custom'=>[
+           'type'=>'link',
+           'text'=>'<i class="fa fa-users"></i> Gerenciar Grupos',
+           'url'=>['usermanager/managergroups'],
+           'params'=>[
+
+             'class'=>'btn btn-success btn-sm',
+           ]
+         ],
           'default'=>[
-              'add'=>['url'=>'index.php?r=_adm/usermanager/ajaxcriarusuarioadm','title'=>'Adicionar um usuário','modalsize'=>'md','formid'=>'form-admcriar','pajaxid'=>'list-user'],
-              'del'=>['url'=>'index.php?r=_adm/usermanager/ajaxdeletarusuarioadm','confirm'=>'Deseja deletar o(s) usuário(s)?', 'title'=>'Deletar Usuario(s)','gridid'=>'grid-user','pajaxid'=>'list-user'],
+              'add'=>[
+                'url'=>'index.php?r=_adm/usermanager/ajaxcriarusuarioadm',
+                'title'=>'Adicionar um usuário',
+                'modalsize'=>'md',
+                'formid'=>'form-admcriar',
+                'pajaxid'=>'list-user'],
+              'del'=>[
+                'url'=>'index.php?r=_adm/usermanager/ajaxdeletarusuarioadm',
+                'confirm'=>'Deseja deletar o(s) usuário(s)?',
+                'title'=>'Deletar Usuario(s)',
+                'gridid'=>'grid-user',
+                'pajaxid'=>'list-user'],
+
           ]
        ]]); ?>
   <!-- fim action box -->

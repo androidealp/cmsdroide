@@ -4,6 +4,8 @@ use app\_adm\components\helpers\ControllerHelper;
 use app\_adm\models\AdmUserSearch;
 use app\_adm\models\AdmUser;
 use app\painel\models\UserSearch;
+use app\_adm\models\AdmGruposSearch;
+use app\_adm\models\AdmGrupos;
 use Yii;
 // use yii\data\ActiveDataProvider;
 
@@ -45,6 +47,51 @@ class UsermanagerController extends ControllerHelper
             'dataProvider'=>$dataProvider,
             'model'=>$model,
             ]);
+    }
+
+    public function actionManagergroups(){
+      /*INIT: Define atributos da pagina*/
+      \Yii::$app->view->title = "Gerenciar Grupos";
+      \Yii::$app->view->params['title-page'] = 'Gerenciador de Grupos administrativos';
+      \Yii::$app->view->params['breadcrumbs-links'] =[['label'=>'Gerenciador de Grupos administrativos',]];
+      /*END: Define atributos da pagina*/
+      $model = new AdmGruposSearch;
+      $dataProvider = $model->search(Yii::$app->request->queryParams);
+      return $this->render('managergroups',[
+        'model'=>$model,
+        'dataProvider'=>$dataProvider
+      ]);
+    }
+
+    public function actionAjaxcriargroupadm(){
+      $model = new AdmGrupos;
+
+      if ($model->load(Yii::$app->request->post())){
+          \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+          if($model->save()){
+          $return = ['msn'=>[
+              'message'=>'Grupo '.$model->nome.' adicionado com sucesso!'
+              ],
+              'type'=>[
+              'type'=>'success'
+              ]];
+          }else{
+              $return = ['msn'=>[
+              'message'=>'Grupo '.$model->nome.' Possui algum item com erro!<br /><br />'.$model->HtmlErros()
+              ],
+              'type'=>[
+              'type'=>'danger'
+              ]];
+          }
+
+          return $return;
+
+      }else{
+          return $this->renderAjax('_ajaxAdmgrupocriar',[
+          'model'=>$model,
+          ]);
+      }
     }
 
     public function actionAjaxcriarusuarioadm(){
