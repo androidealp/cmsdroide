@@ -25,5 +25,48 @@ class DefaultController extends Controller
 	}
 
 
+	public function ajaxInstall($type){
+		$editavel =  LayoutHelper::CheckWritable('@app/config/db.php');
+			$model = new Instalador;
+
+		$return = [
+			'error'=>1,
+			'msn'=>'dados inconsistentes',
+		];
+
+		if(!$editavel){
+			$return = [
+				'error'=>1,
+				'msn'=>'O arquivo Não é editável',
+			];
+		}
+
+		if($editavel && $model->load(\Yii::$app->request->post())){
+
+			switch ($type) {
+				case 'configurar':
+					$return = $model->aplicarbanco('@app/config/db.php');
+					break;
+				case 'instalar':
+ 				 $return = $model->SQLimport();
+ 				 break;
+				default:
+				$return = [
+					'error'=>1,
+					'msn'=>'Algum erro encontrado no processo',
+				];
+					break;
+			}
+
+		}
+
+
+		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+		return $return;
+
+	}
+
+
 
 }

@@ -22,21 +22,17 @@ if ($editavel) {
   </div>
 <div class="row">
 <div class="col-md-6">
-<?php if(!$retorno_save): ?>
   <div class="panel panel-<?=$editavelreturn['type'];?>">
     <div class="panel-heading">
-      <h3 class="panel-title">Arquivo config/DB</h3>
+      <h3 id="title" class="panel-title">Arquivo config/DB</h3>
     </div>
     <div class="panel-body">
       <?=$editavelreturn['msn'];?>
 
-      <?php if($retorno_save): ?>
-        <pre>
-          <?php print_r($retorno_save); ?>
-        </pre>
-      <?php endif; ?>
+      <div id="returnsend"></div>
     </div>
   </div>
+
   <?php
   $form = ActiveForm::begin([
       'id'=>'form-install',
@@ -65,14 +61,41 @@ if ($editavel) {
 
 <?=$form->field($model, 'charset')->textInput(['class'=>'form-control','placeholder'=>'Charset geralmente utf8']); ?>
 
-  <button type="button" class="btn btn-default">
-    Instalar
-  </button>
+  <a data-install="#form-install" href="#" class="btn btn-default">Instalar</a>
 
 <?php ActiveForm::end(); ?>
 
-<?php endif; ?>
+
 </div>
 </div>
 
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    ajax = function(type, serealize){
+      $.ajax({
+        url:'index.php?r=instalador&type='+type,
+        data:serealize,
+        method:'post',
+        type:'json',
+        beforeSend:function(){
+
+        }
+      });
+    }
+
+    $('[data-install]').on('click',function(e){
+      e.prevendDefault();
+      button = $(this).data('install');
+
+      $.each(['configurar','instalar'],function(i,e){
+
+      });
+
+    });
+
+
+  });
+</script>

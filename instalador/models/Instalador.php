@@ -35,6 +35,8 @@ class  Instalador extends  Model
       ];
   }
 
+
+
   public function instalar($file, $editable){
     if($editable && $this->aplicarbanco($file)){
       return $this->SQLimport();
@@ -65,9 +67,15 @@ PHP;
     $arquive = file_put_contents($filepath, $data, LOCK_EX);
 
     if($arquive){
-      return true;
+      return [
+  				'error'=>0,
+  				'msn'=>'Arquivo de banco salvo com sucesso',
+  			];
     }else{
-      return false;
+      return  [
+  				'error'=>1,
+  				'msn'=>'Erro no processo gravar dados de acesso ao banco',
+  			];
       }
 
   }
@@ -76,7 +84,7 @@ PHP;
  {
    $file = Yii::getAlias('@app/instalador/sqlinstall/bancoandroide.sql');
    $pdo = Yii::app()->db->pdoInstance;
-   $return = array();
+   $return = '';
    try
    {
      if (file_exists($file))
@@ -93,15 +101,24 @@ PHP;
            $pdo->exec($sql);
          }
        }
-       $return[] = 'Banco inportado com sucesso!';
+       $return = [
+   				'error'=>0,
+   				'msn'=>'Banco salvo com sucesso!',
+   			];
 
      }else{
-       $return[] = 'O arquivo não existe';
+       $return = [
+   				'error'=>1,
+   				'msn'=>'O arquivo não existe',
+   			];
      }
    }
    catch (PDOException $e)
    {
-     $return =  $e->getMessage();
+     $return = [
+        'error'=>1,
+        'msn'=>print_r($e->getMessage(),true),
+      ];
    }
 
    return $return;
