@@ -13,9 +13,6 @@ class DefaultController extends Controller
 		$editavel =  LayoutHelper::CheckWritable('@app/config/db.php');
 		$model = new Instalador;
 		$retorno_save = 0;
-		if($model->load(\Yii::$app->request->post())){
-			$retorno_save = $model->instalar('@app/config/db.php',$editavel);
-		}
 
 		return $this->render('index',[
 			'model'=>$model,
@@ -25,10 +22,10 @@ class DefaultController extends Controller
 	}
 
 
-	public function ajaxInstall($type){
+	public function actionAjaxinstall($type){
 		$editavel =  LayoutHelper::CheckWritable('@app/config/db.php');
 			$model = new Instalador;
-
+			sleep(3);
 		$return = [
 			'error'=>1,
 			'msn'=>'dados inconsistentes',
@@ -45,10 +42,18 @@ class DefaultController extends Controller
 
 			switch ($type) {
 				case 'configurar':
-					$return = $model->aplicarbanco('@app/config/db.php');
+				//	$return = $model->aplicarbanco('@app/config/db.php');
+				$return =[
+								'error'=>0,
+								'msn'=>'Ok Configuracão',
+							];
 					break;
 				case 'instalar':
- 				 $return = $model->SQLimport();
+ 				 //$return = $model->SQLimport();
+				 $return =[
+ 								'error'=>0,
+ 								'msn'=>'Ok instalar',
+ 							];
  				 break;
 				default:
 				$return = [

@@ -71,26 +71,54 @@ if ($editavel) {
 
 </div>
 
-<script type="text/javascript">
-  $(document).ready(function(){
 
-    ajax = function(type, serealize){
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    $.returnErrors = 0;
+
+  function ajax(type, serealize){
+
       $.ajax({
-        url:'index.php?r=instalador&type='+type,
+        url:'index.php?r=instalador/default/ajaxinstall&type='+type,
         data:serealize,
         method:'post',
-        type:'json',
+        dataType:'json',
+        async: false,
         beforeSend:function(){
+          $('#title').html('Processo de instalação de'+type);
 
+
+        },
+        success:function(data){
+
+
+          if(data.error){
+            $('#returnsend').html('<div class="alert alert-danger">'+data.msn+'</div>');
+            $.returnErrors = 1;
+          }else{
+            //$('#returnsend').html('<div class="alert alert-success">'+data.msn+'</div>');
+              $('#returnsend').text(data.msn);
+          }
+        },
+        error:function(jqx, st, error){
+              $.returnErrors = 1;
+            console.log('jqx: '+jqx+' st: '+st+' error: '+error);
         }
       });
+
+
     }
 
     $('[data-install]').on('click',function(e){
-      e.prevendDefault();
+      e.preventDefault();
       button = $(this).data('install');
-
+      Serializar = $('#form-install').serializeArray();
       $.each(['configurar','instalar'],function(i,e){
+        if(!$.returnErrors){
+          ajax(e, Serializar);
+        }
 
       });
 

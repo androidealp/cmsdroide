@@ -64,7 +64,7 @@ class  Instalador extends  Model
         'charset' => '$charset',
     ];
 PHP;
-    $arquive = file_put_contents($filepath, $data, LOCK_EX);
+    $arquive = file_put_contents($jsonPath, $data, LOCK_EX);
 
     if($arquive){
       return [
@@ -83,7 +83,8 @@ PHP;
   public function SQLimport()
  {
    $file = Yii::getAlias('@app/instalador/sqlinstall/bancoandroide.sql');
-   $pdo = Yii::app()->db->pdoInstance;
+   //initConnection
+   $pdo = Yii::$app->getDb();
    $return = '';
    try
    {
@@ -98,7 +99,7 @@ PHP;
          if (!empty($value))
          {
            $sql = str_replace(" $$$ ", ";", $value) . ";";
-           $pdo->exec($sql);
+           $pdo->createCommand($sql)->execute();
          }
        }
        $return = [
