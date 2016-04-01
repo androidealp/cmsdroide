@@ -61,7 +61,7 @@ if ($editavel) {
 
 <?=$form->field($model, 'charset')->textInput(['class'=>'form-control','placeholder'=>'Charset geralmente utf8']); ?>
 
-  <a data-install="#form-install" href="#" class="btn btn-default">Instalar</a>
+  <a data-install="configurar" href="#form-install" class="btn btn-default">Instalar</a>
 
 <?php ActiveForm::end(); ?>
 
@@ -76,54 +76,96 @@ if ($editavel) {
 <script type="text/javascript">
 
   $(document).ready(function(){
-    $.returnErrors = 0;
 
-  function ajax(type, serealize){
+  function ajax(serealize){
 
       $.ajax({
-        url:'index.php?r=instalador/default/ajaxinstall&type='+type,
+        url:'index.php?r=instalador/default/ajaxinstall',
         data:serealize,
         method:'post',
         dataType:'json',
         async: false,
         beforeSend:function(){
-          $('#title').html('Processo de instalação de'+type);
-
-
+          $('#title').html('Processo de instalação');
         },
-        success:function(data){
-
-
-          if(data.error){
-            $('#returnsend').html('<div class="alert alert-danger">'+data.msn+'</div>');
-            $.returnErrors = 1;
-          }else{
-            //$('#returnsend').html('<div class="alert alert-success">'+data.msn+'</div>');
-              $('#returnsend').text(data.msn);
+        onprogress:function(e){
+          if (e.lengthComputable) {
+          console.log(e.loaded / e.total * 100 + '%');
           }
         },
         error:function(jqx, st, error){
-              $.returnErrors = 1;
             console.log('jqx: '+jqx+' st: '+st+' error: '+error);
         }
+      }).done(function(data){
+        if(data.error){
+          $('#returnsend').html('<div class="alert alert-danger">'+data.msn+'</div>');
+        }else{
+          $('#returnsend').html('<div class="alert alert-success">'+data.msn+'</div>');
+        }
       });
-
 
     }
 
     $('[data-install]').on('click',function(e){
       e.preventDefault();
-      button = $(this).data('install');
-      Serializar = $('#form-install').serializeArray();
-      $.each(['configurar','instalar'],function(i,e){
-        if(!$.returnErrors){
-          ajax(e, Serializar);
-        }
+      button = $(this);
+      Serializar = $(button.attr('href')).serializeArray();
+      Exec = button.data('install');
+      ajax(Serializar);
 
-      });
+/*
+var data = [];
+for (var i = 0; i < 100000; i++) {
+    var tmp = [];
+    for (var i = 0; i < 100000; i++) {
+        tmp[i] = 'hue';
+    }
+    data[i] = tmp;
+};
+$.ajax({
+    xhr: function () {
+        var xhr = new window.XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var percentComplete = evt.loaded / evt.total;
+                console.log(percentComplete);
+                $('.progress').css({
+                    width: percentComplete * 100 + '%'
+                });
+                if (percentComplete === 1) {
+                    $('.progress').addClass('hide');
+                }
+            }
+        }, false);
+        xhr.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var percentComplete = evt.loaded / evt.total;
+                console.log(percentComplete);
+                $('.progress').css({
+                    width: percentComplete * 100 + '%'
+                });
+            }
+        }, false);
+        return xhr;
+    },
+    type: 'POST',
+    url: "/echo/html",
+    data: data,
+    success: function (data) {}
+});
+*/
+
+
 
     });
 
 
   });
+
+
+
+  /*
+http://www.binarytides.com/monitor-progress-long-running-php-scripts-html5-server-sent-events/
+
+  */
 </script>

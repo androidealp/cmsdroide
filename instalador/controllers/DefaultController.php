@@ -22,7 +22,7 @@ class DefaultController extends Controller
 	}
 
 
-	public function actionAjaxinstall($type){
+	public function actionAjaxinstall(){
 		$editavel =  LayoutHelper::CheckWritable('@app/config/db.php');
 			$model = new Instalador;
 			sleep(3);
@@ -35,33 +35,14 @@ class DefaultController extends Controller
 			$return = [
 				'error'=>1,
 				'msn'=>'O arquivo Não é editável',
+
 			];
 		}
 
 		if($editavel && $model->load(\Yii::$app->request->post())){
 
-			switch ($type) {
-				case 'configurar':
-				//	$return = $model->aplicarbanco('@app/config/db.php');
-				$return =[
-								'error'=>0,
-								'msn'=>'Ok Configuracão',
-							];
-					break;
-				case 'instalar':
- 				 //$return = $model->SQLimport();
-				 $return =[
- 								'error'=>0,
- 								'msn'=>'Ok instalar',
- 							];
- 				 break;
-				default:
-				$return = [
-					'error'=>1,
-					'msn'=>'Algum erro encontrado no processo',
-				];
-					break;
-			}
+			$return = $model->instalar('@app/config/db.php');
+
 
 		}
 

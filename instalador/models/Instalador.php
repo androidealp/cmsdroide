@@ -15,6 +15,7 @@ class  Instalador extends  Model
   public $user;
   public $pass;
   public $charset='utf8';
+  Public $retorno = [];
 
 
   public function rules()
@@ -35,14 +36,12 @@ class  Instalador extends  Model
       ];
   }
 
-
-
   public function instalar($file, $editable){
     if($editable && $this->aplicarbanco($file)){
-      return $this->SQLimport();
-    }else{
-      return 'error';
+       $this->SQLimport();
     }
+
+    return $this->retorno;
   }
 
 
@@ -53,6 +52,7 @@ class  Instalador extends  Model
     $user = $this->user;
     $pass = $this->pass;
     $charset = $this->charset;
+    $return = false;
     $data = <<<PHP
     <?php
 
@@ -65,19 +65,21 @@ class  Instalador extends  Model
     ];
 PHP;
     $arquive = file_put_contents($jsonPath, $data, LOCK_EX);
-
     if($arquive){
-      return [
+      $this->retorno =  [
   				'error'=>0,
   				'msn'=>'Arquivo de banco salvo com sucesso',
   			];
+      $return = true;
+
     }else{
-      return  [
+
+      $this->retorno =  [
   				'error'=>1,
   				'msn'=>'Erro no processo gravar dados de acesso ao banco',
   			];
       }
-
+      return $return;
   }
 
   public function SQLimport()
@@ -85,7 +87,6 @@ PHP;
    $file = Yii::getAlias('@app/instalador/sqlinstall/bancoandroide.sql');
    //initConnection
    $pdo = Yii::$app->getDb();
-   $return = '';
    try
    {
      if (file_exists($file))
@@ -102,13 +103,13 @@ PHP;
            $pdo->createCommand($sql)->execute();
          }
        }
-       $return = [
+       $this->retorno = [
    				'error'=>0,
    				'msn'=>'Banco salvo com sucesso!',
    			];
 
      }else{
-       $return = [
+       $this->retorno = [
    				'error'=>1,
    				'msn'=>'O arquivo não existe',
    			];
@@ -116,12 +117,12 @@ PHP;
    }
    catch (PDOException $e)
    {
-     $return = [
+     $this->retorno = [
         'error'=>1,
         'msn'=>print_r($e->getMessage(),true),
+
       ];
    }
 
-   return $return;
  }
 }
