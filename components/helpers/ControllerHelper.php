@@ -19,8 +19,9 @@ class ControllerHelper extends Controller
             'class'=>'app\instalador\Module',
             ]
         ]);
-     }
         $this->instalador = \Yii::$app->hasModule('instalador');
+     }
+
         return parent::init();
     }
 

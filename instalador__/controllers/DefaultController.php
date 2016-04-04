@@ -25,7 +25,7 @@ class DefaultController extends Controller
 	public function actionAjaxinstall(){
 		$editavel =  LayoutHelper::CheckWritable('@app/config/db.php');
 			$model = new Instalador;
-			sleep(3);
+
 		$return = [
 			'error'=>1,
 			'msn'=>'dados inconsistentes',
@@ -41,7 +41,7 @@ class DefaultController extends Controller
 
 		if($editavel && $model->load(\Yii::$app->request->post())){
 
-			$return = $model->instalar('@app/config/db.php');
+			$return = $model->instalar('@app/config/db.php',$editavel);
 
 
 		}

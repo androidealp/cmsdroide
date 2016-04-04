@@ -34,7 +34,7 @@ $form = ActiveForm::begin([
   <?= $form->field($model, 'imagem_pre')->widget(InputFile::className(),[
     'language'      => 'pt-BR',
     'controller'    => '_adm/elfinder',
-    'path' => 'image',
+    'path' => 'media/',
     'filter'        => 'image',
     'template'      => '<div class="input-group">{input}<span class="input-group-btn">{button}</span></div>',
     'options'       => ['class' => 'form-control'],
@@ -48,7 +48,7 @@ $form = ActiveForm::begin([
   <?= $form->field($model, 'imagem_pos')->widget(InputFile::className(),[
     'language'      => 'pt-BR',
     'controller'    => '_adm/elfinder',
-    'path' => 'image',
+    'path' => 'media/',
     'filter'        => 'image',
     'template'      => '<div class="input-group">{input}<span class="input-group-btn">{button}</span></div>',
     'options'       => ['class' => 'form-control'],

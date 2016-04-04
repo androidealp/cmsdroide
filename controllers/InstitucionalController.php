@@ -28,6 +28,7 @@ class InstitucionalController extends ControllerHelper
     public function actionIndex()
     {
        if($this->instalador){
+
          return $this->redirect(['/instalador'],302);
        }
 
