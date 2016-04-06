@@ -35,13 +35,13 @@ class AdmGrupos extends ModelHelper
 
     }
 
-    public function beforeValidate($insert)
+    public function beforeValidate()
     {
           if(count($this->atrib_permissoes)){
             $this->atrib_permissoes = json_encode($this->atrib_permissoes);
           }
 
-        return parent::beforeValidate($insert);
+        return parent::beforeValidate();
     }
 
     /**

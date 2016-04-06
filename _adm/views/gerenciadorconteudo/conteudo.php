@@ -57,18 +57,19 @@ use yii\jui\DatePicker;
                         'filter'=>array(1=>"Ativado",0=>"desativado"),
                     ],
                     [
-                        'attribute' => 'dt_publicacao',
-                        'format' => ['date', 'php:d/m/Y'],
-                        'filter'=>DatePicker::widget(['model'=>$model,'attribute'=>'dt_publicacao','language' => 'pt-BR', 'dateFormat' => 'dd-MM-yyyy','options'=>['class'=>'form-control']]),
+                        'attribute' => 'categorias_conteudo_id',
+                        'format' => 'text',
+                        'value'=>function($data){
+                          return $data->categoriasConteudo->nome;
+                        },
+                        'filter'=>$model->list_category,
                     ],
                     [
-                      'class' => 'yii\grid\CheckboxColumn', 
+                      'class' => 'yii\grid\CheckboxColumn',
                     ]
                 ],
               ]);?>
         <?php Pjax::end(); ?>
       </div>
-        
+
 </div>
-
-

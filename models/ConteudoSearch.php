@@ -26,6 +26,8 @@ use Yii;
  */
 class ConteudoSearch extends \yii\db\ActiveRecord
 {
+
+  public $list_category = [];
     /**
      * @inheritdoc
      */
@@ -34,6 +36,13 @@ class ConteudoSearch extends \yii\db\ActiveRecord
         return 'csdm_conteudo';
     }
 
+
+    public function Categorias(){
+      $cats = CategoriasConteudo::find()->asArray()->all();
+
+      return yii\helpers\ArrayHelper::map($cats, 'id', 'nome');
+  }
+
     /**
      * @inheritdoc
      */
@@ -41,7 +50,7 @@ class ConteudoSearch extends \yii\db\ActiveRecord
     {
         return [
             [['categorias_conteudo_id', 'linguagem_id', 'status','destaque'], 'integer'],
-            [['conteudo_total', 'parametros_extra'], 'string'],
+            [['texto_completo', 'parametros_extra'], 'string'],
             [['dt_publicacao'], 'safe'],
             [['titulo', 'alias'], 'string', 'max' => 70],
             [['texto_introdutorio'], 'string', 'max' => 250],
@@ -56,13 +65,13 @@ class ConteudoSearch extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'categorias_conteudo_id' => 'Categorias Conteudo ID',
-            'linguagem_id' => 'Linguagem ID',
+            'categorias_conteudo_id' => 'Categorias',
+            'linguagem_id' => 'Linguagem',
             'status' => 'Status',
             'titulo' => 'Titulo',
             'alias' => 'Alias',
             'texto_introdutorio' => 'Texto Introdutorio',
-            'conteudo_total' => 'Conteudo Total',
+            'texto_completo' => 'Texto Completo',
             'imagem_pre' => 'Imagem Pre',
             'imagem_pos' => 'Imagem Pos',
             'autor' => 'Autor',
@@ -76,7 +85,7 @@ class ConteudoSearch extends \yii\db\ActiveRecord
      */
     public function getCategoriasConteudo()
     {
-        return $this->hasOne(CsdmCategoriasConteudo::className(), ['id' => 'categorias_conteudo_id']);
+        return $this->hasOne(CategoriasConteudo::className(), ['id' => 'categorias_conteudo_id']);
     }
 
     /**
@@ -84,11 +93,14 @@ class ConteudoSearch extends \yii\db\ActiveRecord
      */
     public function getLinguagem()
     {
-        return $this->hasOne(CsdmLinguagem::className(), ['id' => 'linguagem_id']);
+        return $this->hasOne(Linguagem::className(), ['id' => 'linguagem_id']);
     }
 
     public function search($params){
+
         $query = ConteudoSearch::find();
+
+        $this->list_category = $this->Categorias();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -106,7 +118,7 @@ class ConteudoSearch extends \yii\db\ActiveRecord
                 ['like','titulo',$this->titulo],
                 ['status'=>$this->status],
                 ['destaque'=>$this->destaque],
-                ['date(dt_publicacao)'=>$this->dt_publicacao] //22-12-2015
+                ['categorias_conteudo_id'=>$this->categorias_conteudo_id] //22-12-2015
 
             ]
                         );

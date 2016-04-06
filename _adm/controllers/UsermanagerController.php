@@ -71,17 +71,17 @@ class UsermanagerController extends ControllerHelper
 
           if($model->save()){
           $return = ['msn'=>[
-              'message'=>'Grupo '.$model->nome.' adicionado com sucesso!'
+                'message'=>'Grupo '.$model->nome.' adicionado com sucesso!'
               ],
               'type'=>[
-              'type'=>'success'
+                'type'=>'success'
               ]];
           }else{
               $return = ['msn'=>[
-              'message'=>'Grupo '.$model->nome.' Possui algum item com erro!<br /><br />'.$model->HtmlErros()
+              'message'=>'Grupo '.$model->nome.' Possui algum item com erro!<br /><br />'
               ],
               'type'=>[
-              'type'=>'danger'
+                'type'=>'danger'
               ]];
           }
 

@@ -17,7 +17,7 @@ class GerenciadorconteudoController extends ControllerHelper
         /*INIT: Define atributos da pagina*/
        \Yii::$app->view->title = "Gerenciador de Categorias";
         \Yii::$app->view->params['title-page'] = 'Gerenciador de Categorias';
-        \Yii::$app->view->params['breadcrumbs-links'] =[['label'=>'Gerenciador de Categorias',]]; 
+        \Yii::$app->view->params['breadcrumbs-links'] =[['label'=>'Gerenciador de Categorias',]];
         /*END: Define atributos da pagina*/
 
         $model = new CategoriasConteudoSearch;
@@ -36,12 +36,12 @@ class GerenciadorconteudoController extends ControllerHelper
                 'message'=>'É necessário selecionar uma linha para poder deletar!'
                 ],
                 'type'=>[
-                'type'=>'danger' 
+                'type'=>'danger'
                 ]];
 
           if(Yii::$app->request->post('del-list')){
             $post = Yii::$app->request->post('del-list');
-            $total =count($post); 
+            $total =count($post);
             if($model->admDeletar($post)){
                 $msn = ($total>1)?"$total registros foram deletados.":"$total registro foi deletado.";
 
@@ -49,20 +49,20 @@ class GerenciadorconteudoController extends ControllerHelper
                     'message'=>$msn
                     ],
                     'type'=>[
-                        'type'=>'success' 
-                    ]];    
+                        'type'=>'success'
+                    ]];
             }else{
                $return = ['msn'=>[
                 'message'=>'Erro ao tentar deletar o registro. '
                 ],
                 'type'=>[
-                'type'=>'danger' 
-                ]]; 
+                'type'=>'danger'
+                ]];
             }
-                
-          
-                        
-          }      
+
+
+
+          }
 
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
@@ -86,16 +86,16 @@ class GerenciadorconteudoController extends ControllerHelper
                 'message'=>'Categoria '.$model->nome.' adicionada com sucesso!'
                 ],
                 'type'=>[
-                'type'=>'success' 
-                ]];    
+                'type'=>'success'
+                ]];
             }else{
                 $return = ['msn'=>[
                 'message'=>'Categoria '.$model->nome.' Possui algum item com erro!<br /><br />'.$model->HtmlErros()
                 ],
                 'type'=>[
-                'type'=>'danger' 
+                'type'=>'danger'
                 ]];
-            }            
+            }
 
             return $return;
 
@@ -103,10 +103,10 @@ class GerenciadorconteudoController extends ControllerHelper
             return $this->renderAjax('_ajaxCriar',[
             'model'=>$model,
             'languages'=>$languages
-            ]);    
+            ]);
         }
 
-        
+
     }
 
     public function actionAjaxcriarconteudo(){
@@ -125,15 +125,15 @@ class GerenciadorconteudoController extends ControllerHelper
                 'message'=>'Conteúdo '.$model->titulo.' adicionado com sucesso!'
                 ],
                 'type'=>[
-                'type'=>'success' 
-                ]];    
+                'type'=>'success'
+                ]];
             }else{
                 $return = ['msn'=>[
                 'message'=>'Conteúdo '.$model->titulo.' possui algum item com erros!<br /><br />'.$model->HtmlErros().'<br/><br/>'.$model->texto_completo                ],
                 'type'=>[
-                'type'=>'danger' 
+                'type'=>'danger'
                 ]];
-            }           
+            }
 
             return $return;
 
@@ -143,27 +143,27 @@ class GerenciadorconteudoController extends ControllerHelper
             'model'=>$model,
             'languages'=>$languages,
             'categorias'=>$categorias
-            ]);    
+            ]);
         }
     }
 
     public function actionEditarcategoria($id){
          \Yii::$app->view->title = "Editar categoria";
         \Yii::$app->view->params['title-page'] = 'Editar categoria';
-        \Yii::$app->view->params['breadcrumbs-links'] =[['label'=>'Editar categoria',]]; 
+        \Yii::$app->view->params['breadcrumbs-links'] =[['label'=>'Editar categoria',]];
        $model = CategoriasConteudo::findOne($id);
         $languages = $model->ListLanguage();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()){
-            
+
             $session = Yii::$app->session;
-            
+
             $session->addFlash('notify',[[
                 'icon'=>'glyphicon glyphicons-check',
                 'title'=>'<strong>Nova Categoria</strong>',
                 'message'=>'Categoria '.$model->nome.' adicionada com sucesso!'
                 ],[
-                'type'=>'success' 
+                'type'=>'success'
                 ]]);
             $this->redirect('index.php?r=_adm/gerenciadorconteudo/categorias',302);
         }
@@ -174,7 +174,7 @@ class GerenciadorconteudoController extends ControllerHelper
             ]);
 
     }
-    
+
     public function actionConteudo()
     {
         /*INIT: Define atributos da pagina*/
@@ -184,8 +184,9 @@ class GerenciadorconteudoController extends ControllerHelper
         /*END: Define atributos da pagina*/
 
         $model = new ConteudoSearch;
-        $dataProvider = $model->search(Yii::$app->request->queryParams);
 
+        $dataProvider = $model->search(Yii::$app->request->queryParams);
+    
 
         return $this->render('conteudo',[
             'dataProvider'=>$dataProvider,
@@ -204,15 +205,15 @@ class GerenciadorconteudoController extends ControllerHelper
         $categorias = $model->Categorias();
 
          if ($model->load(Yii::$app->request->post()) && $model->save()){
-            
+
             $session = Yii::$app->session;
-            
+
             $session->addFlash('notify',[[
                 'icon'=>'glyphicon glyphicons-check',
                 'title'=>'<strong>Edição de artigo</strong>',
                 'message'=>'Conteúdo '.$model->titulo.' editado com sucesso!'
                 ],[
-                'type'=>'success' 
+                'type'=>'success'
                 ]]);
             $this->redirect('index.php?r=_adm/gerenciadorconteudo/conteudo',302);
         }
@@ -220,10 +221,9 @@ class GerenciadorconteudoController extends ControllerHelper
         return $this->render('_editarcont',[
             'model'=>$model,
             'languages'=>$languages,
-            'categorias'=> $categorias 
+            'categorias'=> $categorias
             ]);
 
 
     }
 }
-
