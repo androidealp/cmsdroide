@@ -23,15 +23,6 @@ $form = ActiveForm::begin([
 <div id="erros">
 </div>
 
-
-<div class="form-group">
-<?= $form->field($model, 'nome')->textInput(['class'=>'form-control','placeholder'=>'Nome do usário']);?>
-</div>
-
-<div class="form-group">
-<?= $form->field($model, 'email')->textInput(['class'=>'form-control', 'placeholder'=>'E-mail para acesso']);?>
-</div>
-
 <div class="form-group">
   <?= $form->field($model, 'avatar')->widget(InputFile::className(),[
     'language'      => 'pt-BR',
@@ -44,6 +35,23 @@ $form = ActiveForm::begin([
     'multiple'      => false
   ]); ?>
 </div>
+
+<div class="form-group">
+<?= $form->field($model, 'grupos_id')->dropDownList($model->GruposList(),['class'=>'form-control']); ?>
+</div>
+
+<div class="form-group">
+<?= $form->field($model, 'nome')->textInput(['class'=>'form-control','placeholder'=>'Nome do usário']);?>
+</div>
+
+<div class="form-group">
+<?= $form->field($model, 'email')->textInput(['class'=>'form-control', 'placeholder'=>'E-mail para acesso']);?>
+</div>
+
+<div class="form-group">
+<?= $form->field($model, 'senha')->passwordInput(['class'=>'form-control', 'placeholder'=>'Dirite a senha']);?>
+</div>
+
 
 <div class="form-group">
 <?= $form->field($model, 'status_acesso')->checkBox(['label'=>'Ativar']);?>

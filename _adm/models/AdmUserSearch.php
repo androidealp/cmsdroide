@@ -21,6 +21,8 @@ use yii\data\ActiveDataProvider;
  */
 class AdmUserSearch extends \yii\db\ActiveRecord
 {
+
+  public $list_group = [];
     /**
      * @inheritdoc
      */
@@ -32,10 +34,16 @@ class AdmUserSearch extends \yii\db\ActiveRecord
 
     public function beforeValidate(){
 
-            $this->dt_cadastro = \Yii::$app->formatter->asDate($this->dt_cadastro, 'php:Y-m-d'); 
-            $this->dt_ult_acesso = \Yii::$app->formatter->asDate($this->dt_ult_acesso, 'php:Y-m-d'); 
+        //    $this->dt_cadastro = \Yii::$app->formatter->asDate($this->dt_cadastro, 'php:Y-m-d');
+        //    $this->dt_ult_acesso = \Yii::$app->formatter->asDate($this->dt_ult_acesso, 'php:Y-m-d');
         return parent::beforeValidate();
     }
+
+    public function GruposList(){
+      $grupos = AdmGrupos::find()->asArray()->all();
+
+      return yii\helpers\ArrayHelper::map($grupos, 'id', 'nome');
+  }
 
     /**
      * @inheritdoc
@@ -43,7 +51,7 @@ class AdmUserSearch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['grupos_id,', 'status_acesso'], 'integer'],
+            [['grupos_id', 'status_acesso'], 'integer'],
             [['dt_cadastro','dt_ult_acesso'], 'safe'],
             [['nome', 'senha'], 'string', 'max' => 100],
             [['email', 'avatar'], 'string', 'max' => 150]
@@ -82,23 +90,25 @@ class AdmUserSearch extends \yii\db\ActiveRecord
     {
         return $this->hasOne(AdmGrupos::className(), ['id' => 'grupos_id']);
     }
-    
- 
+
+
 
     public function ListGrupos(){
-        $grupos = AdmGrupos::find()->asArray()->all(); 
+        $grupos = AdmGrupos::find()->asArray()->all();
 
         return yii\helpers\ArrayHelper::map($grupos, 'id', 'nome');
     }
 
-  
+
 
     public function search($params){
-        $query = AdmUser::find();
+        $query = AdmUserSearch::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $this->list_group = $this->GruposList();
 
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
@@ -112,7 +122,8 @@ class AdmUserSearch extends \yii\db\ActiveRecord
                 ['like','nome',$this->nome],
                 ['email'=>$this->email],
                 ['status_acesso'=>$this->status_acesso],
-                ['date(dt_criacao)'=>$this->dt_cadastro], //22-12-2015
+                ['grupos_id'=>$this->grupos_id],
+                ['date(dt_cadastro)'=>$this->dt_cadastro], //22-12-2015
                 ['date(dt_ult_acesso)'=>$this->dt_ult_acesso] //22-12-2015
 
             ]

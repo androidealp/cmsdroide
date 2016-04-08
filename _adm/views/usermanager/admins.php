@@ -61,6 +61,14 @@ use yii\jui\DatePicker;
 
                     ],
                     [
+                        'attribute' => 'grupos_id',
+                        'format' => 'html',
+                        'value'=>function($data){
+                          return $data->grupos->nome;
+                        },
+                        'filter'=>$model->list_group
+                    ],
+                    [
                         'attribute' => 'nome',
                         'format' => 'html',
                         'value'=>function($data){
@@ -76,14 +84,7 @@ use yii\jui\DatePicker;
                         }
 
                     ],
-                    [
-                        'attribute' => 'grupos_id',
-                        'format' => 'text',
-                        'value'=>function($data){
-                          return $data->grupos->nome;
-                        }
 
-                    ],
                     [
                         'attribute' => 'status_acesso',
                         'format' => 'html',

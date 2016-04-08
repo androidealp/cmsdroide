@@ -3,6 +3,7 @@
 namespace app\_adm\models;
 
 use Yii;
+use app\_adm\components\helpers\ModelHelper;
 
 /**
  * This is the model class for table "csdm_adm_user".
@@ -21,8 +22,10 @@ use Yii;
  * @property CsdmAdmHashAcess[] $csdmAdmHashAcesses
  * @property CsdmAdmGrupos $grupos
  */
-class AdmUser extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
+class AdmUser extends ModelHelper implements \yii\web\IdentityInterface
 {
+
+  public $list_group = [];
     /**
      * @inheritdoc
      */
@@ -30,13 +33,26 @@ class AdmUser extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return 'csdm_adm_user';
     }
-    
+
+    public function GruposList(){
+      $grupos = AdmGrupos::find()->asArray()->all();
+
+      return yii\helpers\ArrayHelper::map($grupos, 'id', 'nome');
+  }
+
+    public function beforeValidate(){
+
+      $this->dt_cadastro = date('Y-m-d H:i:s');
+
+      return parent::beforeValidate();
+    }
+
     public function beforeSave($insert) {
-        
+
         $hash = Yii::$app->getSecurity()->generatePasswordHash($this->senha);
 
         $this->senha = $hash;
-        
+
         return parent::beforeSave($insert);
     }
 
@@ -46,7 +62,7 @@ class AdmUser extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['grupos_id', 'nome', 'email', 'senha', 'avatar', 'status_acesso', 'parametros_extra', 'dt_cadastro', 'dt_ult_acesso'], 'required'],
+            [['grupos_id', 'nome', 'email', 'senha', 'status_acesso', 'dt_cadastro'], 'required'],
             [['grupos_id', 'status_acesso'], 'integer'],
             [['parametros_extra'], 'string'],
             [['dt_cadastro', 'dt_ult_acesso'], 'safe'],
@@ -69,7 +85,7 @@ class AdmUser extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'avatar' => 'Avatar',
         ];
     }
-    
+
     /**
      * Validates password
      *
@@ -98,7 +114,7 @@ class AdmUser extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->hasOne(AdmGrupos::className(), ['id' => 'grupos_id']);
     }
-    
+
     /**
      * @inheritdoc
      */
