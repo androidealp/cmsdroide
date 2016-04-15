@@ -16,6 +16,8 @@ use Yii;
 class AdmGrupos extends ModelHelper
 {
 
+  public $teste;
+
     /**
      * @inheritdoc
      */
@@ -33,6 +35,16 @@ class AdmGrupos extends ModelHelper
 
         return yii\helpers\ArrayHelper::map($menus, 'id', 'item_nome');
 
+    }
+
+    public function afterFind()
+    {
+      if($this->atrib_permissoes){
+
+        $this->atrib_permissoes = json_decode($this->atrib_permissoes,true);
+      }
+
+      return parent::afterFind();
     }
 
     public function beforeValidate()

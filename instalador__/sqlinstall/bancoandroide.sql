@@ -84,7 +84,7 @@ CREATE TABLE `csdm_adm_grupos` (
   `nome` varchar(45) NOT NULL,
   `atrib_permissoes` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `csdm_adm_grupos` (
 
 LOCK TABLES `csdm_adm_grupos` WRITE;
 /*!40000 ALTER TABLE `csdm_adm_grupos` DISABLE KEYS */;
-INSERT INTO `csdm_adm_grupos` VALUES (1,'Super user','');
+INSERT INTO `csdm_adm_grupos` VALUES (1,'Super user','[\"1\",\"3\",\"4\",\"5\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\"]'),(2,'Comercial teste','[\"1\",\"3\",\"9\"]');
 /*!40000 ALTER TABLE `csdm_adm_grupos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,7 +114,7 @@ CREATE TABLE `csdm_adm_menu` (
   `status` tinyint(2) NOT NULL,
   `detectar_recurso` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +123,7 @@ CREATE TABLE `csdm_adm_menu` (
 
 LOCK TABLES `csdm_adm_menu` WRITE;
 /*!40000 ALTER TABLE `csdm_adm_menu` DISABLE KEYS */;
-INSERT INTO `csdm_adm_menu` VALUES (1,0,'Painel de controle','/_adm/painel','fa fa-tachometer',0,1,0),(2,0,'Gerenciador de conteúdo','#','fa fa-book',0,1,0),(3,2,'Categorias','gerenciadorconteudo/categorias','',0,1,0),(4,2,'Conteúdo','gerenciadorconteudo/conteudo','',0,1,0),(5,0,'Gerenciador de Mídias','/_adm/mediamanager/','fa fa-camera-retro',0,1,0),(6,0,'Gerenciador de usuários','#','fa fa-users',0,1,0),(7,0,'Configurações','#','fa fa-cogs',0,1,0),(8,6,'Administradores','/_adm/usermanager/admins','',0,1,0),(9,6,'Assinantes','/_adm/usermanager/assinantes','',0,1,0),(10,7,'Temas','/_adm/confmanager/temas','',0,1,0),(11,7,'Sistema','/_adm/confmanager/sistema','',0,1,0),(12,7,'Métodos de pagamento','/_adm/metodospagamento/','',0,1,0);
+INSERT INTO `csdm_adm_menu` VALUES (1,0,'Painel de controle','/_adm/painel','fa fa-tachometer',0,1,0),(2,0,'Gerenciador de conteúdo','#','fa fa-book',0,1,0),(3,2,'Categorias','gerenciadorconteudo/categorias','',0,1,0),(4,2,'Conteúdo','gerenciadorconteudo/conteudo','',0,1,0),(5,0,'Gerenciador de Mídias','/_adm/mediamanager/','fa fa-camera-retro',0,1,0),(6,0,'Gerenciador de usuários','#','fa fa-users',0,1,0),(7,0,'Configurações','#','fa fa-cogs',0,1,0),(8,6,'Administradores','/_adm/usermanager/admins','',0,1,0),(9,6,'Assinantes','/_adm/usermanager/assinantes','',0,1,0),(10,7,'Temas','/_adm/confmanager/temas','',0,1,0),(11,7,'Sistema','/_adm/confmanager/sistema','',0,1,0),(12,7,'Métodos de pagamento','/_adm/metodospagamento/','',0,1,0),(13,0,'WidgetEffects','/_adm/widgeteffects/','fa fa-cubes',0,1,0);
 /*!40000 ALTER TABLE `csdm_adm_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,7 +198,7 @@ CREATE TABLE `csdm_adm_user` (
   `dt_cadastro` datetime NOT NULL,
   `dt_ult_acesso` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,7 +207,7 @@ CREATE TABLE `csdm_adm_user` (
 
 LOCK TABLES `csdm_adm_user` WRITE;
 /*!40000 ALTER TABLE `csdm_adm_user` DISABLE KEYS */;
-INSERT INTO `csdm_adm_user` VALUES (1,1,'André Luiz','$2y$13$R.EeZL3yze.oJCiDlr32DuOvqNvpCl2nY.aIITx7Ik3p/nGsViOq2','and4563@gmail.com','','',1,'2015-11-19 07:33:01','0000-00-00 00:00:00');
+INSERT INTO `csdm_adm_user` VALUES (1,1,'André Luiz','$2y$13$R.EeZL3yze.oJCiDlr32DuOvqNvpCl2nY.aIITx7Ik3p/nGsViOq2','and4563@gmail.com','','',1,'2015-11-19 07:33:01','0000-00-00 00:00:00'),(2,2,'Ricardo','$2y$13$1gsfgPfM9IhEWYeejl4kueGWwj5MYfKgJlLmP.lMo3JYza.Mk7fiW','ricardo@next4.com.br','','',1,'2016-04-08 02:00:27','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `csdm_adm_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -341,4 +341,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-27 21:07:50
+-- Dump completed on 2016-04-14 23:14:08

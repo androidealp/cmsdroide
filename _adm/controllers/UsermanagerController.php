@@ -94,6 +94,33 @@ class UsermanagerController extends ControllerHelper
       }
     }
 
+    public function actionEditargroupadm($id){
+         \Yii::$app->view->title = "Editar group admin";
+        \Yii::$app->view->params['title-page'] = 'Editar grupo';
+        \Yii::$app->view->params['breadcrumbs-links'] =[['label'=>'Editar grupo',]];
+       $model = AdmGrupos::findOne($id);
+
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()){
+
+            $session = Yii::$app->session;
+
+            $session->addFlash('notify',[[
+                'icon'=>'glyphicon glyphicons-check',
+                'title'=>'<strong>Edição de grupo</strong>',
+                'message'=>'Grupo '.$model->nome.' editado com sucesso!'
+                ],[
+                'type'=>'success'
+                ]]);
+            $this->redirect('index.php?r=_adm/usermanager/managergroups',302);
+        }
+
+        return $this->render('_editargroupadm',[
+            'model'=>$model,
+            ]);
+
+    }
+
     public function actionAjaxcriarusuarioadm(){
       $model = new AdmUser;
 
@@ -123,6 +150,33 @@ class UsermanagerController extends ControllerHelper
           'model'=>$model,
           ]);
       }
+    }
+
+
+    public function actionEditarusuarioadm($id){
+      \Yii::$app->view->title = "Editar Usuario Admin";
+     \Yii::$app->view->params['title-page'] = 'Editar usuários administrators';
+     \Yii::$app->view->params['breadcrumbs-links'] =[['label'=>'Editar usuários administrators',]];
+    $model = AdmUser::findOne($id);
+
+
+     if ($model->load(Yii::$app->request->post()) && $model->save()){
+
+         $session = Yii::$app->session;
+
+         $session->addFlash('notify',[[
+             'icon'=>'glyphicon glyphicons-check',
+             'title'=>'<strong>Edição de usuário admin</strong>',
+             'message'=>'Usuairo '.$model->nome.' editado!'
+             ],[
+             'type'=>'success'
+             ]]);
+         $this->redirect('index.php?r=_adm/usermanager/admins',302);
+     }
+
+     return $this->render('_editarusuarioadm',[
+         'model'=>$model,
+         ]);
     }
 
 }
