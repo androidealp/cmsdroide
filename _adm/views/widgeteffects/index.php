@@ -1,38 +1,11 @@
 <?php
-$editable = $effects::$editavel;
+$list= $effects::$listfiles;
 
-$ef_files = $effects::$Filedata;
 
+print_r($list);
  ?>
- <!-- {formulário} -->
- <div class="row">
-   <div class="col-md-12">
 
-     <?php if($editable): ?>
-       <div class="panel panel-success">
-         <div class="panel-heading">
-           <h3 class="panel-title">frontend/WidgetEffects.json</h3>
-         </div>
-         <div class="panel-body">
-           <p class="text-success">O arquivo json é totalmente editável</p>
-         </div>
-       </div>
-     <?php else:?>
-       <div class="panel panel-danger">
-         <div class="panel-heading">
-           <h3 class="panel-title">frontend/WidgetEffects.json</h3>
-         </div>
-         <div class="panel-body">
-           <p class="text-danger">
-             O arquivo json não tem permissão de escrita
-           </p>
-         </div>
-       </div>
-     <?php endif; ?>
-     <?php //$this->render('_tema_form',['modeljson'=>$modeljson]);?>
-   </div>
- </div>
- <!-- {/formulário} -->
+
 
 
  <div class="row">
