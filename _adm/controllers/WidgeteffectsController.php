@@ -13,7 +13,7 @@ class WidgeteffectsController extends ControllerHelper
       \Yii::$app->view->params['title-page'] = 'WidgetEffects Manager';
       \Yii::$app->view->params['breadcrumbs-links'] =[['label'=>'WidgetEffects Manager',]];
 
-        $effects = WidgeteffectsHelper::loadEffects();
+        $effects = WidgeteffectsHelper::loadEffects('widgeteffects.json');
         return $this->render('index',[
           'effects'=>$effects
         ]);

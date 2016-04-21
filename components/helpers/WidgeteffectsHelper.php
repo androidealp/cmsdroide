@@ -8,44 +8,32 @@ class WidgeteffectsHelper {
   public static $Filedata = '';
   public static $listfiles = [];
 
-  public function loadEffects($url = ''){
+  public function loadEffects($file = ''){
 
-      if($url) self::$urlBase = $url;
-
-      $themesPath = Yii::getAlias(self::$urlBase);
-
-      $results = scandir($themesPath);
-
-      $list = [];
-
-      foreach ($results as $result) {
-          if ($result === '.' || $result === '..') {
-              continue;
-          }
-
-          $list[] = [
-            'editavel'=> LayoutHelper::CheckWritable(self::$urlBase.$result),
-            'file'=>$result,
-
-          ];
-      }
-
-      
-
-      self::$listfiles = $list;
-
+      $effectPath = Yii::getAlias(self::$urlBase.$file);
+      $dataFile =$this->renderFile($effectPath);
+      self::$editavel = LayoutHelper::CheckWritable($effectPath);
+      self::$Filedata = json_decode($dataFile, true);
       return new WidgeteffectsHelper;
   }
 
-  public function getFile(){
-    $dataFile =$this->renderFile(self::$urlBase.'widgeteffects.json');
-    self::$editavel =LayoutHelper::CheckWritable(self::$urlBase.'widgeteffects.json');
-    self::$Filedata = json_decode($dataFile, true);
+  public function CheckEffect($name){
+    $effectPath = Yii::getAlias(self::$urlBase.$name.'/');
+    $json_existe = yii\helpers\FileHelper::findFiles($effectPath,['only'=>[$name.'.json']]);
+    $editavel = LayoutHelper::CheckWritable($effectPath);
+    $return_val = [];
 
-    return new WidgeteffectsHelper;
+    if(!count($json_existe)){
+      $return_val[] = "O arquivo json {$name} não existe";
+    }else{
+      if(!$editavel){
+        $return_val[] = "O arquivo json {$name} não é editável";
+      }
+    }
+
+    return $return_val;
+
   }
-
-
 
 
 }
