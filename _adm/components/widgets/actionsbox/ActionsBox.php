@@ -47,6 +47,10 @@ class ActionsBox extends Widget {
 
 		$view = ($this->widview)?$this->widview:'actions';
 
+		if(isset($this->buttons['custom'])){
+			$view = 'custom';
+		}
+
 		return $this->render($view,$this->insertInView);
 
 	}
@@ -65,7 +69,7 @@ class ActionsBox extends Widget {
 			if(isset($this->buttons['custom']['type']) && $this->buttons['custom']['type'] == 'link'){
 				$this->insertInView['buttons'][] = Html::a(
 				$this->buttons['custom']['text'],
-				$this->buttons['custom']['url'], 
+				$this->buttons['custom']['url'],
 				$this->buttons['custom']['params']);
 			}else{
 				$this->insertInView['buttons'][] = Html::button($this->buttons['custom']['text'], $this->buttons['custom']['params']);

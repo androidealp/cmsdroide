@@ -73,6 +73,10 @@
 		-moz-animation: cssload-gogoloader 1.9s infinite;
 }
 
+.bg-danger{
+	background-color: rgba(185, 29, 29, 0.66) !important;
+}
+
 
 
 @keyframes cssload-gogoloader {
