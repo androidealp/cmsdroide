@@ -29,6 +29,46 @@ class WidgeteffectsController extends ControllerHelper
         ]);
     }
 
+    public function actionAjaxcriareffect(){
+
+      $modeljson = new app\_adm\models\WidgetJson();
+
+        if ($modeljson->load(Yii::$app->request->post())){
+
+          \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+          $edit = $modeljson->edit($area, $theme, $layoutfile);
+
+          $effects = WidgeteffectsHelper::loadEffects('widgeteffects.json');
+
+
+           if($edit){
+             $return = ['msn'=>[
+                 'message'=>'Arquivo Tema editado, arquivos escritos '.$edit.' bytes'
+                 ],
+                 'type'=>[
+                     'type'=>'success'
+                 ]];
+           }else{
+               $return = ['msn'=>[
+                'message'=>'Não foi possivel salvar por algum erro inesperado.'
+                ],
+                'type'=>[
+                'type'=>'danger'
+                ]];
+           }
+
+           return $return;
+
+        }else{
+
+          return $this->renderAjax('_criareffect',[
+            'modeljson'=>$modeljson
+          ]);
+        }
+
+      }
+
+
 
     public function actionEffect($type)
     {
