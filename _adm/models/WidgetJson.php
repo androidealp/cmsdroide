@@ -27,28 +27,46 @@ class WidgetJson extends  Model
         ];
     }
 
+    public function HtmlErros(){
+    $mderros = $this->getErrors();
+    $li = array();
+    foreach ($mderros as $k => $mderro) {
+    	foreach ($mderro as $c => $erro) {
+    		$li[] = $erro;
+    	}
+    }
+
+    $ul = \yii\helpers\BaseHtml::ul($li,[
+    	'class'=>'list-unstyled',
+    	'item'=>function($item, $index){
+    		return "<li><span class='label bg-yellow margin-right'><i class='fa fa-exclamation-triangle'></i></span> ".$item."</li>";
+    	}
+    	]);
+
+    return $ul;
+    }
+
 
     // yii\helpers\FileHelper::findFiles('.',['only'=>['*.php','*.txt']]);
-    public function save($area,$theme, $file){
-       $jsonPath = Yii::getAlias('@app/temas/themas.json');
-      unset($file[$area][$theme]);
+    public function savefile($widgeteffects){
+      $jsonPath = Yii::getAlias('@app/temas/widgeteffects/widgeteffects.json');
 
-      $file[$this->area][$this->tema] = [
-        "default"=>$this->default,
-        "layout"=>$this->layout
-      ];
+      if(isset($widgeteffects[$this->type])){
+        $this->addError(new WidgetJson, 'type', 'Este widget já existe no sistema');
+        return false;
+      }else{
+        $widgeteffects[$this->type] = [
+          "icon"=>$this->icon,
+          "title"=>$this->title,
+          "desc"=>$this->desc
+        ];
 
-      if($this->default){
-        foreach ($file[$this->area] as $theme => $params) {
-          if($theme != $this->tema){
-            $file[$this->area][$theme]['default'] = 0;
-          }
-        }
+        $filejson = json_encode($widgeteffects);
+
+        return $this->WriteFileJson($jsonPath,$filejson);
       }
 
-      $filejson = json_encode($file);
 
-      return $this->WriteFileJson($jsonPath,$filejson);
     }
 
     public function WriteFileJson($filepath, $data){

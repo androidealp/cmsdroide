@@ -18,7 +18,7 @@ use \app\_adm\components\widgets\actionsbox\ActionsBox;
               'custom'=>[
                   'text'=>'<span class="fa fa-edit"></span> Criar Efeito',
                   'params'=>[
-                    'data-btedturl'=>'index.php?r=_adm/widgeteffects/criarelemento',
+                    'data-btedturl'=>'index.php?r=_adm/widgeteffects/ajaxcriareffect',
                     'data-formid'=>'form-themejson',
                     'data-pajaxid'=>'list-themes',
                     'class'=>'btn btn-block btn-info',

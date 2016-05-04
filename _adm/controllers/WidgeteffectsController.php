@@ -31,26 +31,25 @@ class WidgeteffectsController extends ControllerHelper
 
     public function actionAjaxcriareffect(){
 
-      $modeljson = new app\_adm\models\WidgetJson();
+      $modeljson = new \app\_adm\models\WidgetJson();
 
-        if ($modeljson->load(Yii::$app->request->post())){
+        if ($modeljson->load(\Yii::$app->request->post())){
 
           \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-          $edit = $modeljson->edit($area, $theme, $layoutfile);
 
           $effects = WidgeteffectsHelper::loadEffects('widgeteffects.json');
-
+          $edit = $modeljson->savefile($effects);
 
            if($edit){
              $return = ['msn'=>[
-                 'message'=>'Arquivo Tema editado, arquivos escritos '.$edit.' bytes'
+                 'message'=>'Um novo widget foi adicionado '.$edit.' bytes'
                  ],
                  'type'=>[
                      'type'=>'success'
                  ]];
            }else{
                $return = ['msn'=>[
-                'message'=>'Não foi possivel salvar por algum erro inesperado.'
+                'message'=>'Não foi possivel salvar por algum erro inesperado.'.$modeljson->HtmlErros()
                 ],
                 'type'=>[
                 'type'=>'danger'
