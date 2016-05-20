@@ -25,29 +25,13 @@ use app\_adm\components\helpers\ModelHelper;
 class AdmUser extends ModelHelper implements \yii\web\IdentityInterface
 {
 
-  const SCENARIO_LOGIN = 'login';
-  const SCENARIO_CRIAR = 'criar';
-  const SCENARIO_EDITAR = 'editar';
-
   public $list_group = [];
-  public $redefinir_senha = '';
-  public $real_data_criacao = '';
-  public $real_data_acesso = '';
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return 'csdm_adm_user';
-    }
-
-    public function scenarios()
-    {
-        $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_LOGIN] = ['email', 'senha','dt_ult_acesso','avatar'];
-        $scenarios[self::SCENARIO_CRIAR] = ['id','grupos_id','cargo','nome', 'email', 'senha','redefinir_senha','status_acesso','parametros_extra','dt_cadastro','dt_ult_acesso','avatar'];
-        $scenarios[self::SCENARIO_EDITAR] = ['id','grupos_id','cargo','nome', 'email', 'senha','redefinir_senha','status_acesso','parametros_extra','avatar'];
-        return $scenarios;
     }
 
     public function GruposList(){
@@ -57,39 +41,19 @@ class AdmUser extends ModelHelper implements \yii\web\IdentityInterface
   }
 
     public function beforeValidate(){
-      if($this->scenario == 'criar')
-      {
-          $this->dt_cadastro = date('Y-m-d H:i:s');
-      }else{
-        $this->dt_cadastro = $this->real_data_criacao;
-        $this->dt_ult_acesso = $this->real_data_acesso;
-      }
 
+      $this->dt_cadastro = date('Y-m-d H:i:s');
 
       return parent::beforeValidate();
     }
 
-    public function afterValidate(){
-      $hash = Yii::$app->getSecurity()->generatePasswordHash($this->senha);
-      $this->senha = $hash;
-      return parent::afterValidate();
-    }
+    public function beforeSave($insert) {
 
+        $hash = Yii::$app->getSecurity()->generatePasswordHash($this->senha);
 
+        $this->senha = $hash;
 
-    public function afterFind(){
-
-      $this->real_data_criacao = $this->dt_cadastro;
-      $this->real_data_acesso = $this->dt_ult_acesso;
-
-       $this->dt_cadastro = \Yii::$app->formatter->asDate($this->dt_cadastro, 'php:d/m/Y H:i:s');
-
-       if($this->dt_ult_acesso != '' && $this->dt_ult_acesso != '0000-00-00 00:00:00'){
-          $this->dt_ult_acesso = \Yii::$app->formatter->asDate($this->dt_ult_acesso, 'php:d/m/Y H:i:s');
-       }else{
-         $this->dt_ult_acesso = 'Nunca acessou';
-       }
-      return parent::afterFind();
+        return parent::beforeSave($insert);
     }
 
     /**
@@ -98,16 +62,12 @@ class AdmUser extends ModelHelper implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['grupos_id', 'nome', 'email', 'senha', 'status_acesso', 'dt_cadastro'], 'required', 'on' => self::SCENARIO_CRIAR],
-            [['grupos_id', 'nome', 'email', 'senha', 'status_acesso'], 'required', 'on' => self::SCENARIO_EDITAR],
-            [['email', 'senha'], 'required', 'on' => self::SCENARIO_LOGIN],
+            [['grupos_id', 'nome', 'email', 'senha', 'status_acesso', 'dt_cadastro'], 'required'],
             [['grupos_id', 'status_acesso'], 'integer'],
             [['parametros_extra'], 'string'],
             [['dt_cadastro', 'dt_ult_acesso'], 'safe'],
-            [['nome', 'senha','cargo'], 'string', 'max' => 100],
-            ['senha','string','min'=>8,'message'=>"A senha deve ter no mínimo 8 caracteres"],
-            [['email', 'avatar'], 'string', 'max' => 150],
-            ['redefinir_senha', 'compare', 'compareAttribute'=>'senha', 'message'=>"Este campo precisa ser identico ao campo de senha" ],
+            [['nome', 'senha'], 'string', 'max' => 100],
+            [['email', 'avatar'], 'string', 'max' => 150]
         ];
     }
 
@@ -123,8 +83,6 @@ class AdmUser extends ModelHelper implements \yii\web\IdentityInterface
             'dt_ult_acesso'=>'último acesso',
             'status_acesso' => 'Acesso',
             'avatar' => 'Avatar',
-            'redefinir_senha'=>'Redefinir senha',
-            'cargo'=>'Cargo ocupacional'
         ];
     }
 

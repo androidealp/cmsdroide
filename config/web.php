@@ -8,11 +8,12 @@ $config = [
     'bootstrap' => ['log'],
     'sourceLanguage'=>'pt-br',
     'language'=>'pt-br',
+    'timezone' => 'America/Sao_Paulo',
     'defaultRoute'=>'institucional',
     'modules' => [
         '_adm' => [
             'class' => 'app\_adm\Modules',
-            
+
         ],
         'painel' => [
             'class' => 'app\painel\Module',
@@ -26,11 +27,15 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'dfs@#$6545_-__dsfsfs$%',
         ],
+        'BuscaCep'=>[
+          'class'=>'app\components\WSCorreios'
+        ],
+
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\painel\models\User',
             'enableAutoLogin' => true,
             'loginUrl' => ['/institucional/login'],
         ],
@@ -68,6 +73,7 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
+        'allowedIPs' => ['192.168.*']
     ];
 }
 

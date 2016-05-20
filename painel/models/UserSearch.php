@@ -32,9 +32,16 @@ class UserSearch extends \yii\db\ActiveRecord
 
     public function beforeValidate(){
 
-            $this->dt_cadastro = \Yii::$app->formatter->asDate($this->dt_cadastro, 'php:Y-m-d'); 
-            $this->dt_ult_acesso = \Yii::$app->formatter->asDate($this->dt_ult_acesso, 'php:Y-m-d'); 
+            $this->dt_cadastro = \Yii::$app->formatter->asDate($this->dt_cadastro, 'php:Y-m-d');
+            $this->dt_ult_acesso = \Yii::$app->formatter->asDate($this->dt_ult_acesso, 'php:Y-m-d');
         return parent::beforeValidate();
+    }
+
+    public function getListStatusPrest()
+    {
+       $status = \app\models\StatusPrestador::find()->asArray()->all();
+
+       return yii\helpers\ArrayHelper::map($status, 'id', 'nome');
     }
 
     /**
@@ -43,7 +50,7 @@ class UserSearch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status_acesso'], 'integer'],
+            [['status_prestador_id'], 'integer'],
             [['dt_cadastro','dt_ult_acesso'], 'safe'],
             [['nome', 'senha'], 'string', 'max' => 100],
             [['email'], 'string', 'max' => 150]
@@ -61,14 +68,20 @@ class UserSearch extends \yii\db\ActiveRecord
             'email' => 'E-mail',
             'dt_cadastro' => 'Data Criacão',
             'dt_ult_acesso'=>'último acesso',
-            'status_acesso' => 'Acesso',
+            'status_prestador_id' => 'Status Prestador',
         ];
     }
 
-  
+
+    public function getstatusPrestador()
+    {
+        return $this->hasOne(\app\models\StatusPrestador::className(), ['id' => 'status_prestador_id']);
+    }
+
+
 
     public function search($params){
-        $query = User::find();
+        $query =$this->find()->with('statusPrestador');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -78,6 +91,22 @@ class UserSearch extends \yii\db\ActiveRecord
             return $dataProvider;
         }
 
+        $search_dt_cad = '';
+        $search_dt_ult = '';
+        if($params['UserSearch']['dt_cadastro'])
+        {
+          $search_dt_cad = $params['UserSearch']['dt_cadastro'];
+        }else{
+          $this->dt_cadastro = '';
+        }
+
+        if($params['UserSearch']['dt_ult_acesso'])
+        {
+          $search_dt_ult = $params['UserSearch']['dt_ult_acesso'];
+        }else{
+          $this->dt_ult_acesso = '';
+        }
+
 
 
         $query->andFilterWhere(
@@ -85,9 +114,9 @@ class UserSearch extends \yii\db\ActiveRecord
               'and',
                 ['like','nome',$this->nome],
                 ['email'=>$this->email],
-                ['status_acesso'=>$this->status_acesso],
-                ['date(dt_criacao)'=>$this->dt_cadastro], //22-12-2015
-                ['date(dt_ult_acesso)'=>$this->dt_ult_acesso] //22-12-2015
+                ['status_prestador_id'=>$this->status_prestador_id],
+                ['date(dt_cadastro)'=>$search_dt_cad], //22-12-2015
+                ['date(dt_ult_acesso)'=>$search_dt_ult] //22-12-2015
 
             ]
                         );

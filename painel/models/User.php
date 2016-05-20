@@ -5,7 +5,7 @@ namespace app\painel\models;
 use Yii;
 
 /**
- * This is the model class for table "csdm_user".
+ * model "csdm_user" Altentica e cria usuários prestadores.
  *
  * @property string $id
  * @property string $nome
@@ -18,11 +18,21 @@ use Yii;
  *
  * @property CsdmHashAcess[] $csdmHashAcesses
  */
-class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
+class User extends \app\components\helpers\ModelHelper implements \yii\web\IdentityInterface
 {
     public $AuthKey;
-    public $repete_senha;
-    
+    public $redefinir_senha;
+    public $real_data_criacao = '';
+    public $real_data_acesso = '';
+
+
+    const SCENARIO_LOGIN = 'login';
+    const SCENARIO_CRIAR = 'criar';
+    const SCENARIO_EDITAR = 'editar';
+
+
+    const SCENARIO_ADMCRIAR = 'admcriar';
+    const SCENARIO_ADMEDITAR = 'admeditar';
     /**
      * @inheritdoc
      */
@@ -30,14 +40,67 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return 'csdm_user';
     }
-    
-    public function beforeSave($insert) {
-        
-        $hash = Yii::$app->getSecurity()->generatePasswordHash($this->senha);
 
-        $this->senha = $hash;
-        
-        return parent::beforeSave($insert);
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_LOGIN] = ['email', 'senha','dt_ult_acesso'];
+        $scenarios[self::SCENARIO_CRIAR] = ['id','nome','cnpj','redefinir_senha', 'status_prestador_id', 'email', 'senha','dt_cadastro'];
+        $scenarios[self::SCENARIO_EDITAR] = ['id','email', 'cnpj', 'redefinir_senha', 'status_prestador_id'];
+
+        $scenarios[self::SCENARIO_ADMCRIAR] = ['id','nome','cnpj','redefinir_senha', 'status_prestador_id', 'email', 'senha','dt_cadastro'];
+        $scenarios[self::SCENARIO_ADMEDITAR] = ['id','email', 'cnpj','senha', 'redefinir_senha', 'status_prestador_id'];
+        return $scenarios;
+    }
+
+    public function getListStatusPrest()
+    {
+       $status = \app\models\StatusPrestador::find()->asArray()->all();
+
+       return yii\helpers\ArrayHelper::map($status, 'id', 'nome');
+    }
+
+    public function beforeValidate(){
+      if($this->scenario == self::SCENARIO_CRIAR || $this->scenario == self::SCENARIO_ADMCRIAR )
+      {
+          $this->dt_cadastro = date('Y-m-d H:i:s');
+      }
+
+      if($this->scenario == self::SCENARIO_CRIAR)
+      {
+        $this->status_prestador_id = 3;
+      }
+
+      if($this->scenario == self::SCENARIO_EDITAR || $this->scenario == self::SCENARIO_ADMEDITAR ){
+        $this->dt_cadastro = $this->real_data_criacao;
+        $this->dt_ult_acesso = $this->real_data_acesso;
+      }
+
+
+      return parent::beforeValidate();
+    }
+
+    public function afterValidate(){
+      $hash = Yii::$app->getSecurity()->generatePasswordHash($this->senha);
+      $this->senha = $hash;
+      return parent::afterValidate();
+    }
+
+    public function afterFind(){
+
+      $this->real_data_criacao = $this->dt_cadastro;
+      $this->real_data_acesso = $this->dt_ult_acesso;
+      //$this->senha = '';
+      //$this->redefinir_senha = '';
+
+       $this->dt_cadastro = \Yii::$app->formatter->asDate($this->dt_cadastro, 'php:d/m/Y H:i:s');
+
+       if($this->dt_ult_acesso != '' && $this->dt_ult_acesso != '0000-00-00 00:00:00'){
+          $this->dt_ult_acesso = \Yii::$app->formatter->asDate($this->dt_ult_acesso, 'php:d/m/Y H:i:s');
+       }else{
+         $this->dt_ult_acesso = 'Nunca acessou';
+       }
+      return parent::afterFind();
     }
 
     /**
@@ -46,15 +109,43 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['nome', 'email', 'senha', 'status_acesso', 'parametros', 'dt_cadastro', 'dt_ult_acesso'], 'required'],
+            [['nome','cnpj','email', 'senha','redefinir_senha','status_prestador_id', 'dt_cadastro', 'status_conf_email'], 'required', 'on'=>self::SCENARIO_CRIAR],
+            [['nome','cnpj','email', 'senha','redefinir_senha','status_prestador_id', 'dt_cadastro', 'status_conf_email'], 'required', 'on'=>self::SCENARIO_ADMCRIAR],
+            [['nome','cnpj','email','status_prestador_id', 'dt_cadastro', 'status_conf_email'], 'required', 'on'=>self::SCENARIO_ADMEDITAR],
+            [['cnpj'],'unique','message'=>'Existe outro prestador com o mesmo CNPJ'],
+            [['email'],'unique','message'=>'O e-mail informado existe no sistema, caso tenha conta clique em esqueci minha senha para cadastrar uma nova senha.'],
             [['status_acesso'], 'integer'],
+            [['email'],'email'],
             [['dt_cadastro', 'dt_ult_acesso'], 'safe'],
-            [['nome', 'senha', 'parametros'], 'string', 'max' => 100],
+            [['senha'],'string','min'=>8,'message'=>'O campo mensagem precisa de no mínimo 8 caracteres'],
+            [['nome','senha','redefinir_senha'], 'string', 'max' => 100],
             [['email'], 'string', 'max' => 150],
-            ['repete_senha', 'compare', 'compareAttribute' => 'senha'],
+            ['redefinir_senha', 'compare', 'compareAttribute' => 'senha'],
         ];
     }
-    
+
+    /**
+     * "labels para os atributos"
+     * @author André Luiz Pereira <andre@next4.com.br>
+     * @return Array - Relorna os labels
+     */
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'status_prestador_id' => 'Status prestador',
+            'nome' => 'Nome',
+            'email' => 'E-mail',
+            'cnpj' => 'cnpj',
+            'senha' => 'Senha',
+            'dt_ult_acesso'=>'Último acesso',
+            'dt_cadastro' => 'Data Criacão',
+            'redefinir_senha' => 'Redefinir senha',
+
+        ];
+    }
+
     /**
      * Validates password
      *
@@ -65,17 +156,38 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         //password = senha do usuário
         // $this->senha = senha no banco que está criptografada
-        return Yii::$app->getSecurity()->validatePassword($password, $this->senha);
+        return \Yii::$app->getSecurity()->validatePassword($password, $this->senha);
+    }
+
+    public function getAceiteLps()
+    {
+        return $this->hasMany(\app\models\AceiteLps::className(), ['user_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCsdmHashAcesses()
+    public function getAvaliacaoPrestadors()
     {
-        return $this->hasMany(CsdmHashAcess::className(), ['user_id' => 'id']);
+        return $this->hasMany(\app\models\AvaliacaoPrestador::className(), ['user_id' => 'id']);
     }
-    
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+     public function getstatusPrestador()
+     {
+         return $this->hasOne(\app\models\StatusPrestador::className(), ['id' => 'status_prestador_id']);
+     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getuserCadastro()
+    {
+        return $this->hasMany(\app\painel\models\UserCadastro::className(), ['user_id' => 'id']);
+    }
+
     /**
      * @inheritdoc
      */
@@ -101,7 +213,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public static function findByUsername($username)
     {
         return static::find()
-                ->where(['email' => $username,'status_acesso'=>1])->one();
+                ->where(['email' => $username,'status_prestador_id'=>1])->one();
     }
 
     /**
@@ -127,5 +239,5 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
        return $this->getAuthKey() === $authKey;
     }
-    
+
 }
