@@ -1,33 +1,64 @@
 <?php
 
-namespace app\models;
+namespace app\_adm\models;
 
 use Yii;
+use app\_adm\components\helpers\ModelHelper;
 
 /**
- * This is the model class for table "csdm_adm_config".
+ * Este model acessa a tabela "csdm_adm_config".
  *
  * @property integer $id
- * @property integer $funcao_mail_smtp
- * @property string $default_email
- * @property string $email_smtp
- * @property string $servidor_smtp
- * @property integer $porta
- * @property integer $requer_autenticacao
- * @property integer $ativar_cron
- * @property string $url_cron
- * @property integer $exec_segundos
- * @property integer $manutencao_site
- * @property integer $exbir_previa_tempo_horas
+ * @property integer $host
+ * @property string $username
+ * @property string $password
+ * @property string $port
+ * @property integer $encryption
+ * @property integer $key_remote_acccess
  */
-class AdmConfig extends \yii\db\ActiveRecord
+class AdmConfig extends ModelHelper
 {
+
+  public $register_pass = '';
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'csdm_adm_config';
+        $alias = \Yii::$app->params['alias_db'];
+return $alias.'adm_config';
+    }
+
+
+    public function beforeSave($insert)
+    {
+
+      if(!empty($this->password))
+      {
+        $key =  \Yii::$app->params['secretEmailKey'];
+        $this->password = utf8_encode(\Yii::$app->getSecurity()->encryptByPassword($this->password, $key));
+
+      }else{
+        $this->password = $this->register_pass;
+      }
+
+      return parent::beforeSave($insert);
+    }
+
+    /**
+     * descrobre a senha do e-mail com base no key
+     * @author André Luiz Pereira <andre@next4.com.br>
+     * @param string $data - senha encriptada, se não for passada considera que é um find da base e recupera direto do pass
+     * @return string senha descoberta
+     */
+    public function decry($data = '')
+    {
+      $key = \Yii::$app->params['secretEmailKey'];
+      if(!$data){
+        $data = $this->password;
+      }
+      $quebrado = \Yii::$app->getSecurity()->decryptByPassword(utf8_decode($data),$key);
+      return $quebrado;
     }
 
     /**
@@ -36,31 +67,28 @@ class AdmConfig extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['funcao_mail_smtp', 'default_email', 'email_smtp', 'servidor_smtp', 'porta', 'requer_autenticacao', 'ativar_cron', 'url_cron', 'exec_segundos', 'manutencao_site'], 'required'],
-            [['funcao_mail_smtp', 'porta', 'requer_autenticacao', 'ativar_cron', 'exec_segundos', 'manutencao_site', 'exbir_previa_tempo_horas'], 'integer'],
-            [['default_email', 'email_smtp'], 'string', 'max' => 100],
-            [['servidor_smtp', 'url_cron'], 'string', 'max' => 45]
+            [['id', 'host', 'username', 'port', 'encryption', 'key_remote_acccess'], 'required'],
+            [['id','port'], 'integer'],
+            [['host'], 'string', 'max' => 50],
+            [['username'], 'string', 'max' => 70],
+            [['password','key_remote_acccess'], 'string', 'max' => 500],
+            [['encryption'], 'string', 'max' => 7],
         ];
     }
 
     /**
-     * @inheritdoc
+     * metodos para criar o labels no formulário
      */
     public function attributeLabels()
     {
         return [
             'id' => 'ID',
-            'funcao_mail_smtp' => 'Funcao Mail Smtp',
-            'default_email' => 'Default Email',
-            'email_smtp' => 'Email Smtp',
-            'servidor_smtp' => 'Servidor Smtp',
-            'porta' => 'Porta',
-            'requer_autenticacao' => 'Requer Autenticacao',
-            'ativar_cron' => 'Ativar Cron',
-            'url_cron' => 'Url Cron',
-            'exec_segundos' => 'Exec Segundos',
-            'manutencao_site' => 'Manutencao Site',
-            'exbir_previa_tempo_horas' => 'Exbir Previa Tempo Horas',
+            'host' => 'E-mail Host',
+            'username' => 'Username',
+            'password' => 'Senha',
+            'port' => 'Porta',
+            'encryption' => 'Encryption',
+            'key_remote_acccess' => 'Key para acesso remoto',
         ];
     }
 }

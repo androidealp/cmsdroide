@@ -1,0 +1,14 @@
+id,id_parente,item_nome,url,icon,ordem,status,detectar_recurso
+1,0,"Painel de controle",/_adm/painel,"fa fa-tachometer",0,1,0
+2,0,"Gerenciador de conteúdo",#,"fa fa-book",0,1,0
+3,2,Categorias,gerenciadorconteudo/categorias,,0,1,0
+4,2,Conteúdo,gerenciadorconteudo/conteudo,,0,1,0
+5,0,"Gerenciador de Mídias",/_adm/mediamanager/,"fa fa-camera-retro",0,1,0
+6,0,"Gerenciador de usuários",#,"fa fa-users",0,1,0
+7,0,Configurações,#,"fa fa-cogs",0,1,0
+8,6,Administradores,/_adm/usermanager/admins,,0,1,0
+9,6,Assinantes,/_adm/usermanager/assinantes,,0,1,0
+10,7,Temas,/_adm/confmanager/temas,,0,1,0
+11,7,Sistema,/_adm/confmanager/sistema,,0,1,0
+12,7,"Métodos de pagamento",/_adm/metodospagamento/,,0,1,0
+13,0,WidgetEffects,/_adm/widgeteffects/,"fa fa-cubes",0,1,0

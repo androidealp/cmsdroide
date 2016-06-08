@@ -23,7 +23,8 @@ class AdmMenu extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'csdm_adm_menu';
+        $alias = \Yii::$app->params['alias_db'];
+return $alias.'adm_menu';
     }
 
     /**

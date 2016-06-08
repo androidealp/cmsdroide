@@ -38,16 +38,22 @@ $config = [
             'identityClass' => 'app\painel\models\User',
             'enableAutoLogin' => true,
             'loginUrl' => ['/institucional/login'],
+            'identityCookie' => [
+                'name' => '_painelUser', // unique for backend
+                //'path' => '/web' // correct path for backend app.
+            ]
+        ],
+        'session' => [
+            'name' => '_painelSessao',
+            'savePath' => __DIR__ . '/../painel/sessions',
         ],
         'errorHandler' => [
             'errorAction' => 'institucional/error',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'viewPath'         => '@app/mail/',
+            'useFileTransport' => false,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -55,6 +61,22 @@ $config = [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
+                ],
+                [
+                    'class'         => 'yii\log\FileTarget',
+                    'levels'        => ['error'],
+                    'categories'    => ['banco'],
+                    'logFile'       => '@app/runtime/logs/banco/erros.log',
+                    'maxFileSize'   => 1024 * 2,
+                    'maxLogFiles'   => 100,
+                ],
+                [
+                    'class'         => 'yii\log\FileTarget',
+                    'levels'        => ['error'],
+                    'categories'    => ['mail'],
+                    'logFile'       => '@app/runtime/logs/mail/erros.log',
+                    'maxFileSize'   => 1024 * 2,
+                    'maxLogFiles'   => 100,
                 ],
             ],
         ],

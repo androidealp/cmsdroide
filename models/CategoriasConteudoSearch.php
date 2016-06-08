@@ -26,13 +26,14 @@ class CategoriasConteudoSearch extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'csdm_categorias_conteudo';
+      $alias = \Yii::$app->params['alias_db'];
+        return $alias.'categorias_conteudo';
     }
 
 
     public function beforeValidate(){
 
-            $this->dt_criacao = \Yii::$app->formatter->asDate($this->dt_criacao, 'php:Y-m-d'); 
+            $this->dt_criacao = \Yii::$app->formatter->asDate($this->dt_criacao, 'php:Y-m-d');
         return parent::beforeValidate();
     }
 
@@ -62,10 +63,10 @@ class CategoriasConteudoSearch extends \yii\db\ActiveRecord
             'status' => 'Publicar',
         ];
     }
- 
+
 
     public function ListLanguage(){
-        $langs = Linguagem::find()->asArray()->all(); 
+        $langs = Linguagem::find()->asArray()->all();
 
         return yii\helpers\ArrayHelper::map($langs, 'id', 'nome');
     }

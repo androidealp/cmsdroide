@@ -28,7 +28,8 @@ class AdmUserSearch extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'csdm_adm_user';
+        $alias = \Yii::$app->params['alias_db'];
+return $alias.'adm_user';
     }
 
 
@@ -78,7 +79,7 @@ class AdmUserSearch extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCsdmAdmHashAcesses()
+    public function getAdmHashAcesses()
     {
         return $this->hasMany(AdmHashAcess::className(), ['user_id' => 'id']);
     }

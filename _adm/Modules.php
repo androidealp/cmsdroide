@@ -11,19 +11,25 @@ class Modules extends \yii\base\Module
     public function init()
     {
         parent::init();
-        
-         $this->defaultRoute = 'painel';
-         
+
+        $this->defaultRoute = 'painel';
+        Yii::$app->session->name = '_adminSessao';
+        Yii::$app->session->savePath = __DIR__ . '/../_adm/sessions';
+
          Yii::$app->setComponents(
         [
             'errorHandler'=>[
                 'errorAction'=>'_adm/painel/erro',
                 'class'=>'yii\web\ErrorHandler',
-            ],    
+            ],
             'user' => [
                 'class' => 'yii\web\User',
                 'identityClass' => 'app\_adm\models\AdmUser',
                 'loginUrl' => Yii::$app->urlManager->createUrl(['_adm/painel/login']),
+                'identityCookie' => [
+                      'name' => '_adminUser', // unique for backend
+                      //'path' => '/web' // correct path for backend app.
+                  ]
             ],
         ]
     );
@@ -67,10 +73,10 @@ class Modules extends \yii\base\Module
                     ]
                 ]
          ];
-        
-         
-         
-        
+
+
+
+
 
         // custom initialization code goes here
     }

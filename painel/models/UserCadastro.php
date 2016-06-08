@@ -44,7 +44,8 @@ class UserCadastro extends \app\components\helpers\ModelHelper
      */
     public static function tableName()
     {
-        return 'csdm_user_cadastro';
+        $alias = \Yii::$app->params['alias_db'];
+        return $alias.'user_cadastro';
     }
 
     public function scenarios()
@@ -166,10 +167,6 @@ class UserCadastro extends \app\components\helpers\ModelHelper
       return yii\helpers\ArrayHelper::map($estados, 'nome', 'nome');
     }
 
-    public function ServicosList(){
-      $servicos = \app\models\Servicos::find()->asArray()->all();
-      return yii\helpers\ArrayHelper::map($servicos, 'id', 'nome');
-  }
 
     /**
      * @inheritdoc

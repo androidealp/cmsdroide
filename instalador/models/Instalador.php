@@ -15,15 +15,19 @@ class  Instalador extends  Model
   public $user;
   public $pass;
   public $charset='utf8';
-  Public $retorno = [];
+  public $retorno = [];
+  public $alias = 'csdm_';
+  public $parans_file = '@app/config/params.php';
+  public $db_file = '@app/config/db.php';
 
 
   public function rules()
   {
       return [
-          [['host', 'banco','user','pass','charset'], 'required'],
+        [['alias','banco','user','pass','charset','host','parans_file','db_file'], 'required'],
       ];
   }
+
 
   public function attributeLabels()
   {
@@ -33,28 +37,32 @@ class  Instalador extends  Model
           'user' => 'Usuário do banco',
           'pass' => 'Senha do banco',
           'charset' => 'charset',
+          'alias'=>'Alias',
+          'parans_file'=>'Path do arquivo de parametros',
+          'db_file'=>'Path do arquivo de banco',
       ];
   }
 
-  public function instalar($file, $editable){
-    if($editable && $this->aplicarbanco($file)){
+
+public function instalar(){
+
        $this->SQLimport();
-    }
 
     return $this->retorno;
   }
 
 
-  public function aplicarbanco($file){
-    $jsonPath = Yii::getAlias($file);
+  public function aplicarRegras(){
+    $jsonPath = Yii::getAlias($this->db_file);
+    $pathparams = Yii::getAlias($this->parans_file);
     $host = $this->host;
     $banco = $this->banco;
     $user = $this->user;
     $pass = $this->pass;
     $charset = $this->charset;
-    $return = false;
+    $alias = $this->alias;
     $data = <<<PHP
-    <?php
+<?php
 
     return [
         'class' => 'yii\db\Connection',
@@ -64,22 +72,35 @@ class  Instalador extends  Model
         'charset' => '$charset',
     ];
 PHP;
-    $arquive = file_put_contents($jsonPath, $data, LOCK_EX);
-    if($arquive){
+
+$params = <<<PHP
+<?php
+
+return [
+    'alias_db' => '$alias',
+    'http_type'=>'http', //http, https
+    'secretEmailKey'=>'sdfsdf6464sdfsd',
+    'cadastro_adm_email'=>'teste@teste.net.br'
+];
+PHP;
+
+
+    $bd = file_put_contents($jsonPath, $data, LOCK_EX);
+    $arquivo_parans = file_put_contents($pathparams, $params, LOCK_EX);
+    if($bd && $arquivo_parans){
       $this->retorno =  [
   				'error'=>0,
-  				'msn'=>'Arquivo de banco salvo com sucesso',
+  				'msn'=>'Arquivo de banco e parametros salvos com sucesso',
   			];
-      $return = true;
 
     }else{
 
       $this->retorno =  [
   				'error'=>1,
-  				'msn'=>'Erro no processo gravar dados de acesso ao banco',
+  				'msn'=>'Erro no processo gravar dados de acesso ao banco bd = '.print_r($bd,true).' arquivo parans = '.print_r($arquivo_parans,true),
   			];
       }
-      return $return;
+      return $this->retorno;
   }
 
   public function SQLimport()
@@ -100,6 +121,12 @@ PHP;
          if (!empty($value))
          {
            $sql = str_replace(" $$$ ", ";", $value) . ";";
+
+           if(\Yii::$app->params['alias_db'] != 'csdm_')
+           {
+             $sql = str_replace("csdm_", \Yii::$app->params['alias_db'], $sql);
+           }
+
            $pdo->createCommand($sql)->execute();
          }
        }
@@ -125,5 +152,5 @@ PHP;
    }
 
  }
- 
+
 }

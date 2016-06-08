@@ -26,7 +26,8 @@ class CategoriasConteudo extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'csdm_categorias_conteudo';
+      $alias = \Yii::$app->params['alias_db'];
+        return $alias.'categorias_conteudo';
     }
 
 
@@ -77,11 +78,11 @@ class CategoriasConteudo extends \yii\db\ActiveRecord
         }
 
         return $del;
-       
+
     }
 
     public function ListLanguage(){
-        $langs = Linguagem::find()->asArray()->all(); 
+        $langs = Linguagem::find()->asArray()->all();
 
         return yii\helpers\ArrayHelper::map($langs, 'id', 'nome');
     }

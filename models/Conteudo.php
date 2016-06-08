@@ -32,7 +32,8 @@ class Conteudo extends ModelHelper
      */
     public static function tableName()
     {
-        return 'csdm_conteudo';
+        $alias = \Yii::$app->params['alias_db'];
+        return $alias.'conteudo';
     }
 
 

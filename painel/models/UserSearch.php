@@ -26,7 +26,8 @@ class UserSearch extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'csdm_user';
+        $alias = \Yii::$app->params['alias_db'];
+        return $alias.'user';
     }
 
 

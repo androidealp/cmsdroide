@@ -29,6 +29,7 @@ class AdmUser extends ModelHelper implements \yii\web\IdentityInterface
   const SCENARIO_CRIAR = 'criar';
   const SCENARIO_EDITAR = 'editar';
 
+  public $AuthKey;
   public $list_group = [];
   public $redefinir_senha = '';
   public $real_data_criacao = '';
@@ -38,7 +39,8 @@ class AdmUser extends ModelHelper implements \yii\web\IdentityInterface
      */
     public static function tableName()
     {
-        return 'csdm_adm_user';
+        $alias = \Yii::$app->params['alias_db'];
+return $alias.'adm_user';
     }
 
     public function scenarios()

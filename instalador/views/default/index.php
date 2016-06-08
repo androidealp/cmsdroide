@@ -1,18 +1,31 @@
 <?php
 use yii\bootstrap\ActiveForm;
+//cms_droide
+//cms_dr
 $this->title = 'Instalador Droide';
 $editavelreturn = [];
-if ($editavel) {
-  $editavelreturn = [
-    'type'=>'success',
-    'msn'=>'Este arquivo é totalmente editável, após a instalação mudar para leitura'
-  ];
+$texto = [];
+$permitir = 'success';
+if($editavel['bd']){
+  $texto[] = '<span class="text-success">O arquivo '.$model->db_file.' é totalmente editável, após a instalação mudar para leitura.</span>';
 }else{
-  $editavelreturn = [
-    'type'=>'danger',
-    'msn'=>'Este arquivo Não é editável, esta instalação poderá não ser bem sucedida, após instalar o banco editar manualmente o arquivo db'
-  ];
+  $permitir = 'danger';
+  $texto[] = '<span class="text-danger">O arquivo '.$model->db_file.' não é editável, edite antes para poder fazer a instalação do banco.</span>';
 }
+
+if($editavel['parans']){
+  $texto[] = '<span class="text-success">O arquivo '.$model->parans_file.' é totalmente editável, após a instalação mudar para leitura.</span>';
+}else{
+  $permitir = 'danger';
+  $texto[] = '<span class="text-danger">O arquivo '.$model->$parans_file.' não é editável, edite antes para poder fazer a instalação do banco.</span>';
+}
+
+
+  $editavelreturn = [
+    'type'=>$permitir,
+    'msn'=>implode('<br /><br />',$texto)
+  ];
+
 
 ?>
 
@@ -21,7 +34,7 @@ if ($editavel) {
     <h1> Instalador <small>CMS Droide</small></h1>
   </div>
 <div class="row">
-<div class="col-md-6">
+<div class="col-md-8">
   <div class="panel panel-<?=$editavelreturn['type'];?>">
     <div class="panel-heading">
       <h3 id="title" class="panel-title">Arquivo config/DB</h3>
@@ -33,7 +46,9 @@ if ($editavel) {
     </div>
   </div>
 
-  <?php
+<?php if($permitir == 'success'): ?>
+
+<?php
   $form = ActiveForm::begin([
       'id'=>'form-install',
       'layout' => 'default',
@@ -51,6 +66,10 @@ if ($editavel) {
 
   ?>
 
+<?=$form->field($model, 'parans_file')->textInput(['class'=>'form-control','placeholder'=>'Host, geralmente localhost']); ?>
+
+<?=$form->field($model, 'db_file')->textInput(['class'=>'form-control','placeholder'=>'Host, geralmente localhost']); ?>
+
 <?=$form->field($model, 'host')->textInput(['class'=>'form-control','placeholder'=>'Host, geralmente localhost']); ?>
 
 <?=$form->field($model, 'banco')->textInput(['class'=>'form-control','placeholder'=>'Nome do banco de dados']); ?>
@@ -61,11 +80,13 @@ if ($editavel) {
 
 <?=$form->field($model, 'charset')->textInput(['class'=>'form-control','placeholder'=>'Charset geralmente utf8']); ?>
 
+<?=$form->field($model, 'alias')->textInput(['class'=>'form-control','placeholder'=>'O alias é importante para o bom andamento do sistema.'])->label('Alias <small class="text-danger">(é importante para o bom andamento do sistema, e proteção da base)</small>'); ?>
+
   <a data-install="configurar" href="#form-install" class="btn btn-default">Instalar</a>
 
 <?php ActiveForm::end(); ?>
 
-
+<?php endif; ?>
 </div>
 </div>
 
@@ -80,13 +101,14 @@ if ($editavel) {
   function ajax(serealize){
 
       $.ajax({
-        url:'index.php?r=instalador/default/ajaxinstall',
+        url:'index.php?r=instalador/default/ajaxinstallfiles',
         data:serealize,
         method:'post',
         dataType:'json',
         async: false,
         beforeSend:function(){
           $('#title').html('Processo de instalação');
+          $('#returnsend').html('<div class="alert alert-info">Aplicando os arquivos....</div>');
         },
         onprogress:function(e){
           if (e.lengthComputable) {
@@ -101,6 +123,7 @@ if ($editavel) {
           $('#returnsend').html('<div class="alert alert-danger">'+data.msn+'</div>');
         }else{
           $('#returnsend').html('<div class="alert alert-success">'+data.msn+'</div>');
+          window.location.href = "index.php?r=instalador/default/installbd&error="+data.error;
         }
       });
 
@@ -112,50 +135,6 @@ if ($editavel) {
       Serializar = $(button.attr('href')).serializeArray();
       Exec = button.data('install');
       ajax(Serializar);
-
-/*
-var data = [];
-for (var i = 0; i < 100000; i++) {
-    var tmp = [];
-    for (var i = 0; i < 100000; i++) {
-        tmp[i] = 'hue';
-    }
-    data[i] = tmp;
-};
-$.ajax({
-    xhr: function () {
-        var xhr = new window.XMLHttpRequest();
-        xhr.upload.addEventListener("progress", function (evt) {
-            if (evt.lengthComputable) {
-                var percentComplete = evt.loaded / evt.total;
-                console.log(percentComplete);
-                $('.progress').css({
-                    width: percentComplete * 100 + '%'
-                });
-                if (percentComplete === 1) {
-                    $('.progress').addClass('hide');
-                }
-            }
-        }, false);
-        xhr.addEventListener("progress", function (evt) {
-            if (evt.lengthComputable) {
-                var percentComplete = evt.loaded / evt.total;
-                console.log(percentComplete);
-                $('.progress').css({
-                    width: percentComplete * 100 + '%'
-                });
-            }
-        }, false);
-        return xhr;
-    },
-    type: 'POST',
-    url: "/echo/html",
-    data: data,
-    success: function (data) {}
-});
-*/
-
-
 
     });
 

@@ -23,7 +23,8 @@ class AdmGrupos extends ModelHelper
      */
     public static function tableName()
     {
-        return 'csdm_adm_grupos';
+        $alias = \Yii::$app->params['alias_db'];
+return $alias.'adm_grupos';
     }
 
     public function getPermissoes() {
@@ -44,6 +45,10 @@ class AdmGrupos extends ModelHelper
         $this->atrib_permissoes = json_decode($this->atrib_permissoes,true);
       }
 
+      if($this->menu_permissoes){
+        $this->menu_permissoes = json_decode($this->menu_permissoes,true);
+      }
+
       return parent::afterFind();
     }
 
@@ -51,6 +56,10 @@ class AdmGrupos extends ModelHelper
     {
           if(count($this->atrib_permissoes)){
             $this->atrib_permissoes = json_encode($this->atrib_permissoes);
+          }
+
+          if($this->menu_permissoes){
+            $this->menu_permissoes = json_encode($this->menu_permissoes);
           }
 
         return parent::beforeValidate();
@@ -62,7 +71,7 @@ class AdmGrupos extends ModelHelper
     public function rules()
     {
         return [
-            [['nome', 'atrib_permissoes'], 'required'],
+            [['nome', 'atrib_permissoes', 'menu_permissoes'], 'required'],
             [['atrib_permissoes'], 'string'],
             [['nome'], 'string', 'max' => 45]
         ];

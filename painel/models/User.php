@@ -25,10 +25,12 @@ class User extends \app\components\helpers\ModelHelper implements \yii\web\Ident
     public $real_data_criacao = '';
     public $real_data_acesso = '';
 
-
+    const SCENARIO_RESET_EMAIL = 'reset_email';
+    const SCENARIO_RESET_PASS = 'reset_pass';
     const SCENARIO_LOGIN = 'login';
     const SCENARIO_CRIAR = 'criar';
     const SCENARIO_EDITAR = 'editar';
+    CONST SCENARIO_VALIDAR_MAIL = 'validar_email';
 
 
     const SCENARIO_ADMCRIAR = 'admcriar';
@@ -38,18 +40,27 @@ class User extends \app\components\helpers\ModelHelper implements \yii\web\Ident
      */
     public static function tableName()
     {
-        return 'csdm_user';
+        $alias = \Yii::$app->params['alias_db'];
+        return $alias.'user';
+    }
+
+    public function getCustomScenarios()
+    {
+      return [
+          self::SCENARIO_RESET_EMAIL =>     ['email','hash_mail'],
+          self::SCENARIO_VALIDAR_MAIL =>    ['hash_mail','status_conf_email'],
+          self::SCENARIO_LOGIN =>           ['email', 'senha','dt_ult_acesso'],
+          self::SCENARIO_CRIAR =>           ['nome','cnpj','redefinir_senha', 'status_prestador_id', 'email', 'senha','dt_cadastro','hash_mail'],
+          self::SCENARIO_EDITAR =>          ['nome','senha','redefinir_senha'],
+          self::SCENARIO_RESET_PASS =>      ['senha','redefinir_senha','hash_mail'],
+          self::SCENARIO_ADMCRIAR =>        ['nome','cnpj','redefinir_senha', 'status_prestador_id', 'email', 'senha','dt_cadastro'],
+          self::SCENARIO_ADMEDITAR =>       ['email', 'cnpj','senha', 'redefinir_senha', 'status_prestador_id'],
+      ];
     }
 
     public function scenarios()
     {
-        $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_LOGIN] = ['email', 'senha','dt_ult_acesso'];
-        $scenarios[self::SCENARIO_CRIAR] = ['id','nome','cnpj','redefinir_senha', 'status_prestador_id', 'email', 'senha','dt_cadastro'];
-        $scenarios[self::SCENARIO_EDITAR] = ['id','email', 'cnpj', 'redefinir_senha', 'status_prestador_id'];
-
-        $scenarios[self::SCENARIO_ADMCRIAR] = ['id','nome','cnpj','redefinir_senha', 'status_prestador_id', 'email', 'senha','dt_cadastro'];
-        $scenarios[self::SCENARIO_ADMEDITAR] = ['id','email', 'cnpj','senha', 'redefinir_senha', 'status_prestador_id'];
+        $scenarios = $this->getCustomScenarios();
         return $scenarios;
     }
 
@@ -81,8 +92,12 @@ class User extends \app\components\helpers\ModelHelper implements \yii\web\Ident
     }
 
     public function afterValidate(){
-      $hash = Yii::$app->getSecurity()->generatePasswordHash($this->senha);
-      $this->senha = $hash;
+      if(!empty($this->redefinir_senha)){
+        $hash = Yii::$app->getSecurity()->generatePasswordHash($this->senha);
+        $this->senha = $hash;
+      }else{
+        $this->redefinir_senha = $this->senha;
+      }
       return parent::afterValidate();
     }
 
@@ -108,19 +123,22 @@ class User extends \app\components\helpers\ModelHelper implements \yii\web\Ident
      */
     public function rules()
     {
+        $allscenarios = $this->getCustomScenarios();
         return [
-            [['nome','cnpj','email', 'senha','redefinir_senha','status_prestador_id', 'dt_cadastro', 'status_conf_email'], 'required', 'on'=>self::SCENARIO_CRIAR],
-            [['nome','cnpj','email', 'senha','redefinir_senha','status_prestador_id', 'dt_cadastro', 'status_conf_email'], 'required', 'on'=>self::SCENARIO_ADMCRIAR],
-            [['nome','cnpj','email','status_prestador_id', 'dt_cadastro', 'status_conf_email'], 'required', 'on'=>self::SCENARIO_ADMEDITAR],
-            [['cnpj'],'unique','message'=>'Existe outro prestador com o mesmo CNPJ'],
-            [['email'],'unique','message'=>'O e-mail informado existe no sistema, caso tenha conta clique em esqueci minha senha para cadastrar uma nova senha.'],
-            [['status_acesso'], 'integer'],
-            [['email'],'email'],
-            [['dt_cadastro', 'dt_ult_acesso'], 'safe'],
-            [['senha'],'string','min'=>8,'message'=>'O campo mensagem precisa de no mínimo 8 caracteres'],
-            [['nome','senha','redefinir_senha'], 'string', 'max' => 100],
-            [['email'], 'string', 'max' => 150],
-            ['redefinir_senha', 'compare', 'compareAttribute' => 'senha'],
+                [$allscenarios[self::SCENARIO_CRIAR], 'required', 'on' => self::SCENARIO_CRIAR],
+                [$allscenarios[self::SCENARIO_ADMCRIAR], 'required', 'on' => self::SCENARIO_ADMCRIAR],
+                [$allscenarios[self::SCENARIO_ADMEDITAR], 'required', 'on' => self::SCENARIO_ADMEDITAR],
+                [$allscenarios[self::SCENARIO_LOGIN], 'required', 'on' => self::SCENARIO_LOGIN],
+                [$allscenarios[self::SCENARIO_RESET_EMAIL], 'required', 'on' => self::SCENARIO_RESET_EMAIL],
+                [['cnpj'],'unique','message'=>'O CNPJ está cadastrado em nosso sistema, verifique se possui uma conta'],
+                [['email'],'unique','message'=>'O e-mail informado existe no sistema, caso possua esta conta clique em esqueci minha senha para cadastrar uma nova senha.'],
+                [['status_acesso'], 'integer'],
+                [['email'],'email'],
+                [['dt_cadastro', 'dt_ult_acesso'], 'safe'],
+                [['senha'],'string','min'=>8,'message'=>'O campo mensagem precisa de no mínimo 8 caracteres'],
+                [['nome','senha','redefinir_senha'], 'string', 'max' => 100],
+                [['email'], 'string', 'max' => 150],
+                ['redefinir_senha', 'compare', 'compareAttribute' => 'senha'],
         ];
     }
 
@@ -159,26 +177,7 @@ class User extends \app\components\helpers\ModelHelper implements \yii\web\Ident
         return \Yii::$app->getSecurity()->validatePassword($password, $this->senha);
     }
 
-    public function getAceiteLps()
-    {
-        return $this->hasMany(\app\models\AceiteLps::className(), ['user_id' => 'id']);
-    }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAvaliacaoPrestadors()
-    {
-        return $this->hasMany(\app\models\AvaliacaoPrestador::className(), ['user_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-     public function getstatusPrestador()
-     {
-         return $this->hasOne(\app\models\StatusPrestador::className(), ['id' => 'status_prestador_id']);
-     }
 
     /**
      * @return \yii\db\ActiveQuery
