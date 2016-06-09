@@ -9,7 +9,7 @@ use yii\base\Model;
  */
 class  Instalador extends  Model
 {
-
+  public $alias_substuir = 'csdm_';
   public $host='localhost';
   public $banco;
   public $user;
@@ -122,7 +122,7 @@ PHP;
          {
            $sql = str_replace(" $$$ ", ";", $value) . ";";
 
-           if(\Yii::$app->params['alias_db'] != 'csdm_')
+           if(\Yii::$app->params['alias_db'] != $this->alias_substuir)
            {
              $sql = str_replace("csdm_", \Yii::$app->params['alias_db'], $sql);
            }
