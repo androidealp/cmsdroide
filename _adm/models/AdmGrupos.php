@@ -10,6 +10,7 @@ use Yii;
  * @property integer $id
  * @property string $nome
  * @property string $atrib_permissoes
+ * @property string $menu_permissoes
  *
  * @property CsdmAdmUser[] $csdmAdmUsers
  */
@@ -72,7 +73,7 @@ return $alias.'adm_grupos';
     {
         return [
             [['nome', 'atrib_permissoes', 'menu_permissoes'], 'required'],
-            [['atrib_permissoes'], 'string'],
+            [['atrib_permissoes','menu_permissoes'], 'string'],
             [['nome'], 'string', 'max' => 45]
         ];
     }
@@ -86,6 +87,7 @@ return $alias.'adm_grupos';
             'id' => 'ID',
             'nome' => 'Nome',
             'atrib_permissoes' => 'Permissões',
+            'menu_permissoes' => 'Permissões de menus',
         ];
     }
 

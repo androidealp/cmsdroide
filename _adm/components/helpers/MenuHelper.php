@@ -6,7 +6,7 @@ class MenuHelper{
 
     public static $menuitens = [];
 
-    public static $restricoes = [];
+    public static $menu_permissoes = [];
 
     public static function AdmMenu(){
         self::$menuitens = AdmMenu::find()->where(['status'=>1])->asArray()->all();
@@ -14,7 +14,7 @@ class MenuHelper{
         $userId = \Yii::$app->user->identity->grupos_id;
 
         $grupos = AdmGrupos::find()->where(['id'=>$userId])->one();
-        self::$restricoes = $grupos->atrib_permissoes;
+        self::$menu_permissoes = $grupos->menu_permissoes;
         return new MenuHelper;
     }
 
@@ -48,10 +48,10 @@ class MenuHelper{
 
         foreach (self::$menuitens as $linha => $item) {
 
-          if($item['url'] == '#'){
+          if($item['url'] == '#' && in_array($item['id'], self::$menu_permissoes)){
             $itensReturn = self::_Items($itensReturn,$parente_id, $item);
           }else{
-            if(in_array($item['id'], self::$restricoes) || in_array($item['id_parente'], self::$restricoes) ){
+            if(in_array($item['id'], self::$menu_permissoes) || in_array($item['id_parente'], self::$menu_permissoes) ){
               $itensReturn = self::_Items($itensReturn,$parente_id, $item);
             }
           }

@@ -10,6 +10,7 @@ use yii\data\ActiveDataProvider;
  * @property integer $id
  * @property string $nome
  * @property string $atrib_permissoes
+ * @property string $menu_permissoes
  *
  * @property CsdmAdmUser[] $csdmAdmUsers
  */
@@ -30,8 +31,8 @@ return $alias.'adm_grupos';
     public function rules()
     {
         return [
-            [['nome', 'atrib_permissoes'], 'required'],
-            [['atrib_permissoes'], 'string'],
+            [['nome', 'atrib_permissoes','menu_permissoes'], 'required'],
+            [['atrib_permissoes','menu_permissoes'], 'string'],
             [['nome'], 'string', 'max' => 45]
         ];
     }
@@ -44,7 +45,8 @@ return $alias.'adm_grupos';
         return [
             'id' => 'ID',
             'nome' => 'Nome',
-            'atrib_permissoes' => 'Atrib Permissoes',
+            'atrib_permissoes' => 'Permissões de atributos',
+            'menu_permissoes' => 'Permissões de menus',
         ];
     }
 
