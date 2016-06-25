@@ -7,17 +7,17 @@ $editavelreturn = [];
 $texto = [];
 $permitir = 'success';
 if($editavel['bd']){
-  $texto[] = '<span class="text-success">O arquivo '.$model->db_file.' é totalmente editável, após a instalação mudar para leitura.</span>';
+  $texto[] = '<span class="text-success">O arquivo '.\Yii::getAlias($model->db_file).' é totalmente editável, após a instalação mudar para leitura.</span>';
 }else{
   $permitir = 'danger';
-  $texto[] = '<span class="text-danger">O arquivo '.$model->db_file.' não é editável, edite antes para poder fazer a instalação do banco.</span>';
+  $texto[] = '<span class="text-danger">O arquivo '.\Yii::getAlias($model->db_file).' não é editável, edite antes para poder fazer a instalação do banco.</span>';
 }
 
 if($editavel['parans']){
-  $texto[] = '<span class="text-success">O arquivo '.$model->parans_file.' é totalmente editável, após a instalação mudar para leitura.</span>';
+  $texto[] = '<span class="text-success">O arquivo '.\Yii::getAlias($model->parans_file).' é totalmente editável, após a instalação mudar para leitura.</span>';
 }else{
   $permitir = 'danger';
-  $texto[] = '<span class="text-danger">O arquivo '.$model->$parans_file.' não é editável, edite antes para poder fazer a instalação do banco.</span>';
+  $texto[] = '<span class="text-danger">O arquivo '.\Yii::getAlias($model->parans_file).' não é editável, edite antes para poder fazer a instalação do banco.</span>';
 }
 
 

@@ -21,7 +21,7 @@ class PainelController extends ControllerHelper
     public function actionLogin(){
         
         if (!\Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect('index.php?r=_adm/painel');
         }
         
         //$md_ip = new Ips();
@@ -31,7 +31,7 @@ class PainelController extends ControllerHelper
             //register ip pos login
            // $md_ip->register_ip();
             
-            return $this->goBack();
+            return $this->redirect('index.php?r=_adm/painel');
         } else {
             return $this->render('login', [
                 'model' => $model,
