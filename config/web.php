@@ -3,13 +3,21 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
-    'id' => 'basic',
+    'id' => 'cmsdroide',
+    'name'=>'CMS-Droide',
+    'version'=>'1.0',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    'sourceLanguage'=>'pt-br',
+    'sourceLanguage'=>'pt-BR',
     'language'=>'pt-br',
     'timezone' => 'America/Sao_Paulo',
     'defaultRoute'=>'institucional',
+    //  colocar em manutenção
+    // 'catchAll' => [
+    //     'institucional/manutencao',
+    //     'param1' => 'value1',
+    //     'param2' => 'value2',
+    // ],
     'modules' => [
         '_adm' => [
             'class' => 'app\_adm\Modules',
@@ -23,6 +31,16 @@ $config = [
         ],
     ],
     'components' => [
+      'formatter' => [
+        'class' => 'yii\i18n\Formatter',
+        'defaultTimeZone'=>'America/Sao_Paulo',
+        'dateFormat' => 'php:d/m/Y',
+        'datetimeFormat' => 'php:d/m/Y H:i:s',
+        'timeFormat' => 'php:H:i:s',
+        'decimalSeparator' => ',',
+        'thousandSeparator' => '.',
+        'currencyCode' => 'R$',
+         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'dfs@#$6545_-__dsfsfs$%',
