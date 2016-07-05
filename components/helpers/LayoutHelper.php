@@ -61,8 +61,16 @@ class LayoutHelper {
     public function checkFolderTheme($area,$theme){
       $errors = array('error'=>array(),'warning'=>array());
       $themesPath = Yii::getAlias(self::$urlBase.$area.'/'.$theme);
-      $filesPHP = yii\helpers\FileHelper::findFiles($themesPath,['only'=>['*.php']]);
-      $filesAssets = yii\helpers\FileHelper::findFiles($themesPath,['only'=>['*Asset*']]);
+
+      if(is_dir($themesPath)){
+        $filesPHP = yii\helpers\FileHelper::findFiles($themesPath,['only'=>['*.php']]);
+        $filesAssets = yii\helpers\FileHelper::findFiles($themesPath,['only'=>['*Asset*']]);
+      }else{
+        $filesPHP = [];
+        $filesAssets = [];
+        $errors['error'][] = "A pasta {$theme} não existe no temas themas.json.";
+      }
+
       if(!count($filesPHP)){
         $errors['error'][] = "Não localizou nenhum arquivo PHP no tema $theme.";
       }

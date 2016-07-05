@@ -44,7 +44,40 @@ public function actionSistema(){
     \Yii::$app->view->params['title-page'] = 'Sistema';
     \Yii::$app->view->params['breadcrumbs-links'] =[['label'=>'Gerenciar o sistema',]];
 
-    return $this->render('sistema');
+    $model = \app\_adm\models\AdmConfig::findOne(1);
+    $model->register_pass = $model->password;
+    $model->password = '';
+
+    if($model->load(\Yii::$app->request->post()))
+    {
+        $session = \Yii::$app->session;
+
+        if($model->save(true,['host','password','username','port', 'encryption'])){
+          $session = \Yii::$app->session;
+          $session->addFlash('notify',[[
+              'icon'=>'glyphicon glyphicons-check',
+              'title'=>'<strong>Aceite do projeto</strong>',
+              'message'=>'Configurações salvas com sucesso.'
+              ],[
+              'type'=>'success'
+              ]]);
+              $model->password = '';
+        }else{
+          $session = \Yii::$app->session;
+          $session->addFlash('notify',[[
+              'icon'=>'glyphicon glyphicons-check',
+              'title'=>'<strong>Aceite do projeto</strong>',
+              'message'=>'Foram detectados erros no processo de salvar. '.$model->HtmlErros()
+              ],[
+              'type'=>'error'
+              ]]);
+        }
+
+    }
+
+    return $this->render('sistema',[
+     'model'=>$model
+   ]);
 }
 
 

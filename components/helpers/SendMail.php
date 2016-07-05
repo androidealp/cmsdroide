@@ -20,8 +20,8 @@ use yii\base\ErrorException;
 class SendMail extends Component{
 
  public $mail = false;
- public $titulo = 'Mensagem de contado da Tesb';
- public $assunto = 'Contato Tesb';
+ public $titulo = 'Mensagem de contado';
+ public $assunto = 'Contato site';
  public $data = [];
  public $layoutSend = '@app/mail/layouts/tesb_mail';
  public $sendto = '';
@@ -38,14 +38,28 @@ class SendMail extends Component{
      if($model){
        $this->mail = Yii::$app->mailer;
        // aplico as informacoes do banco para parametros de envio smpt
+
+       if($model->encryption != 'none'){
        $this->mail->transport = [
               'class' => 'Swift_SmtpTransport',
               'host' => $model->host,
               'username' => $model->username,
               'password' => $model->decry(), // descubro a senha antes de logar
               'port' =>  "{$model->port}",
-              'encryption' => $model->encryption,
+              'encryption'=>$model->encryption,
        ];
+
+       }else{
+
+          $this->mail->transport = [
+            'class' => 'Swift_SmtpTransport',
+            'host' => $model->host,
+            'username' => $model->username,
+            'password' => $model->decry(), // descubro a senha antes de logar
+            'port' =>  "{$model->port}",
+          ];
+
+       }
 
      }else{
        \Yii::error("Tentativa de iniciar o setTrasport do mailer, porém o banco não foi localizado em sendMail.php" ,'mail');
@@ -111,6 +125,33 @@ class SendMail extends Component{
     }
 
     return $return;
+  }
+
+  /**
+   * Pega a lista de mails administrativos que tem permissão de recebimento
+   * @author André Luiz Pereira <andre@next4.com.br>
+   * @param string $type - tipo de permissao, no caso do envio pode ser  email_novos_cads ou email_aceite_projeto
+   * @return array - retorna um array com a lista de e-mails
+   */
+  public function getListMailTO($type)
+  {
+    $mailList = [];
+    $usersSend = \app\_adm\models\AdmUser::find()->
+                                      select(['email','grupos_id'])->
+                                      joinWith(['grupos'=>function($q){
+                                        return $q->select(['id']);
+                                      }])->
+                                      where(['status_acesso'=>1])->
+                                      where(['like','csdm_adm_grupos.atrib_permissoes',$type])->
+                                      asArray()->All();
+
+      if($usersSend){
+        foreach ($usersSend as $k => $user) {
+          $mailList[] = $user['email'];
+        }
+      }
+
+      return $mailList;
   }
 
 }
