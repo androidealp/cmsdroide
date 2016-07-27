@@ -11,11 +11,12 @@ class WidgeteffectsHelper {
   public function loadEffects($file = ''){
 
       $effectPath = Yii::getAlias(self::$urlBase.$file);
-      $dataFile =$this->renderFile($effectPath);
+      $dataFile =Yii::$app->view->renderFile($effectPath);
       self::$editavel = LayoutHelper::CheckWritable($effectPath);
       self::$Filedata = json_decode($dataFile, true);
       return new WidgeteffectsHelper;
   }
+
 
   public function CheckEffect($name){
     $effectPath = Yii::getAlias(self::$urlBase.$name.'/');
@@ -35,7 +36,18 @@ class WidgeteffectsHelper {
 
   }
 
-  
+  public function getWidget($widget, $key){
+    $effect = WidgeteffectsHelper::loadEffects($widget.'.json');
+    $return = false;
+    if(isset(self::$Filedata[$key]['items'])){
+      $return = self::$Filedata[$key]['items'];
+    }
+
+    return $return;
+
+  }
+
+
 
 
 }
