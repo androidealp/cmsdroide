@@ -97,6 +97,21 @@ class ConteudoSearch extends \yii\db\ActiveRecord
         return $this->hasOne(Linguagem::className(), ['id' => 'linguagem_id']);
     }
 
+    public function searchByCat($id,$page=20)
+    {
+      $query = ConteudoSearch::find()->where(['categorias_conteudo_id'=>$id]);
+
+      $dataProvider = new ActiveDataProvider([
+          'query' => $query,
+          'pagination' => [
+              'pageSize' => $page,
+          ],
+      ]);
+
+      return $dataProvider;
+
+    }
+
     public function search($params){
 
         $query = ConteudoSearch::find();
