@@ -27,7 +27,7 @@ class WidgetEffectsMap extends  ModelHelper
 
   public static function tableName()
   {
-      return '{{%ptyp_widget_effects_map}}';
+      return '{{%widget_effects_map}}';
   }
 
   /**

@@ -24,8 +24,8 @@ class AdmGrupos extends ModelHelper
      */
     public static function tableName()
     {
-        $alias = \Yii::$app->params['alias_db'];
-return $alias.'adm_grupos';
+
+      return '{{%adm_grupos}}';
     }
 
     public function getPermissoes() {

@@ -16,14 +16,12 @@ MainAsset::register($this);
   </head>
   <body class="install-page">
       <?php $this->beginBody() ?>
-    
+
       <div class="box-body">
          <?=$content ?>
-
       </div><!-- /.login-box-body -->
-   
+
     <?php $this->endBody() ?>
   </body>
 </html>
 <?php $this->endPage() ?>
-

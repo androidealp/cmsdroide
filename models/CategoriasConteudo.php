@@ -26,8 +26,8 @@ class CategoriasConteudo extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-      $alias = \Yii::$app->params['alias_db'];
-        return $alias.'categorias_conteudo';
+
+        return '{{%categorias_conteudo}}';
     }
 
 

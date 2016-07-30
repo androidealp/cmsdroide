@@ -39,8 +39,7 @@ class AdmUser extends ModelHelper implements \yii\web\IdentityInterface
      */
     public static function tableName()
     {
-        $alias = \Yii::$app->params['alias_db'];
-return $alias.'adm_user';
+        return '{{%adm_user}}';
     }
 
     public function scenarios()

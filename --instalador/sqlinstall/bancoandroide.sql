@@ -337,7 +337,7 @@ COMMIT;
 -- Data for table `csdm_adm_user`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `csdm_adm_user` (`id`, `grupos_id`, `nome`, `email`, `senha`, `avatar`, `status_acesso`, `dt_cadastro`, `dt_ult_acesso`, `parametros_extra`) VALUES (1, 1, 'Admin', 'admin@admin.com', '$2y$13$R.EeZL3yze.oJCiDlr32DuOvqNvpCl2nY.aIITx7Ik3p/nGsViOq2', DEFAULT, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', DEFAULT);
+INSERT INTO `csdm_adm_user` (`id`, `grupos_id`, `nome`, `email`, `senha`, `avatar`, `status_acesso`, `dt_cadastro`, `dt_ult_acesso`, `parametros_extra`) VALUES (1, 1, 'Admin', 'admin@admin.com', '$2y$13$R.EeZL3yze.oJCiDlr32DuOvqNvpCl2nY.aIITx7Ik3p/nGsViOq2','', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '');
 
 COMMIT;
 
@@ -366,7 +366,7 @@ COMMIT;
 -- Data for table `csdm_user`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `csdm_user` (`id`, `nome`, `perfil_id`, `user_nome`, `email`, `senha`, `status_user_id`, `status_conf_email`, `hash_mail`, `dt_cadastro`, `dt_ult_acesso`, `parametros_extra`) VALUES (1, 'user teste', 1, 'droide', 'teste@teste.com.br', '$2y$13$R.EeZL3yze.oJCiDlr32DuOvqNvpCl2nY.aIITx7Ik3p/nGsViOq2', 1, 1, 'feito', '0000-00-00 00:00:00', '0000-00-00 00:00:00', DEFAULT);
+INSERT INTO `csdm_user` (`id`, `nome`, `perfil_id`, `user_nome`, `email`, `senha`, `status_user_id`, `status_conf_email`, `hash_mail`, `dt_cadastro`, `dt_ult_acesso`, `parametros_extra`) VALUES (1, 'user teste', 1, 'droide', 'teste@teste.com.br', '$2y$13$R.EeZL3yze.oJCiDlr32DuOvqNvpCl2nY.aIITx7Ik3p/nGsViOq2', 1, 1, 'feito', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '');
 
 COMMIT;
 
@@ -458,7 +458,6 @@ COMMIT;
 -- Data for table `csdm_user_menu`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `csdm_user_menu` (`id`, `id_parente`, `item_nome`, `url`, `icon`, `ordem`, `status`, `detectar_recurso`) VALUES (1, 0, 'Painel', 'painel', DEFAULT, 0, 1, 0);
+INSERT INTO `csdm_user_menu` (`id`, `id_parente`, `item_nome`, `url`, `icon`, `ordem`, `status`, `detectar_recurso`) VALUES (1, 0, 'Painel', 'painel', '', 0, 1, 0);
 
 COMMIT;
-

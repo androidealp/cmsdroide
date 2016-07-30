@@ -3,7 +3,8 @@
     return [
         'class' => 'yii\db\Connection',
         'dsn' => 'mysql:host=localhost;dbname=bd_cms_droide',
-        'username' => 'droideteste',
-        'password' => 'teste1234',
+        'username' => 'teste',
+        'password' => 'teste',
         'charset' => 'utf8',
+        'tablePrefix'=>'csdm_'
     ];

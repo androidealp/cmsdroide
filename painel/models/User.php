@@ -40,8 +40,8 @@ class User extends \app\components\helpers\ModelHelper implements \yii\web\Ident
      */
     public static function tableName()
     {
-        $alias = \Yii::$app->params['alias_db'];
-        return $alias.'user';
+
+        return '{{%user}}';
     }
 
     public function getCustomScenarios()

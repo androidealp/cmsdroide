@@ -20,7 +20,7 @@ class AdmRecursos extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'csdm_adm_recursos';
+        return '{{%adm_recursos}}';
     }
 
     /**
