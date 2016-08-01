@@ -5,7 +5,7 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'cmsdroide',
     'name'=>'CMS-Droide',
-    'version'=>'1.0',
+    'version'=>'0.1',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'sourceLanguage'=>'pt-BR',
@@ -31,6 +31,11 @@ $config = [
         ],
     ],
     'components' => [
+      'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'showScriptName' => false,
+            'enablePrettyUrl' => true,
+        ],
       'formatter' => [
         'class' => 'yii\i18n\Formatter',
         'defaultTimeZone'=>'America/Sao_Paulo',

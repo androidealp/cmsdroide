@@ -30,26 +30,11 @@ class ControllerHelper extends Controller
      * @author André Luiz Pereira <andre@next4.com.br>
      * @return array - aceess rulers
      */
-    // public function behaviors()
-    // {
-    //     $this->layout = LayoutHelper::loadThemesJson()->front();
-    //     return [
-    //         'access' => [
-    //             'class' => AccessControl::className(),
-    //
-    //             'rules' => [
-    //                 [
-    //                     'allow' => true,
-    //                     'roles' => ['@'],
-    //                 ],
-    //                 [
-    //                     'allow' => true,
-    //                     'actions' => ['login','cadastrar','novasenha','ajaxcorreios','gii'],
-    //                     'roles' => ['?'],
-    //                 ],
-    //             ],
-    //         ]
-    //     ];
-    // }
+    public function behaviors()
+    {
+        $this->layout = LayoutHelper::loadThemesJson()->front();
+        return [
+        ];
+    }
 
 }
