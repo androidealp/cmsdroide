@@ -12,36 +12,36 @@ class PainelController extends ControllerHelper
     {
         return $this->render('index');
     }
-    
+
     public function actionErro(){
-        
+
         $this->render('error');
     }
-    
+
     public function actionLogin(){
-        
+
         if (!\Yii::$app->user->isGuest) {
-            return $this->redirect('index.php?r=_adm/painel');
+            return $this->redirect(['/_adm/painel']);
         }
-        
+
         //$md_ip = new Ips();
-        
+
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             //register ip pos login
            // $md_ip->register_ip();
-            
-            return $this->redirect('index.php?r=_adm/painel');
+
+            return $this->redirect(['/_adm/painel']);
         } else {
             return $this->render('login', [
                 'model' => $model,
             ]);
         }
-        
+
     }
-    
+
     public function actionLogout(){
-        
+
         Yii::$app->user->logout();
         return $this->goHome();
     }

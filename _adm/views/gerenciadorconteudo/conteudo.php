@@ -49,14 +49,6 @@ use yii\jui\DatePicker;
                           'filter'=>array(1=>"Ativo",0=>"Inativo"),
                     ],
                     [
-                        'attribute'=>'destaque',
-                        'format' => 'html',
-                        'value'=>function($data){
-                            return ($data->destaque)?'<span class="fa fa-star text-warning text-center block"></span>':'<span class="fa fa-star text-center block"></span>';
-                        },
-                        'filter'=>array(1=>"Ativado",0=>"desativado"),
-                    ],
-                    [
                         'attribute' => 'categorias_conteudo_id',
                         'format' => 'text',
                         'value'=>function($data){
