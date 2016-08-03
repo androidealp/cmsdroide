@@ -3,6 +3,7 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Html;
 use yii\jui\DatePicker;
+use yii\helpers\Url;
 
 
 ?>
@@ -12,8 +13,8 @@ use yii\jui\DatePicker;
   <!-- action box -->
        <?=ActionsBox::widget(['buttons'=>[
           'default'=>[
-              'add'=>['url'=>'index.php?r=_adm/gerenciadorconteudo/ajaxcriar','title'=>'Adicionar Categoria','formid'=>'form-catsave','pajaxid'=>'list-category'],
-              'del'=>['url'=>'index.php?r=_adm/gerenciadorconteudo/ajaxdeletar','confirm'=>'Deseja deletar a(s) categoria(s)', 'title'=>'Deletar Categoria(s)','gridid'=>'grid-categorias','pajaxid'=>'list-category'],
+              'add'=>['url'=>Url::to(['gerenciadorconteudo/ajaxcriar']),'title'=>'Adicionar Categoria','formid'=>'form-catsave','pajaxid'=>'list-category'],
+              'del'=>['url'=>Url::to(['gerenciadorconteudo/ajaxdeletar']),'confirm'=>'Deseja deletar a(s) categoria(s)', 'title'=>'Deletar Categoria(s)','gridid'=>'grid-categorias','pajaxid'=>'list-category'],
           ]
        ]]); ?>
   <!-- fim action box -->
@@ -62,13 +63,12 @@ use yii\jui\DatePicker;
                         'filter'=>DatePicker::widget(['model'=>$model,'attribute'=>'dt_criacao','language' => 'pt-BR', 'dateFormat' => 'dd-MM-yyyy','options'=>['class'=>'form-control']]),
                     ],
                     [
-                      'class' => 'yii\grid\CheckboxColumn', 
+                      'class' => 'yii\grid\CheckboxColumn',
                       // usar var keys = $('#grid').yiiGridView('getSelectedRows'); para os iscripts
                     ]
                 ],
               ]);?>
         <?php Pjax::end(); ?>
       </div>
-        
-</div>
 
+</div>

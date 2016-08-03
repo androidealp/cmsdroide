@@ -4,6 +4,7 @@ use yii\widgets\Pjax;
 use yii\helpers\Html;
 use yii\jui\DatePicker;
 
+use yii\helpers\Url;
 
 ?>
 
@@ -12,8 +13,8 @@ use yii\jui\DatePicker;
   <!-- action box -->
        <?=ActionsBox::widget(['buttons'=>[
           'default'=>[
-              'add'=>['url'=>'index.php?r=_adm/gerenciadorconteudo/ajaxcriarconteudo','title'=>'Adicionar um Conteúdo','modalsize'=>'lg','formid'=>'form-contsave','pajaxid'=>'list-content'],
-              'del'=>['url'=>'index.php?r=_adm/gerenciadorconteudo/ajaxdeletarconteudo','confirm'=>'Deseja deletar o(s) conteúdo(s)?', 'title'=>'Deletar Conteúdo(s)','gridid'=>'grid-content','pajaxid'=>'list-content'],
+              'add'=>['url'=>Url::to(['gerenciadorconteudo/ajax-criar-conteudo']),'title'=>'Adicionar um Conteúdo','modalsize'=>'lg','formid'=>'form-contsave','pajaxid'=>'list-content'],
+              'del'=>['url'=>Url::to(['gerenciadorconteudo/ajaxdeletarconteudo']),'confirm'=>'Deseja deletar o(s) conteúdo(s)?', 'title'=>'Deletar Conteúdo(s)','gridid'=>'grid-content','pajaxid'=>'list-content'],
           ]
        ]]); ?>
   <!-- fim action box -->

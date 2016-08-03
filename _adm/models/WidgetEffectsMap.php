@@ -15,7 +15,7 @@ class WidgetEffectsMap extends  ModelHelper
   const SLIDESHOW = 'slideshow';
   const BD   = 'bd';
   public $path = '@app/temas/widgeteffects/';
-  public $key;
+  public $key = "";
   public $nome;
   public $desc;
   public $ativar;
@@ -39,7 +39,7 @@ class WidgetEffectsMap extends  ModelHelper
   {
     return [
         self::SLIDESHOW =>  ['key','nome', 'desc','ativar','params','items'],
-        self::BD =>    ['effect_key','nome','icon'],
+        self::BD =>    ['effect_key','nome_effect','icon'],
     ];
   }
 
@@ -198,11 +198,10 @@ class WidgetEffectsMap extends  ModelHelper
      */
     public function loadEffect($widget)
     {
-      $return = false;
+      $return = $this;
       $effect = WidgeteffectsHelper::loadEffects($widget.'.json');
       if($effect::$Filedata){
           $this->json_all_items = $effect::$Filedata;
-          $return = $this;
       }
 
       return $return;

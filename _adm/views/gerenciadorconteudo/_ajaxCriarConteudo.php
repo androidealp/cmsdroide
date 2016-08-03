@@ -49,17 +49,13 @@ $form = ActiveForm::begin([
         <?=$form->field($model, 'categorias_conteudo_id')->dropDownList($categorias,['class'=>'form-control']); ?>
     </div>
 
-    <div class="col-lg-6">
-        <?=$form->field($model, 'destaque')->dropDownList([0=>'inativo',1=>'ativo'],['class'=>'form-control']); ?>
-    </div>
-    
 </div>
 <div class="form-group">
 
      <div class="col-lg-12">
     <?= $form->field($model, 'texto_introdutorio')->textArea(['class'=>'form-control','placeholder'=>'Limite máximo 250 caracteres']);?>
     </div>
-    
+
 </div>
 
 <div class="form-group teste">
@@ -82,4 +78,3 @@ $form = ActiveForm::begin([
 
 
 <?php ActiveForm::end(); ?>
-

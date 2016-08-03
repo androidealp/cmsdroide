@@ -109,7 +109,7 @@ class GerenciadorconteudoController extends ControllerHelper
 
     }
 
-    public function actionAjaxcriarconteudo(){
+    public function actionAjaxCriarConteudo(){
         $model = new Conteudo;
        $languages = $model->ListLanguage();
        $categorias = $model->Categorias();
@@ -186,7 +186,7 @@ class GerenciadorconteudoController extends ControllerHelper
         $model = new ConteudoSearch;
 
         $dataProvider = $model->search(Yii::$app->request->queryParams);
-    
+
 
         return $this->render('conteudo',[
             'dataProvider'=>$dataProvider,
