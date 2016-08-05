@@ -9,13 +9,15 @@ use yii\web\AssetBundle;
  */
 class DroideAsset extends AssetBundle
 {
-    public $basePath = '@webroot/temas/bootstrapdroide';
-    public $baseUrl = '@web/temas/bootstrapdroide';
+    public $basePath = '@webroot/temas';
+    public $baseUrl = '@web/temas';
     public $css = [
-        'css/template.css',
+        'bootstrapdroide/css/template.css',
     ];
     public $js = [
-      'js/template.js'
+      'common/js/vue.min.js',
+      'bootstrapdroide/js/template.js',
+
     ];
     public $depends = [
         'yii\web\YiiAsset',
