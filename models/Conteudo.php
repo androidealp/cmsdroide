@@ -39,6 +39,8 @@ class Conteudo extends ModelHelper
     public function beforeValidate(){
 
         $this->dt_publicacao = date('Y-m-d H:i:s');
+        $this->imagem_pre = '';
+        $this->imagem_pos = '';
 
         if(empty($this->alias)){
             $this->alias = \yii\helpers\BaseInflector::slug($this->titulo);
@@ -66,7 +68,7 @@ class Conteudo extends ModelHelper
     {
         return [
             [['categorias_conteudo_id', 'linguagem_id', 'titulo', 'texto_completo', 'autor','dt_publicacao'], 'required'],
-            [['categorias_conteudo_id', 'linguagem_id', 'status','destaque'], 'integer'],
+            [['categorias_conteudo_id', 'linguagem_id', 'status'], 'integer'],
             [['texto_completo', 'parametros_extra'], 'string'],
             [['dt_publicacao'], 'safe'],
             [['titulo', 'alias'], 'string', 'max' => 70],
@@ -100,7 +102,6 @@ class Conteudo extends ModelHelper
             'autor' => 'Autor',
             'parametros_extra' => 'Parametros Extra',
             'dt_publicacao' => 'Publicado em',
-            'destaque' => 'Destaque',
         ];
     }
 

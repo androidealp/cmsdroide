@@ -13,7 +13,7 @@ use yii\helpers\Url;
   <!-- action box -->
        <?=ActionsBox::widget(['buttons'=>[
           'default'=>[
-              'add'=>['url'=>Url::to(['gerenciadorconteudo/ajaxcriar']),'title'=>'Adicionar Categoria','formid'=>'form-catsave','pajaxid'=>'list-category'],
+              'add'=>['url'=>Url::to(['gerenciadorconteudo/ajax-criar-categoria']),'title'=>'Adicionar Categoria','formid'=>'form-catsave','pajaxid'=>'list-category'],
               'del'=>['url'=>Url::to(['gerenciadorconteudo/ajaxdeletar']),'confirm'=>'Deseja deletar a(s) categoria(s)', 'title'=>'Deletar Categoria(s)','gridid'=>'grid-categorias','pajaxid'=>'list-category'],
           ]
        ]]); ?>

@@ -14,7 +14,7 @@ use yii\helpers\Url;
        <?=ActionsBox::widget(['buttons'=>[
           'default'=>[
               'add'=>['url'=>Url::to(['gerenciadorconteudo/ajax-criar-conteudo']),'title'=>'Adicionar um Conteúdo','modalsize'=>'lg','formid'=>'form-contsave','pajaxid'=>'list-content'],
-              'del'=>['url'=>Url::to(['gerenciadorconteudo/ajaxdeletarconteudo']),'confirm'=>'Deseja deletar o(s) conteúdo(s)?', 'title'=>'Deletar Conteúdo(s)','gridid'=>'grid-content','pajaxid'=>'list-content'],
+              'del'=>['url'=>Url::to(['gerenciadorconteudo/ajax-deletar-conteudo']),'confirm'=>'Deseja deletar o(s) conteúdo(s)?', 'title'=>'Deletar Conteúdo(s)','gridid'=>'grid-content','pajaxid'=>'list-content'],
           ]
        ]]); ?>
   <!-- fim action box -->

@@ -71,7 +71,7 @@ class GerenciadorconteudoController extends ControllerHelper
     }
 
 
-    public function actionAjaxcriar(){
+    public function actionAjaxCriarCategoria(){
 
         $model = new CategoriasConteudo;
         $languages = $model->ListLanguage();
@@ -100,7 +100,7 @@ class GerenciadorconteudoController extends ControllerHelper
             return $return;
 
         }else{
-            return $this->renderAjax('_ajaxCriar',[
+            return $this->renderAjax('_ajaxCriarCategoria',[
             'model'=>$model,
             'languages'=>$languages
             ]);

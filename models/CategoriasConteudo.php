@@ -34,7 +34,7 @@ class CategoriasConteudo extends \yii\db\ActiveRecord
     public function beforeValidate(){
 
         $this->dt_criacao = date('Y-m-d H:i:s');
-
+        $this->parametros_extra = '';
         if(empty($this->alias)){
             $this->alias = \yii\helpers\BaseInflector::slug($this->nome);
         }

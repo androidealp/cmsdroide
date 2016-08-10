@@ -1,6 +1,3 @@
-$(document).on('click','[data-clone]',function(e){
-  e.preventDefault();
-});
 
 // normal = new Vue({
 //   el: '#app',
