@@ -39,6 +39,14 @@ use yii\bootstrap\ActiveForm;
       <?=$form->field($modeljson, 'layout')->textInput(['class'=>'form-control', 'placeholder'=>'nome do arquivo de Layout ex, man']);?>
     </div>
 
+    <div class="" id="box-actionslayout">
+      <?=$form->field($modeljson, 'page_action[]')->textInput(['class'=>'form-control', 'placeholder'=>'path da action']);?>
+      <?=$form->field($modeljson, 'page_layout[]')->textInput(['class'=>'form-control', 'placeholder'=>'arquivo php do layout ex: main']);?>
+      <?php \yii\widgets\Pjax::begin(['id'=>'layout-action']); ?>
+        <?=$this->render('_layoutsactions',['form'=>$form, 'modeljson'=>$modeljson]); ?>
+      <?php \yii\widgets\Pjax::end(); ?>
+    </div>
+
 
     <?php ActiveForm::end(); ?>
   </div>

@@ -22,6 +22,9 @@ class ThemeJson extends  Model
     public $pages =[];
     public $file="";
     public $errorFiles = [];
+    public $page_action = [];
+    public $page_layout = [];
+
 
 
 
@@ -48,7 +51,23 @@ class ThemeJson extends  Model
         $this->tema = $theme;
         $this->layout = $getparams['layout'];
         $this->default = $getparams['default'];
-        $this->pages = (isset($getparams['pages']))?$getparams['pages']:[];
+
+        if(isset($getparams['pages'])){
+          $tratar_pages = [];
+          $tratar_page_action = [];
+          $tratar_page_layout= [];
+          foreach ($getparams['pages'] as $pAction => $pLayout) {
+            $tratar_pages[] = ['action'=>$pAction, 'layout'=>$pLayout];
+            $tratar_page_action[] = $pAction;
+            $tratar_page_layout[] = $pLayout;
+          }
+          $this->page_action = $tratar_page_action;
+          $this->page_layout = $tratar_page_layout;
+          $this->pages = $tratar_pages;
+          //$this->pages = (isset($getparams['pages']))?$getparams['pages']:[];
+
+        }
+
         if(!\app\components\helpers\LayoutHelper::CheckLayoutExists($area.'/'.$theme)){
           $this->errorFiles['theme']= "O tema $theme não foi encontrado na pasta temas / admin";
         }

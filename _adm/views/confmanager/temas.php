@@ -137,11 +137,13 @@ $countcontent = 0;
                                             <button  data-btalert="Foram detectados erros criticos, que precisam ser resolvidos antes de editar o tema." title="Edição indisponivel" class="btn btn-block btn-danger" type="button" name="button"><?='Editar '.$theme; ?></button>
                                             <?php else:?>
                                             <!-- action box -->
+
                                                  <?=ActionsBox::widget(['buttons'=>[
                                                     'custom'=>[
                                                         'text'=>'<span class="fa fa-edit"></span> Editar',
                                                         'params'=>[
-                                                          'data-btedturl'=>'index.php?r=_adm/confmanager/editartema&area='.$area.'&theme='.$theme,
+                                                          'data-btedturl'=>\yii\helpers\Url::to(['confmanager/editartema','area'=>$area,'theme'=>$theme]),
+                                                          //'data-btedturl'=>'index.php?r=_adm/confmanager/editartema&area='.$area.'&theme='.$theme,
                                                           'data-formid'=>'form-themejson',
                                                           'data-pajaxid'=>'list-themes',
                                                           'class'=>'btn btn-block btn-info',
