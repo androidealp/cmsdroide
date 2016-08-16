@@ -11,6 +11,7 @@ class CustomAssets extends AssetBundle{
 	];
     public $js = [
 			'temas/common/js/custom.js'
+			'temas/purephoenix/js/tools.js'
     ];
 
 }
