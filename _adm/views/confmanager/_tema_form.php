@@ -40,13 +40,12 @@ use yii\bootstrap\ActiveForm;
     </div>
 
     <div class="" id="box-actionslayout">
+      <a href="#" class="btn btn-primary" data-cloneadd="#box-actionslayout"></a>
 
 
-      <?php \yii\widgets\Pjax::begin(['id'=>'layout-action']); ?>
       <?php foreach ($modeljson->pages as $k => $value): ?>
         <?=$this->render('_layoutsactions',['modeljson'=>$modeljson, 'k'=>$k, 'value'=>$value]); ?>
         <?php endforeach; ?>
-      <?php \yii\widgets\Pjax::end(); ?>
     </div>
 
 

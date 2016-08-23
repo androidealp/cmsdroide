@@ -10,7 +10,7 @@ class CustomAssets extends AssetBundle{
 	'temas/purephoenix/font/font-awesome/css/font-awesome.min.css',
 	];
     public $js = [
-			'temas/common/js/custom.js'
+			'temas/common/js/custom.js',
 			'temas/purephoenix/js/tools.js'
     ];
 
