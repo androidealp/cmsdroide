@@ -25,6 +25,7 @@ class Modules extends \yii\base\Module
             'user' => [
                 'class' => 'yii\web\User',
                 'identityClass' => 'app\_adm\models\AdmUser',
+                'enableAutoLogin' => false,
                 'loginUrl' => Yii::$app->urlManager->createUrl(['_adm/painel/login']),
                 'identityCookie' => [
                       'name' => '_adminUser', // unique for backend

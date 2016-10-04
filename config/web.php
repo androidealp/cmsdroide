@@ -59,7 +59,7 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\painel\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
             'loginUrl' => ['/institucional/login'],
             'identityCookie' => [
                 'name' => '_painelUser', // unique for backend

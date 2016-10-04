@@ -19,11 +19,6 @@ class PainelController extends ControllerHelper
     }
 
     public function actionLogin(){
-
-        if (!\Yii::$app->user->isGuest) {
-            return $this->redirect(['/_adm/painel']);
-        }
-
         //$md_ip = new Ips();
 
         $model = new LoginForm();
