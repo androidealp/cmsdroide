@@ -12,7 +12,7 @@ $( function() {
       elementClick:'[data-ajaxproc]',
       getUrl: 0,
       getData:0,
-      setIdProcess:0,
+      dataForm:'',
       enableShow:0,
       element:0,
       method:'post',
@@ -20,28 +20,42 @@ $( function() {
       textTimeout:'<p class="text-danger">Ops! Seu processo esgotou o tempo de execução.</p>',
       beforeSend:function(){
       },
-      json:{"process":0,"text":"Iniciando processo..."},
-      _progress:function(json = ''){
-        return '<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="'+json.process+'" aria-valuemin="0" aria-valuemax="100" style="width:'+json.process+'%"> <span class="sr-only">'+json.process+'% '+json.text+'</span> </div></div>';
+      json:{"process":0,"text":"Iniciando processo de instalação..."},
+      progress:function(json = ''){
+        return '<div class="text-center">'+json.process+'% '+json.text+'</div><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="'+json.process+'" aria-valuemin="0" aria-valuemax="100" style="width:'+json.process+'%"> <span class="">'+json.process+'% '+json.text+'</span> </div></div>';
       }
     };
 
     var settings = $.extend(defaults, options );
     settings.element = this;
 
-    settings.element.html(settings.element._progress(settings.json));
-
-    if(settings.enableShow == 1)
-      {
-
-        settings.element.show('slow');
-      }
-
       if(settings.event == 'load'){
+        settings.element.html(settings.progress(settings.json));
+        if(settings.enableShow == 1)
+          {
+            settings.element.show('slow');
+          }
         _sendAjax(settings, settings.element);
       }else{
+
         $(document).on(settings.event,settings.elementClick,function(e){
           e.preventDefault();
+
+
+          settings.element.html(settings.progress(settings.json));
+
+          if(settings.enableShow == 1)
+            {
+              settings.element.show('slow');
+            }
+          if(settings.dataForm){
+            console.log('check tipo'+typeof settings.dataForm);
+            form = (typeof settings.dataForm == 'string')?$(settings.dataForm):settings.dataForm;
+            settings.getData = form.serializeArray();
+            settings.getData.push({"stopExec":0});
+
+          }
+
           _sendAjax(settings, settings.element);
         });
       }

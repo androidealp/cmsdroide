@@ -83,7 +83,7 @@ if($editavel['parans']){
 
     <?=$form->field($model, 'alias')->textInput(['class'=>'form-control','placeholder'=>'O alias é importante para o bom andamento do sistema.'])->label('Alias <small class="text-danger">(é importante para o bom andamento do sistema, e proteção da base)</small>'); ?>
 
-      <a data-install="configurar" href="#form-install" class="btn btn-default">Instalar</a>
+      <button  id="instalar" class="btn btn-default">Instalar</button>
 
     <?php ActiveForm::end(); ?>
 
@@ -99,53 +99,14 @@ if($editavel['parans']){
 
   $(document).ready(function(){
 
-  function ajax(serealize){
-
-      $.ajax({
-        url:'index.php?r=instalador/default/ajaxinstallfiles',
-        data:serealize,
-        method:'post',
-        dataType:'json',
-        async: false,
-        beforeSend:function(){
-          $('#title').html('Processo de instalação');
-          $('#returnsend').html('<div class="alert alert-info">Aplicando os arquivos....</div>');
-        },
-        onprogress:function(e){
-          if (e.lengthComputable) {
-          console.log(e.loaded / e.total * 100 + '%');
-          }
-        },
-        error:function(jqx, st, error){
-            console.log('jqx: '+jqx+' st: '+st+' error: '+error);
-        }
-      }).done(function(data){
-        if(data.error){
-          $('#returnsend').html('<div class="alert alert-danger">'+data.msn+'</div>');
-        }else{
-          $('#returnsend').html('<div class="alert alert-success">'+data.msn+'</div>');
-          window.location.href = "index.php?r=instalador/default/installbd&error="+data.error;
-        }
-      });
-
-    }
-
-    $('[data-install]').on('click',function(e){
-      e.preventDefault();
-      button = $(this);
-      Serializar = $(button.attr('href')).serializeArray();
-      Exec = button.data('install');
-      ajax(Serializar);
-
+    $('#returnsend').droideProcess({
+      elementClick:'#instalar',
+      getUrl: 'index.php?r=instalador/default/init-install',
+      dataForm:$('#form-install')
     });
+
 
 
   });
 
-
-
-  /*
-http://www.binarytides.com/monitor-progress-long-running-php-scripts-html5-server-sent-events/
-
-  */
 </script>

@@ -3,7 +3,7 @@ namespace  app\instalador\models;
 
 use Yii;
 use yii\base\Model;
-
+use \app\components\helpers\LayoutHelper;
 /**
  *
  */
@@ -44,11 +44,43 @@ class  Instalador extends  Model
   }
 
 
+
 public function instalar(){
 
        $this->SQLimport();
 
     return $this->retorno;
+  }
+
+  public function ckFile()
+  {
+    $ck_bd = LayoutHelper::CheckWritable($this->db_file);
+    $ck_parans = LayoutHelper::CheckWritable($this->parans_file);
+    $ettos_ck = [];
+    if(!$ck_bd)
+    {
+      $ettos_ck[] = 'Arquivo de banco ['.$this->db_file.'] precisa de permissão de escrita';
+    }
+    if(!$ck_parans)
+    {
+      $ettos_ck[] = 'Arquivo de params ['.$this->parans_file.'] precisa de permissão de escrita';
+    }
+
+    return implode('<br />',$ettos_ck);
+  }
+
+  public function checkProc()
+  {
+    if($this->load(\Yii::$app->request->post()))
+    {
+      return 'files';
+    }
+
+    if(\Yii::$app->request->post('bd')){
+      return 'bd';
+    }
+
+    return false;
   }
 
 

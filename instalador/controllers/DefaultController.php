@@ -47,6 +47,61 @@ class DefaultController extends Controller
 		]);
 	}
 
+	public function actionInitInstall()
+	{
+		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+		sleep(1);
+		$model = new Instalador;
+
+		$ck_proc = $model->checkProc();
+		$return = [
+			'json'=>['process'=>10, 'text'=>'Erro dados incompletos'],
+			'getData'=>[
+				'stopExec'=>1
+			]
+		];
+
+		$ck_parans = LayoutHelper::CheckWritable($model->parans_file);
+		$erroEscrita  = $model->ckFile();
+
+		if($ettos_ck)
+		{
+			$return['json']['text'] = $erroEscrita;
+		}
+
+		if(!$ettos_ck && $ck_proc == 'files')
+		{
+			$return =  $this->installFiles($model, $return);
+		}
+
+		if(!$ettos_ck && $ck_proc == 'bd')
+		{
+			$return = $this->installBD($model, $return);
+		}
+
+		return $return;
+
+	}
+
+	private function installBD($model, $return)
+	{
+		$return['json']['process'] = 100;
+			$return['json']['text'] = 'Instalação do banco concluida com sucesso!';
+			$return['getData']['stopExec'] = 1;
+
+		return $return;
+	}
+
+	private function installFiles($model, $return)
+	{
+		$return['json']['process'] = 50;
+		$return['json']['text'] = 'Instalação do arquivo de parametros bd concluido!';
+		$return['getData']['stopExec'] = 0;
+		$return['getData']['bd'] = 'bd';
+
+		return $return;
+	}
+
 
 	public function actionAjaxinstallfiles(){
 		$model = new Instalador;

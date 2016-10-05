@@ -12,7 +12,8 @@ class MainAsset extends AssetBundle
     ];
 
     public $js = [
-      'js/custom.js'
+      'js/custom.js',
+      'js/droide-process.js'
     ];
 
 
