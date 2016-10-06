@@ -148,8 +148,13 @@ PHP;
        $sqlStream = rtrim($sqlStream);
        $newStream = preg_replace_callback("/\((.*)\)/", create_function('$matches', 'return str_replace(";"," $$$ ",$matches[0]);'), $sqlStream);
        $sqlArray = explode(";", $newStream);
+       $total_query = count($sqlArray);
+       $line = 0;
+       $line_success = 0;
+       $query_error = [];
        foreach ($sqlArray as $value)
        {
+         $line++;
          if (!empty($value))
          {
            $sql = str_replace(" $$$ ", ";", $value) . ";";
@@ -159,18 +164,38 @@ PHP;
              $sql = str_replace("csdm_", \Yii::$app->params['alias_db'], $sql);
            }
 
-           $pdo->createCommand($sql)->execute();
+           $exec = $pdo->createCommand($sql)->execute();
+
+           if(!$exec){
+             $query_error[$line] = 'Linha '.$line.' não foi executado:<br /><pre> '.$sql.'</pre>';
+           }else{
+             $line_success++;
+           }
          }
        }
+
+       $porcentagem = 57;
+       $text_ret = "Total de {$total_query} querys, executou {$line_success}! ";
+       if($total_query > $line_success){
+         $porcentagem = 89;
+         $text_ret .= "Nem todas as querys foram executadas corretamente. <br />";
+         $text_ret .= implode('<br />',$query_error);
+       }else{
+         $porcentagem = 100;
+         $text_ret .= "Todos os registros executados com sucesso";
+       }
+
        $this->retorno = [
    				'error'=>0,
-   				'msn'=>'Banco salvo com sucesso!',
+   				'msn'=>$text_ret,
+          'porcentagem'=>$porcentagem
    			];
 
      }else{
        $this->retorno = [
    				'error'=>1,
    				'msn'=>'O arquivo não existe',
+          'porcentagem'=>55
    			];
      }
    }

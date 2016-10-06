@@ -28,7 +28,7 @@ $( function() {
 
     var settings = $.extend(defaults, options );
     settings.element = this;
-
+    settings.getData.stopExec = 0;
       if(settings.event == 'load'){
         settings.element.html(settings.progress(settings.json));
         if(settings.enableShow == 1)
@@ -49,10 +49,10 @@ $( function() {
               settings.element.show('slow');
             }
           if(settings.dataForm){
-            console.log('check tipo'+typeof settings.dataForm);
+
             form = (typeof settings.dataForm == 'string')?$(settings.dataForm):settings.dataForm;
             settings.getData = form.serializeArray();
-            settings.getData.push({"stopExec":0});
+
 
           }
 
@@ -88,7 +88,7 @@ $( function() {
             {
               myObject.html(data.mensagem);
             }else{
-              settings._progress(data.json);
+              myObject.html(settings.progress(data.json));
 
             }
 

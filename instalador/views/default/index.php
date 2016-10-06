@@ -1,5 +1,6 @@
 <?php
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
 //cms_droide
 //cms_dr
 $this->title = 'Instalador Droide';
@@ -96,17 +97,11 @@ if($editavel['parans']){
 
 
 <script type="text/javascript">
-
-  $(document).ready(function(){
-
-    $('#returnsend').droideProcess({
-      elementClick:'#instalar',
-      getUrl: 'index.php?r=instalador/default/init-install',
-      dataForm:$('#form-install')
-    });
-
-
-
+$(document).ready(function(){
+  $('#returnsend').droideProcess({
+    elementClick:"#instalar",
+    getUrl: "<?=Url::to('/instalador/default/init-install')?>",
+    dataForm:$('#form-install')
   });
-
+});
 </script>

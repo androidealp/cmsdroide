@@ -33,19 +33,11 @@ class InstitucionalController extends ControllerHelper
 
        }
 
-       if (!\Yii::$app->user->isGuest) {
-           return $this->redirect(['/painel/']);
-       }
-
         return $this->render('index');
     }
 
     public function actionLogin()
     {
-
-        if (!\Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {

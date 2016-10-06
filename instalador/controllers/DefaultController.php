@@ -64,17 +64,17 @@ class DefaultController extends Controller
 		$ck_parans = LayoutHelper::CheckWritable($model->parans_file);
 		$erroEscrita  = $model->ckFile();
 
-		if($ettos_ck)
+		if($erroEscrita)
 		{
 			$return['json']['text'] = $erroEscrita;
 		}
 
-		if(!$ettos_ck && $ck_proc == 'files')
+		if(!$erroEscrita && $ck_proc == 'files')
 		{
 			$return =  $this->installFiles($model, $return);
 		}
 
-		if(!$ettos_ck && $ck_proc == 'bd')
+		if(!$erroEscrita && $ck_proc == 'bd')
 		{
 			$return = $this->installBD($model, $return);
 		}
@@ -85,8 +85,11 @@ class DefaultController extends Controller
 
 	private function installBD($model, $return)
 	{
-		$return['json']['process'] = 100;
-			$return['json']['text'] = 'Instalação do banco concluida com sucesso!';
+		
+		$ret_banco = $model->instalar();
+
+			$return['json']['process'] = $ret_banco['porcentagem'];
+			$return['json']['text'] = $ret_banco['msn'];
 			$return['getData']['stopExec'] = 1;
 
 		return $return;
@@ -94,9 +97,13 @@ class DefaultController extends Controller
 
 	private function installFiles($model, $return)
 	{
-		$return['json']['process'] = 50;
-		$return['json']['text'] = 'Instalação do arquivo de parametros bd concluido!';
-		$return['getData']['stopExec'] = 0;
+
+		$files = $model->aplicarRegras();
+
+		$return['json']['process'] = ($files['error'])?27:50;
+		$return['json']['text'] = $files['msn'];
+
+		$return['getData']['stopExec'] = ($files['error'])?1:0;
 		$return['getData']['bd'] = 'bd';
 
 		return $return;
