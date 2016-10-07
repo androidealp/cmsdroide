@@ -9,7 +9,6 @@ use \app\components\helpers\LayoutHelper;
  */
 class  Instalador extends  Model
 {
-  public $alias_substuir = 'csdm_';
   public $host='localhost';
   public $banco;
   public $user;
@@ -112,7 +111,8 @@ $params = <<<PHP
 return [
     'http_type'=>'http', //http, https
     'secretEmailKey'=>'sdfsdf6464sdfsd',
-    'cadastro_adm_email'=>'teste@teste.net.br'
+    'cadastro_adm_email'=>'teste@teste.net.br',
+    'alias_db'=>'$alias'
 ];
 PHP;
 
@@ -159,7 +159,7 @@ PHP;
          {
            $sql = str_replace(" $$$ ", ";", $value) . ";";
 
-           if(\Yii::$app->params['alias_db'] != $this->alias_substuir)
+           if(\Yii::$app->params['alias_db'] != "csdm_")
            {
              $sql = str_replace("csdm_", \Yii::$app->params['alias_db'], $sql);
            }
