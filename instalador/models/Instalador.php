@@ -150,7 +150,7 @@ PHP;
        $sqlArray = explode(";", $newStream);
        $total_query = count($sqlArray);
        $line = 0;
-       $line_success = 0;
+       $line_success = 1;
        $query_error = [];
        foreach ($sqlArray as $value)
        {
@@ -166,7 +166,7 @@ PHP;
 
            $exec = $pdo->createCommand($sql)->execute();
 
-           if(!$exec){
+           if($exec===false){
              $query_error[$line] = 'Linha '.$line.' não foi executado:<br /><pre> '.$sql.'</pre>';
            }else{
              $line_success++;
