@@ -14,7 +14,7 @@ use Yii;
  * @property string $titulo
  * @property string $alias
  * @property string $texto_introdutorio
- * @property string $texto_completo
+ * @property string $conteudo_total
  * @property string $imagem_pre
  * @property string $imagem_pos
  * @property string $autor
@@ -39,6 +39,7 @@ class Conteudo extends ModelHelper
     public function beforeValidate(){
 
         $this->dt_publicacao = date('Y-m-d H:i:s');
+        $this->parametros_extra = '';
         $this->imagem_pre = '';
         $this->imagem_pos = '';
 
@@ -50,10 +51,10 @@ class Conteudo extends ModelHelper
             $postEditor = Yii::$app->request->post('editor',0);
             if(is_array($postEditor)){
                 foreach ($postEditor as $k => $html) {
-                   $this->texto_completo .=  $html;
+                   $this->conteudo_total .=  $html;
                 }
             }else{
-                $this->texto_completo = trim($postEditor);
+                $this->conteudo_total = trim($postEditor);
             }
 
         }
@@ -67,10 +68,10 @@ class Conteudo extends ModelHelper
     public function rules()
     {
         return [
-            [['categorias_conteudo_id', 'linguagem_id', 'titulo', 'texto_completo', 'autor','dt_publicacao'], 'required'],
+            [['categorias_conteudo_id', 'linguagem_id', 'titulo', 'conteudo_total', 'autor','dt_publicacao'], 'required'],
             [['categorias_conteudo_id', 'linguagem_id', 'status'], 'integer'],
-            [['texto_completo', 'parametros_extra'], 'string'],
-            [['dt_publicacao'], 'safe'],
+            [['conteudo_total', 'parametros_extra'], 'string'],
+            [['dt_publicacao','dt_criacao'], 'safe'],
             [['titulo', 'alias'], 'string', 'max' => 70],
             [['texto_introdutorio'], 'string', 'max' => 250],
             [['imagem_pre', 'imagem_pos', 'autor'], 'string', 'max' => 100]
@@ -96,12 +97,13 @@ class Conteudo extends ModelHelper
             'titulo' => 'Titulo',
             'alias' => 'Alias',
             'texto_introdutorio' => 'Texto Introdutorio',
-            'texto_completo' => 'Texto completo',
+            'conteudo_total' => 'Texto completo',
             'imagem_pre' => 'Imagem de introdução',
             'imagem_pos' => 'Imagem de conteúdo',
             'autor' => 'Autor',
             'parametros_extra' => 'Parametros Extra',
             'dt_publicacao' => 'Publicado em',
+            'dt_criacao'=>'Data de criação'
         ];
     }
 

@@ -64,7 +64,7 @@ $form = ActiveForm::begin([
 ]);*/
   echo Editor::widget([
     'model'=>$model,
-    'id'=>'texto_completo'
+    'id'=>'conteudo_total'
     ]);
      ?>
 </div>

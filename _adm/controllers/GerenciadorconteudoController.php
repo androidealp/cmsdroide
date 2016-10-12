@@ -118,7 +118,7 @@ class GerenciadorconteudoController extends ControllerHelper
         if ($model->load(Yii::$app->request->post())){
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-
+            $model->dt_criacao = date('Y-m-d H:i:s');
 
             if($model->save()){
             $return = ['msn'=>[
