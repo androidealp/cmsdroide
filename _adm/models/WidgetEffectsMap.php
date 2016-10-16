@@ -228,6 +228,30 @@ class WidgetEffectsMap extends  ModelHelper
       return $this;
     }
 
+    public function search($params)
+    {
+      $query = $this->find();
+
+      $dataProvider = new \yii\data\ActiveDataProvider([
+          'query' => $query,
+      ]);
+
+      if (!($this->load($params) && $this->validate())) {
+          return $dataProvider;
+      }
+
+      $query->andFilterWhere(
+          [
+            'and',
+              ['like','effect_key',$this->effect_key],
+              ['like','nome_effect',$this->nome_effect],
+
+          ]
+                      );
+
+      return $dataProvider;
+    }
+
 
     /**
      * Recupera uma lista baseada no json, para listagem e localização de efeitos

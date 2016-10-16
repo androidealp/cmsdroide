@@ -14,7 +14,23 @@ class WidgetEffectsController extends ControllerHelper
      *
      * @return mixed
      */
-    public function actionIndex($widget='slideshow')
+    public function actionIndex()
+    {
+      \Yii::$app->view->title = "Widget Effects";
+      \Yii::$app->view->params['title-page'] = 'Gerenciador de efeitos';
+      \Yii::$app->view->params['breadcrumbs-links'] =[['label'=>'Gerenciador de efeitos - Widget Effects']];
+
+        $widgets = new WidgetEffectsMap;
+
+        $dataProvider = $widgets->search(Yii::$app->request->queryParams);
+
+        return $this->render('index',[
+          'widgets'=>$widgets,
+          'dataProvider'=>$dataProvider,
+        ]);
+    }
+
+    public function actionEfeito($widget='slideshow')
     {
       \Yii::$app->view->title = "Gerenciar Efeitos";
       \Yii::$app->view->params['title-page'] = 'Gerenciar Efeitos';
@@ -30,13 +46,14 @@ class WidgetEffectsController extends ControllerHelper
 
         $dataprovider = $widgets->searchListJson($effectSelect->effect_key.'.json');
 
-        return $this->render('index',[
+        return $this->render('efeito',[
           'dataprovider'=>$dataprovider,
           'layoutHelper'=>$layoutHelper,
           'widgets'=>$widgets,
           'effectSelect'=>$effectSelect,
           'editavel'=>$layoutHelper->CheckWritable($widgets->path.$effectSelect->effect_key.'.json')
         ]);
+
     }
 
 
