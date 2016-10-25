@@ -61,8 +61,6 @@ $form = ActiveForm::begin([
       <?= $form->field($model, 'grupos_id')->dropDownList($grupos,['class'=>'form-control']); ?>
       <!-- fim drop grupos -->
 
-      <?= $form->field($model, 'cargo')->textArea(['class'=>'form-control','placeholder'=>'Informe o cargo do usuário']);?>
-      <!-- fim cargo -->
 
       <?= $form->field($model, 'nome')->textInput(['class'=>'form-control','placeholder'=>'Nome do usário']);?>
       <!-- fim nome de usuario -->
@@ -97,7 +95,6 @@ $form = ActiveForm::begin([
             <p><strong>Nome:</strong> <?=$model->nome;?></p>
             <p><strong>E-mail:</strong> <a href="mailto:<?=$model->email;?>"><?=$model->email;?></a></p>
             <p><strong>Grupo:</strong> <span class="label label-success"><?=$grupos[$model->grupos_id];?></span></p>
-            <p><strong>Cargo:</strong> <?=($model->cargo)?$model->cargo:'Não informado';?></p>
           </div>
       </div>
 

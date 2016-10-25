@@ -64,7 +64,7 @@ $form = ActiveForm::begin([
         ->label(false)
         ->textInput([
           'placeholder'=>$model->getAttributeLabel('alias'),
-          'class'=>'form-control form-control-sm','placeholder'=>'Gera automaticamente']);?>
+          'class'=>'form-control form-control-sm','placeholder'=>'Alias (gera automaticamente)']);?>
     </div>
 </div>
 
