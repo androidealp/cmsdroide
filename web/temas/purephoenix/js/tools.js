@@ -1,5 +1,10 @@
 jQuery(function($){
 
+  // enable selec2
+  $('select').select2();
+
+  
+
   function execAjax(boxid, getUrl,form=0, before = 0, getSuccess=0)
   {
     getData = "";

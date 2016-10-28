@@ -112,7 +112,7 @@ $(document).ready(function(){
 	        ],
 	    };
 
-      eModal.ajax(options);
+      eModal.ajax(options).then($('select').select2());
   });
 
   $(document).on('click','[data-btalert]',function(e){
@@ -163,7 +163,7 @@ $(document).ready(function(){
 	    };
 
 		//var url = $(this).data('btaddurl');
-		eModal.ajax(options);
+		eModal.ajax(options).then($('select').select2());
 	});
 
 	$(document).on('click','[data-btdelurl]',function(e){
