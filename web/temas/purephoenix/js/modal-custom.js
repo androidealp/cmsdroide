@@ -112,7 +112,7 @@ $(document).ready(function(){
 	        ],
 	    };
 
-      eModal.ajax(options).then($('select').select2());
+      eModal.ajax(options).then(setTimeout(function(){ $('select').select2(); }, 1000));
   });
 
   $(document).on('click','[data-btalert]',function(e){
@@ -163,7 +163,9 @@ $(document).ready(function(){
 	    };
 
 		//var url = $(this).data('btaddurl');
-		eModal.ajax(options).then($('select').select2());
+		eModal.ajax(options).then(
+      setTimeout(function(){ $('select').select2(); }, 1000)
+    );
 	});
 
 	$(document).on('click','[data-btdelurl]',function(e){
