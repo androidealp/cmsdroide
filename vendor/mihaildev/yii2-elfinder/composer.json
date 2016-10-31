@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "name": "mihaildev/yii2-elfinder",
     "keywords": ["yii", "elfinder", "filemanager"],
@@ -26,4 +27,35 @@
         "bower-asset-library": "vendor/bower"
       }
     }
+=======
+{
+    "name": "mihaildev/yii2-elfinder",
+    "keywords": ["yii", "elfinder", "filemanager"],
+    "description": "Yii2 ElFinder",
+    "homepage": "https://github.com/MihailDev/yii2-elfinder",
+    "type": "yii2-extension",
+    "license": "BSD-3-Clause",
+    "minimum-stability":"stable",
+    "authors": [
+        {
+            "name": "Mihail",
+            "email": "mihail.kucher@gmail.com",
+            "homepage": "https://github.com/MihailDev",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"mihaildev\\elfinder\\": ""}
+    },
+    "require": {
+        "yiisoft/yii2-jui": "*",
+        "studio-42/elfinder": "^2.1.10"
+    },
+    "extra": {
+      "asset-installer-paths": {
+        "npm-asset-library": "vendor/npm",
+        "bower-asset-library": "vendor/bower"
+      }
+    }
+>>>>>>> 2088f758f1e562a149fe831ca66f9ce355be4535
 }

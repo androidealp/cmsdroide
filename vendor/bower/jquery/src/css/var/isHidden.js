@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 define([
 	"../../core",
 	"../../selector"
@@ -11,3 +12,21 @@ define([
 		return jQuery.css( elem, "display" ) === "none" || !jQuery.contains( elem.ownerDocument, elem );
 	};
 });
+=======
+define( [
+	"../../core",
+	"../../selector"
+
+	// css is assumed
+], function( jQuery ) {
+
+	return function( elem, el ) {
+
+		// isHidden might be called from jQuery#filter function;
+		// in that case, element will be second argument
+		elem = el || elem;
+		return jQuery.css( elem, "display" ) === "none" ||
+			!jQuery.contains( elem.ownerDocument, elem );
+	};
+} );
+>>>>>>> 2088f758f1e562a149fe831ca66f9ce355be4535

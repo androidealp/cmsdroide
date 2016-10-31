@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 /**
  * @var array $options
@@ -18,4 +19,15 @@ define('ELFINDER_IMG_PARENT_URL', Yii::$app->assetManager->getPublishedUrl(__DIR
 
 // run elFinder
 $connector = new elFinderConnector(new elFinder($options));
+=======
+<?php
+/**
+ * @var array $options
+ */
+
+define('ELFINDER_IMG_PARENT_URL', \mihaildev\elfinder\Assets::getPathUrl());
+
+// run elFinder
+$connector = new elFinderConnector(new elFinder($options));
+>>>>>>> 2088f758f1e562a149fe831ca66f9ce355be4535
 $connector->run();

@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
 Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+=======
+Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
+>>>>>>> 2088f758f1e562a149fe831ca66f9ce355be4535
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 
@@ -21,7 +25,11 @@ body
 .cke_editable
 {
 	font-size: 13px;
+<<<<<<< HEAD
 	line-height: 1.6em;
+=======
+	line-height: 1.6;
+>>>>>>> 2088f758f1e562a149fe831ca66f9ce355be4535
 }
 
 blockquote
@@ -64,7 +72,11 @@ ol,ul,dl
 h1,h2,h3,h4,h5,h6
 {
 	font-weight: normal;
+<<<<<<< HEAD
 	line-height: 1.2em;
+=======
+	line-height: 1.2;
+>>>>>>> 2088f758f1e562a149fe831ca66f9ce355be4535
 }
 
 hr
@@ -93,6 +105,11 @@ pre
 {
 	white-space: pre-wrap; /* CSS 2.1 */
 	word-wrap: break-word; /* IE7 */
+<<<<<<< HEAD
+=======
+	-moz-tab-size: 4;
+	tab-size: 4;
+>>>>>>> 2088f758f1e562a149fe831ca66f9ce355be4535
 }
 
 .marker
@@ -102,7 +119,11 @@ pre
 
 span[lang]
 {
+<<<<<<< HEAD
    font-style: italic;
+=======
+	font-style: italic;
+>>>>>>> 2088f758f1e562a149fe831ca66f9ce355be4535
 }
 
 figure
@@ -113,11 +134,28 @@ figure
 	background: rgba(0,0,0,0.05);
 	padding: 10px;
 	margin: 10px 20px;
+<<<<<<< HEAD
 	display: block; /* For IE8 */
 }
 
 figure figcaption
+=======
+	display: inline-block;
+}
+
+figure > figcaption
+>>>>>>> 2088f758f1e562a149fe831ca66f9ce355be4535
 {
 	text-align: center;
 	display: block; /* For IE8 */
 }
+<<<<<<< HEAD
+=======
+
+a > img {
+	padding: 1px;
+	margin: 1px;
+	border: none;
+	outline: 1px solid #0782C1;
+}
+>>>>>>> 2088f758f1e562a149fe831ca66f9ce355be4535

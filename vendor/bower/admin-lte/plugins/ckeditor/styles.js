@@ -1,5 +1,9 @@
 ﻿/**
+<<<<<<< HEAD
  * Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+=======
+ * Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
+>>>>>>> 2088f758f1e562a149fe831ca66f9ce355be4535
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -107,5 +111,9 @@ CKEDITOR.stylesSet.add( 'default', [
 
 	{ name: 'Borderless Table',		element: 'table',	styles: { 'border-style': 'hidden', 'background-color': '#E6E6FA' } },
 	{ name: 'Square Bulleted List',	element: 'ul',		styles: { 'list-style-type': 'square' } }
+<<<<<<< HEAD
 ]);
+=======
+] );
+>>>>>>> 2088f758f1e562a149fe831ca66f9ce355be4535
 

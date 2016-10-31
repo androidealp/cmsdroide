@@ -26,6 +26,7 @@ use Yii;
  * @property CsdmUser $user
  */
 class UserCadastro extends \app\components\helpers\ModelHelper
+<<<<<<< HEAD
 {
 
   const SCENARIO_CRIAR = 'criar';
@@ -64,6 +65,46 @@ class UserCadastro extends \app\components\helpers\ModelHelper
      */
     public function rules()
     {
+=======
+{
+
+  const SCENARIO_CRIAR = 'criar';
+  const SCENARIO_EDITAR = 'editar';
+
+
+  const SCENARIO_ADMCRIAR = 'admcriar';
+  const SCENARIO_ADMEDITAR = 'admeditar';
+
+  public $telefone_1 = '';
+  public $telefone_2 = '';
+  public $arq_uploads = '';
+
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return '{{%user_cadastro}}';
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+
+        $scenarios[self::SCENARIO_CRIAR] = ['id','user_id','descricao','empresa','telefones', 'servicos', 'telefone_1','telefone_2',  'inscricao_estadual', 'documentos' ,'arq_uploads','pessoa_contato','dt_cadastro','cep', 'logradouro', 'numero', 'bairro', 'cidade', 'estado'];
+        $scenarios[self::SCENARIO_EDITAR] = ['id','user_id','empresa','descricao','telefones', 'servicos','telefone_1','telefone_2', 'inscricao_estadual', 'documentos', 'pessoa_contato','dt_cadastro','cep', 'logradouro', 'numero', 'bairro', 'cidade', 'estado'];
+
+        $scenarios[self::SCENARIO_ADMCRIAR] = ['id','user_id','empresa','descricao','telefones', 'servicos','telefone_1','telefone_2', 'inscricao_estadual', 'pessoa_contato','dt_cadastro','cep', 'logradouro', 'numero', 'bairro', 'cidade', 'estado'];
+        $scenarios[self::SCENARIO_ADMEDITAR] = ['id','user_id','empresa','telefones', 'descricao', 'servicos','telefone_1','telefone_2', 'inscricao_estadual', 'documentos', 'pessoa_contato','dt_cadastro','cep', 'logradouro', 'numero', 'bairro', 'cidade', 'estado'];
+        return $scenarios;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+>>>>>>> 2088f758f1e562a149fe831ca66f9ce355be4535
         return [
             [['user_id', 'empresa', 'telefones','servicos','inscricao_estadual','arq_uploads','pessoa_contato','inscricao_estadual','logradouro', 'numero', 'bairro', 'cidade', 'estado'], 'required', 'on' => self::SCENARIO_CRIAR],
             [[ 'user_id', 'empresa', 'telefones','servicos','inscricao_estadual','pessoa_contato','cep','inscricao_estadual', 'logradouro', 'numero', 'bairro', 'cidade', 'estado'], 'required', 'on' => self::SCENARIO_EDITAR],

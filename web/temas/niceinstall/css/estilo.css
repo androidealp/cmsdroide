@@ -1,0 +1,16 @@
+div.block-center{
+  display: table;
+  margin:0 auto;
+}
+
+div.box-body div.container{
+  width: 750px;
+}
+
+body.install-page *{
+  font-size: 12px;
+}
+
+.page-header h1{
+  font-size: 20px;
+}
