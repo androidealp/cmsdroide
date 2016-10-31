@@ -13,6 +13,13 @@ class ControllerHelper extends Controller
     public $instalador = false;
 
     public function init(){
+      $cookies = \Yii::$app->request->cookies;
+      if($cookies->has('language'))
+      {
+          \Yii::$app->language = $cookies->getValue('language');
+          \Yii::$app->sourceLanguage = $cookies->getValue('language');
+      }
+
      if(file_exists(\Yii::$app->basePath.'/instalador')){
          \Yii::$app->setModules([
         'instalador'=>[
@@ -22,7 +29,17 @@ class ControllerHelper extends Controller
         $this->instalador = \Yii::$app->hasModule('instalador');
      }
 
+
+
         return parent::init();
+
+
+    }
+
+    public function behaviors()
+    {
+      $this->layout = LayoutHelper::loadThemesJson()->front();
+      return [];
     }
 
     /**

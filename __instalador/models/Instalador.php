@@ -70,6 +70,7 @@ public function instalar(){
         'username' => '$user',
         'password' => '$pass',
         'charset' => '$charset',
+        'tablePrefix' => '$alias',
     ];
 PHP;
 
@@ -77,7 +78,6 @@ $params = <<<PHP
 <?php
 
 return [
-    'alias_db' => '$alias',
     'http_type'=>'http', //http, https
     'secretEmailKey'=>'sdfsdf6464sdfsd',
     'cadastro_adm_email'=>'teste@teste.net.br'

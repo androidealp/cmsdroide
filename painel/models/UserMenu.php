@@ -23,8 +23,7 @@ class UserMenu extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        $alias = \Yii::$app->params['alias_db'];
-        return $alias.'user_menu';
+        return '{{%user_menu}}';
     }
 
     /**

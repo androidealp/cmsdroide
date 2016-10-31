@@ -17,10 +17,11 @@ class  AdmMethods extends  ActiveRecord
      */
     public static function tableName()
     {
-        return 'csdm_adm_methods';
+        
+        return '{{%adm_methods}}';
     }
 
-  
+
     public function rules()
     {
         return [

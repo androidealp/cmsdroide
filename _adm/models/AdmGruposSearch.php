@@ -21,8 +21,7 @@ class AdmGruposSearch extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        $alias = \Yii::$app->params['alias_db'];
-return $alias.'adm_grupos';
+      return '{{%adm_grupos}}';
     }
 
     /**

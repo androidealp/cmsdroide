@@ -44,8 +44,7 @@ class UserCadastro extends \app\components\helpers\ModelHelper
      */
     public static function tableName()
     {
-        $alias = \Yii::$app->params['alias_db'];
-        return $alias.'user_cadastro';
+        return '{{%user_cadastro}}';
     }
 
     public function scenarios()

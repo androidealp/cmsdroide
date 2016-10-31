@@ -23,7 +23,7 @@ class SendMail extends Component{
  public $titulo = 'Mensagem de contado';
  public $assunto = 'Contato site';
  public $data = [];
- public $layoutSend = '@app/mail/layouts/tesb_mail';
+ public $layoutSend = '@app/mail/layouts/prova_mail';
  public $sendto = '';
  public $from = '';
 
@@ -66,6 +66,74 @@ class SendMail extends Component{
        throw new \yii\web\HttpException(500, 'Erro no processo de envio, contacte o administrador');
      }
 
+  }
+
+  public function SendMultiples($ListSend, $mensagem)
+  {
+    $msn_template = '';
+    $msn = [];
+    foreach ($ListSend as $k => $mail) {
+      $getkeys = array_keys($mail);
+      $msn_template = $mensagem;
+      foreach ($getkeys as $k => $key) {
+        $msn_template = str_replace('{'.$key.'}',$mail[$key],$msn_template);
+      }
+
+      $msn[] = \Yii::$app->mailer->compose($this->layoutSend,['mensagem'=>$msn_template])
+      ->setFrom($this->from)
+      ->setSubject($this->assunto)
+      ->setTo($mail['email']);
+    }
+
+
+
+    return \Yii::$app->mailer->sendMultiple($msn);
+
+  }
+
+  public function teste()
+  {
+    return $this->mail->transport;
+  }
+
+  /**
+   * Metodo de envio, simplificado
+   * @author André Luiz Pereira <andre@next4.com.br>
+   * @return bool - retorna verdadeiro ou falso se os dados foram enviados
+   */
+  public function sendSimple($mensagem)
+  {
+    $send = false;
+    $envio = false;
+    $geterros = '';
+    if($this->mail->hasProperty('transport')){
+
+
+      // verifico as tentativas de envio se os dados estão respondendo corretamente para o envio
+      try {
+        $envio =  \Yii::$app->mailer->compose($this->layoutSend,['mensagem'=>$mensagem])
+                     ->setFrom($this->from)
+                     ->setTo($this->sendto)
+                     ->setSubject($this->assunto)
+                     ->send();
+      } catch (ErrorException $e) {
+        $geterros = 'Erro de envio: '.$e;
+      }
+
+       if($envio){
+         $send = true;
+       }else{
+          \Yii::error("O envio não foi realizado, erro no processo de send, ".print_r($envio, true),'mail');
+       }
+
+
+
+    }else{
+      \Yii::error("As propriendades não foram definidas corretamente no transport no metodo send." ,'mail');
+       //throw new \yii\web\HttpException(500, 'Erro no processo de envio, contacte o administrador');
+    }
+
+    return $send;
   }
 
   /**

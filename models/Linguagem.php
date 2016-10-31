@@ -23,8 +23,7 @@ class Linguagem extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        $alias = \Yii::$app->params['alias_db'];
-        return $alias.'linguagem';
+        return '{{%linguagem}}';
     }
 
     /**

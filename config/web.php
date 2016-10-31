@@ -31,6 +31,41 @@ $config = [
         ],
     ],
     'components' => [
+      'Tools'=>[
+        'class'=>'app\components\helpers\Tools'
+      ],
+      'loadConteudo'=>[
+        'class'=>'app\components\helpers\ConteudoHelper'
+      ],
+      'SendMail' =>[ // nome sugestifo, aplicado unicamente por conta de ser facilmente lembrado, porém a classe instacia o swiftmailer
+        'class'=>'app\components\helpers\SendMail'
+      ],
+      'urlManager' => [
+        'enablePrettyUrl' => true,
+        'showScriptName' => true,
+        'enableStrictParsing' => false,
+        // 'rules' => [
+        //     [
+        //       'class' => 'yii\rest\UrlRule',
+        //       'pluralize'=>false,
+        //       //'controller' => 'api'
+        //     ],
+        //  ],
+      ],
+      'i18n' => [
+        'translations' => [
+            'site*' => [
+              'forceTranslation' => true,
+                'class' => 'yii\i18n\PhpMessageSource',
+                'basePath' => '@app/messages',
+                'sourceLanguage' => 'en-US',
+                'fileMap' => [
+                    'site' => 'site.php',
+                    'en-US/error' => 'error.php',
+                ],
+            ],
+        ],
+    ],
       'formatter' => [
         'class' => 'yii\i18n\Formatter',
         'defaultTimeZone'=>'America/Sao_Paulo',
@@ -54,7 +89,8 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\painel\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
+            'authTimeout' => 60*30,
             'loginUrl' => ['/institucional/login'],
             'identityCookie' => [
                 'name' => '_painelUser', // unique for backend
@@ -62,6 +98,7 @@ $config = [
             ]
         ],
         'session' => [
+            'timeout'=>60*30,
             'name' => '_painelSessao',
             'savePath' => __DIR__ . '/../painel/sessions',
         ],
@@ -82,7 +119,7 @@ $config = [
                 ],
                 [
                     'class'         => 'yii\log\FileTarget',
-                    'levels'        => ['error'],
+                    'levels'        => ['error','info'],
                     'categories'    => ['banco'],
                     'logFile'       => '@app/runtime/logs/banco/erros.log',
                     'maxFileSize'   => 1024 * 2,
@@ -90,9 +127,17 @@ $config = [
                 ],
                 [
                     'class'         => 'yii\log\FileTarget',
-                    'levels'        => ['error'],
+                    'levels'        => ['error','info'],
                     'categories'    => ['mail'],
                     'logFile'       => '@app/runtime/logs/mail/erros.log',
+                    'maxFileSize'   => 1024 * 2,
+                    'maxLogFiles'   => 100,
+                ],
+                [
+                    'class'         => 'yii\log\FileTarget',
+                    'levels'        => ['error','info'],
+                    'categories'    => ['acesso'],
+                    'logFile'       => '@app/runtime/logs/acesso/erros.log',
                     'maxFileSize'   => 1024 * 2,
                     'maxLogFiles'   => 100,
                 ],

@@ -28,8 +28,7 @@ class AdmUserSearch extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        $alias = \Yii::$app->params['alias_db'];
-return $alias.'adm_user';
+        return '{{%adm_user}}';
     }
 
 

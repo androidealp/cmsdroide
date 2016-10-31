@@ -25,8 +25,8 @@ class AdmConfig extends ModelHelper
      */
     public static function tableName()
     {
-        $alias = \Yii::$app->params['alias_db'];
-return $alias.'adm_config';
+        
+        return '{{%adm_config}}';
     }
 
 

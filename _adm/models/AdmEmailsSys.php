@@ -18,7 +18,7 @@ class AdmEmailsSys extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'csdm_adm_emails_sys';
+        return '{{%adm_emails_sys}}';
     }
 
     /**
