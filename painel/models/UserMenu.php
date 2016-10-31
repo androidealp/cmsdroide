@@ -23,10 +23,6 @@ class UserMenu extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-<<<<<<< HEAD
-=======
-
->>>>>>> 2088f758f1e562a149fe831ca66f9ce355be4535
         return '{{%user_menu}}';
     }
 

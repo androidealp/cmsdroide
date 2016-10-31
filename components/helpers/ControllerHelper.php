@@ -36,12 +36,6 @@ class ControllerHelper extends Controller
 
     }
 
-    public function behaviors()
-    {
-      $this->layout = LayoutHelper::loadThemesJson()->front();
-      return [];
-    }
-
     /**
      * Behavior for acess implement layout
      * @author André Luiz Pereira <andre@next4.com.br>
