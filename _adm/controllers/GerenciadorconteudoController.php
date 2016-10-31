@@ -158,14 +158,12 @@ class GerenciadorconteudoController extends ControllerHelper
 
             $session = Yii::$app->session;
 
-            $session->addFlash('notify',[[
-                'icon'=>'glyphicon glyphicons-check',
-                'title'=>'<strong>Nova Categoria</strong>',
-                'message'=>'Categoria '.$model->nome.' adicionada com sucesso!'
-                ],[
-                'type'=>'success'
-                ]]);
-            $this->redirect('index.php?r=_adm/gerenciadorconteudo/categorias',302);
+            $session->addFlash('alert',[
+              'type'=>'success',
+              'msn'=>'Categoria '.$model->nome.' adicionada com sucesso!'
+            ]);
+
+            return $this->redirect(['gerenciadorconteudo/categorias'],302);
         }
 
         return $this->render('_editarcat',[
@@ -208,14 +206,11 @@ class GerenciadorconteudoController extends ControllerHelper
 
             $session = Yii::$app->session;
 
-            $session->addFlash('notify',[[
-                'icon'=>'glyphicon glyphicons-check',
-                'title'=>'<strong>Edição de artigo</strong>',
-                'message'=>'Conteúdo '.$model->titulo.' editado com sucesso!'
-                ],[
-                'type'=>'success'
-                ]]);
-            $this->redirect('index.php?r=_adm/gerenciadorconteudo/conteudo',302);
+            $session->addFlash('alert',[
+              'type'=>'success',
+              'msn'=>'Conteúdo '.$model->titulo.' salvo com sucesso.'
+            ]);
+          return  $this->redirect(['gerenciadorconteudo/conteudo'],302);
         }
 
         return $this->render('_editarcont',[

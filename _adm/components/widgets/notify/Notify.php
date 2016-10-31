@@ -29,15 +29,15 @@ public function run(){
 			});
 HTML;
 
-			return $this->registerJs($js, View::POS_END, 'notify');	
+			return \Yii::$app->view->registerJs($js, \yii\web\View::POS_END, 'notify');	
 		}
-		
+
 	}
 
 }
 
 /*
-types 
+types
 
 $.notify({
 	icon: 'glyphicon glyphicon-star',

@@ -5,7 +5,7 @@ use yii\bootstrap\Nav;
 use yii\helpers\Url;
 use app\temas\admin\purephoenix\MainAsset;
 use app\_adm\components\helpers\MenuHelper;
-use app\_adm\components\widgets\notify\Notify;
+use app\_adm\components\widgets\toastr\Toastr;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -397,7 +397,7 @@ MainAsset::register($this);
   </div>
 </div>
 
-<?=Notify::widget();
+<?=Toastr::widget();
 ?>
 
 <?php $this->endBody() ?>

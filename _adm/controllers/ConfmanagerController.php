@@ -54,23 +54,21 @@ public function actionSistema(){
 
         if($model->save(true,['host','password','username','port', 'encryption'])){
           $session = \Yii::$app->session;
-          $session->addFlash('notify',[[
-              'icon'=>'glyphicon glyphicons-check',
-              'title'=>'<strong>Aceite do projeto</strong>',
-              'message'=>'Configurações salvas com sucesso.'
-              ],[
-              'type'=>'success'
-              ]]);
+
+          $session->addFlash('alert',[
+            'type'=>'success',
+            'msn'=>'Configurações salvas com sucesso.'
+          ]);
+
               $model->password = '';
         }else{
           $session = \Yii::$app->session;
-          $session->addFlash('notify',[[
-              'icon'=>'glyphicon glyphicons-check',
-              'title'=>'<strong>Aceite do projeto</strong>',
-              'message'=>'Foram detectados erros no processo de salvar. '.$model->HtmlErros()
-              ],[
-              'type'=>'error'
-              ]]);
+
+          $session->addFlash('alert',[
+            'type'=>'error',
+            'msn'=>'Foram detectados erros no processo de salvar. '.$model->HtmlErros()
+          ]);
+          
         }
 
     }
