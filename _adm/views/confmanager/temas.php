@@ -207,7 +207,7 @@ $countcontent = 0;
                                                         'custom'=>[
                                                             'text'=>'<span class="fa fa-edit"></span>',
                                                             'params'=>[
-                                                              'data-btedturl'=>'index.php?r=_adm/confmanager/editartema&area='.$area.'&theme='.$theme,
+                                                              'data-btedturl'=>\yii\helpers\Url::to(['confmanager/editartema','area'=>$area,'theme'=>$theme]),
                                                               'data-formid'=>'form-themejson',
                                                               'data-pajaxid'=>'list-themes',
                                                               'class'=>'btn btn-xs btn-info',

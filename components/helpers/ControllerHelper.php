@@ -14,6 +14,7 @@ class ControllerHelper extends Controller
 
     public function init(){
       $cookies = \Yii::$app->request->cookies;
+
       if($cookies->has('language'))
       {
           \Yii::$app->language = $cookies->getValue('language');
@@ -29,10 +30,7 @@ class ControllerHelper extends Controller
         $this->instalador = \Yii::$app->hasModule('instalador');
      }
 
-
-
         return parent::init();
-
 
     }
 

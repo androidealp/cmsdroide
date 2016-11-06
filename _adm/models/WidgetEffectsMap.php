@@ -13,6 +13,7 @@ class WidgetEffectsMap extends  ModelHelper
 {
 
   const SLIDESHOW = 'slideshow';
+  const PARALLAX = 'parallax';
   const BD   = 'bd';
   public $path = '@app/temas/widgeteffects/';
   public $key = "";
@@ -39,6 +40,7 @@ class WidgetEffectsMap extends  ModelHelper
   {
     return [
         self::SLIDESHOW =>  ['key','nome', 'desc','ativar','params','items'],
+        self::PARALLAX  =>  ['key','nome', 'desc','ativar','params','items'],
         self::BD =>    ['effect_key','nome_effect','icon'],
     ];
   }
@@ -63,6 +65,7 @@ class WidgetEffectsMap extends  ModelHelper
     $allscenarios = $this->getCustomScenarios();
 
     $allscenarios[self::SLIDESHOW] = array_diff($allscenarios[self::SLIDESHOW], ['items']);
+    $allscenarios[self::PARALLAX] = array_diff($allscenarios[self::PARALLAX], ['items']);
 
     return $allscenarios;
 
@@ -76,6 +79,7 @@ class WidgetEffectsMap extends  ModelHelper
       $allscenarios = $this->TratarRequired();
         return [
           [$allscenarios[self::SLIDESHOW], 'required', 'on' => self::SLIDESHOW],
+          [$allscenarios[self::PARALLAX], 'required', 'on' => self::PARALLAX],
           [$allscenarios[self::BD], 'required', 'on' => self::BD],
         ];
     }
@@ -263,6 +267,7 @@ class WidgetEffectsMap extends  ModelHelper
     public function searchListJson($file)
     {
 
+
       $effect = WidgeteffectsHelper::loadEffects($file);
 
       $dataprivader =new \yii\data\ArrayDataProvider([
@@ -285,6 +290,11 @@ class WidgetEffectsMap extends  ModelHelper
     public function getListEffect($effect)
     {
       $return = [];
+
+      if(!$effect)
+      {
+        return $return;
+      }
 
       foreach ($effect as $k => $ef) {
 

@@ -1,7 +1,7 @@
 <?php
 namespace app\_adm\components\widgets\toastr;
 use yii\base\Widget;
-use app\_adm\components\widgets\notify\ToastrAssets;
+use app\_adm\components\widgets\toastr\ToastrAssets;
 use Yii;
 
 class Toastr extends Widget{

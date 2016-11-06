@@ -62,10 +62,9 @@ $ckeditorOptions = ElFinder::ckeditorOptions('_adm/elfinder',[/* Some CKEditor O
           <?= $form->field($model, 'nome')->textInput(['class'=>'form-control']);?>
           <?= $form->field($model, 'desc')->label('Descrição')->textInput(['class'=>'form-control']);?>
           <?= $form->field($model, 'ativar')->checkBox(['label'=>'Publicado']);?>
-          <?= $form->field($model, 'params[slide-auto]')->checkBox(['label'=>'Slide automatico']);?>
-          <?= $form->field($model, 'params[panel-text]')->checkBox(['label'=>'Texto no banner']);?>
-          <?= $form->field($model, 'params[navegacao]')->checkBox(['label'=>'Navegação']);?>
-          <?= $form->field($model, 'params[prev-next]')->checkBox(['label'=>'Botões Anterior e próximo']);?>
+          <?= $form->field($model, 'params[speed]')->label('Velocidade')->textInput(['placeholder'=>'Informar velocidade do efeito em milesimos']);?>
+          <?= $form->field($model, 'params[textoposicao]')->label('Posição inicial do texto')->textInput(['placeholder'=>'posição com base no topo do banner sem px']);?>
+
 
 
         </div>
@@ -80,33 +79,45 @@ $ckeditorOptions = ElFinder::ckeditorOptions('_adm/elfinder',[/* Some CKEditor O
     <div class="box box-default direct-chat direct-chat-default">
         <div class="box-header with-border">
           <h3 class="box-title"><?=$model->nome?> - Items Banner</h3>
-          <div class="box-tools pull-right">
-            <?php //Html::a('Adicionar Item','#', ['class'=>'btn btn-success']); ?>
 
-            <?=ActionsBox::widget(
-            [
-              //'add_titulo'=>false,
-              'buttons'=>[
-               'custom'=>[
-                   'text'=>'<span class="fa fa-plus"></span> Adicionar novo Item',
-                   'params'=>[
-                     'data-btedturl'=>\yii\helpers\Url::to(['/_adm/widget-effects/ajax-novoitem','widget'=>'slideshow','key'=>$model->key]),
-                     'data-formid'=>'form-newitem',
-                     'data-pajaxid'=>'list-themes',
-                     'class'=>'btn btn-block btn-info',
-                     'title'=>'Adicionar novo item',
-                   ]
-               ]
-            ]]); ?>
-
-
-          </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body margin">
 
           <!-- NEW BOX ACCORDION -->
           <div class="box-group" id="accordion">
+            <!-- se for vazio -->
+            <?php if (!$model->items): ?>
+              <div class="panel box box-success">
+                <div class="box-header with-border">
+                  <h4 class="box-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse"  class="">
+                      Dados para efeito paralax no banner
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapse" class="panel-collapse collapse in" >
+                  <div class="box-body">
+                    <?= $form->field($model, 'items[0][titulo]')->label('Titulo')->textInput(['class'=>'form-control']);?>
+                    <?= $form->field($model, 'items[0][desc]')->label('Descrição')->textArea(['class'=>'form-control']);?>
+                    <?= $form->field($model, 'items[0][urlbt]')->label('Url do botão')->textInput(['class'=>'form-control','placeholder'=>'Se não tiver link não colocar']);?>
+                    <?= $form->field($model, 'items[0][texto_bt]')->label('Texto do botão')->textInput(['class'=>'form-control','placeholder'=>'Se não tiver link não colocar']);?>
+
+                    <?= $form->field($model, 'items[0][image]')->label('Imagem')->widget(InputFile::className(),[
+                      'language'      => 'pt-BR',
+                      'controller'    => '_adm/elfinder',
+                      'path' => 'media/',
+                      //'filter'        => 'image',
+                      'template'      => '<div class="input-group">{input}<span class="input-group-btn">{button}</span></div>',
+                      'options'       => ['class' => 'form-control'],
+                      'buttonOptions' => ['class' => 'btn btn-default'],
+                      'multiple'      => false
+                    ]); ?>
+                  </div>
+                </div>
+              </div>
+            <?php endif; ?>
+
                     <?php foreach ($model->items as $k => $item): ?>
                       <div class="panel box box-success">
                         <div class="box-header with-border">
@@ -115,16 +126,6 @@ $ckeditorOptions = ElFinder::ckeditorOptions('_adm/elfinder',[/* Some CKEditor O
                               <?=$item['titulo'] ?>
                             </a>
                           </h4>
-                          <div class="box-tools pull-right">
-                            <?=Html::a('<i class="fa fa-times"></i>','#',
-                            [
-                              'class'=>'btn btn-xs btn-danger',
-                              'title'=>'Esta ação irá remover ['.$item['titulo'].'] deseja continuar?',
-                              'data-mdconfirm'=>\yii\helpers\Url::to(['/_adm/widget-effects/ajax-delete-item','widget'=>'slideshow','key'=>$model->key,'item'=>$k]),
-
-                          ]); ?>
-
-                          </div>
                         </div>
                         <div id="collapse-<?=$k?>" class="panel-collapse collapse <?=($k == 0)?'in':''?>" >
                           <div class="box-body">
@@ -143,8 +144,6 @@ $ckeditorOptions = ElFinder::ckeditorOptions('_adm/elfinder',[/* Some CKEditor O
                               'buttonOptions' => ['class' => 'btn btn-default'],
                               'multiple'      => false
                             ]); ?>
-                            <?= $form->field($model, 'items['.$k.'][video]')->label('Video do Youtube')->textInput(['class'=>'form-control']);?>
-                            <?= $form->field($model, 'items['.$k.'][order]')->label('ordem')->textInput(['class'=>'form-control']);?>
                           </div>
                         </div>
                       </div>

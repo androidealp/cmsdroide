@@ -10,7 +10,7 @@ use yii\helpers\Url;
   <div class="box box-widget widget-user">
               <!-- Add the bg color to the header using any of the bg-* classes -->
                <?php if ($model['item_main']): ?>
-                 <div class="widget-user-header bg-black" style="background: url('<?=\Yii::$app->request->baseUrl.$model['item_main']?>') center center;">
+                 <div class="widget-user-header bg-black" style="background: url('<?=\Yii::$app->request->baseUrl.'/'.$model['item_main']?>') center center;    box-shadow: inset 0 0 200px rgba(0,0,0,0.4);">
                <?php else: ?>
                  <div class="widget-user-header bg-aqua-active">
                <?php endif; ?>
@@ -19,7 +19,7 @@ use yii\helpers\Url;
               </div>
               <div class="widget-user-image">
                 <?php if ($model['item_main']): ?>
-                    <?=Html::img(\Yii::$app->request->baseUrl.$model['item_main'],['class'=>"img-circle"])  ?>
+                    <?=Html::img(\Yii::$app->request->baseUrl.'/'.$model['item_main'],['class'=>"img-circle"])  ?>
                 <?php endif; ?>
 
               </div>

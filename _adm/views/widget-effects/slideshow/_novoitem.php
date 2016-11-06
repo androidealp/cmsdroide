@@ -28,7 +28,8 @@ use mihaildev\elfinder\InputFile;
 
 <?= $form->field($model, 'items[titulo]')->label('Titulo')->textInput(['class'=>'form-control']);?>
 <?= $form->field($model, 'items[desc]')->label('Descrição')->textArea(['class'=>'form-control']);?>
-<?= $form->field($model, 'items[urlbt]')->label('Url do botão')->textInput(['class'=>'form-control']);?>
+<?= $form->field($model, 'items[urlbt]')->label('Url do botão')->textInput(['class'=>'form-control','placeholder'=>'Se não tiver link não colocar']);?>
+<?= $form->field($model, 'items[texto_bt]')->label('Texto do botão')->textInput(['class'=>'form-control','placeholder'=>'Se não tiver link não colocar']);?>
 <?= $form->field($model, 'items[image]')->label('Imagem')->widget(InputFile::className(),[
   'language'      => 'pt-BR',
   'controller'    => '_adm/elfinder',

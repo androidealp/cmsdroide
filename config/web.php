@@ -9,7 +9,7 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'sourceLanguage'=>'pt-BR',
-    'language'=>'pt-br',
+    'language'=>'pt-BR',
     'timezone' => 'America/Sao_Paulo',
     'defaultRoute'=>'institucional',
     //  colocar em manutenção
@@ -31,6 +31,13 @@ $config = [
         ],
     ],
     'components' => [
+      'assetManager' => [
+       'bundles' => [
+           'yii\web\JqueryAsset' => [
+               'jsOptions' => [ 'position' => \yii\web\View::POS_HEAD ],
+           ],
+       ],
+   ],
       'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
@@ -61,6 +68,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\painel\models\User',
             'enableAutoLogin' => false,
+            'authTimeout' => 60*30,
             'loginUrl' => ['/institucional/login'],
             'identityCookie' => [
                 'name' => '_painelUser', // unique for backend
@@ -68,6 +76,7 @@ $config = [
             ]
         ],
         'session' => [
+            'timeout'=>60*30,
             'name' => '_painelSessao',
             'savePath' => __DIR__ . '/../painel/sessions',
         ],

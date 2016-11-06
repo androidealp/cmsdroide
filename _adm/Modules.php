@@ -15,6 +15,7 @@ class Modules extends \yii\base\Module
         $this->defaultRoute = 'painel';
         Yii::$app->session->name = '_adminSessao';
         Yii::$app->session->savePath = __DIR__ . '/../_adm/sessions';
+        Yii::$app->session->timeout= 60*20;
 
          Yii::$app->setComponents(
         [
@@ -26,6 +27,7 @@ class Modules extends \yii\base\Module
                 'class' => 'yii\web\User',
                 'identityClass' => 'app\_adm\models\AdmUser',
                 'enableAutoLogin' => false,
+                'authTimeout' => 60*20,
                 'loginUrl' => Yii::$app->urlManager->createUrl(['_adm/painel/login']),
                 'identityCookie' => [
                       'name' => '_adminUser', // unique for backend

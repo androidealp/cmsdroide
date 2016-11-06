@@ -39,8 +39,9 @@ class WidgeteffectsHelper {
   public function getWidget($widget, $key){
     $effect = WidgeteffectsHelper::loadEffects($widget.'.json');
     $return = false;
-    if(isset(self::$Filedata[$key]['items'])){
-      $return = self::$Filedata[$key]['items'];
+    if(isset(self::$Filedata[$key]['params']) && isset(self::$Filedata[$key]['items'])){
+      $return['params'] = self::$Filedata[$key]['params'];
+      $return['items'] = self::$Filedata[$key]['items'];
     }
 
     return $return;

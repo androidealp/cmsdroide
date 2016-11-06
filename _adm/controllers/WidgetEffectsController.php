@@ -39,7 +39,6 @@ class WidgetEffectsController extends ControllerHelper
         $layoutHelper = new \app\components\helpers\LayoutHelper();
         $widgets = new WidgetEffectsMap;
         $effectSelect = $widgets->find()->where(['effect_key'=>$widget])->one();
-
         if(!$effectSelect){
           throw new \yii\web\HttpException(404, 'Caminho não foi encontrado');
         }
