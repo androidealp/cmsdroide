@@ -11,11 +11,17 @@ class Modules extends \yii\base\Module
     public function init()
     {
         parent::init();
+        \Yii::configure($this, require(__DIR__ . '/config.php'));
 
         $this->defaultRoute = 'painel';
         Yii::$app->session->name = '_adminSessao';
         Yii::$app->session->savePath = __DIR__ . '/../_adm/sessions';
         Yii::$app->session->timeout= 60*20;
+        Yii::$app->assetManager->bundles = [
+            'yii\web\JqueryAsset' => [
+                'jsOptions' => [ 'position' => \yii\web\View::POS_HEAD ],
+            ],
+        ];
 
          Yii::$app->setComponents(
         [
@@ -45,7 +51,7 @@ class Modules extends \yii\base\Module
                     //'disabledCommands' => ['netmount'], //отключение ненужных команд https://github.com/Studio-42/elFinder/wiki/Client-configuration-options#commands
                     'roots' => [
                         [
-                            'baseUrl'=>'@web/media',
+                            'baseUrl'=>'media',
                             'basePath'=>'@webroot/media',
                             'path' => '/',
                             'name' => 'Media Root'
@@ -76,10 +82,6 @@ class Modules extends \yii\base\Module
                     ]
                 ]
          ];
-
-
-
-
 
         // custom initialization code goes here
     }

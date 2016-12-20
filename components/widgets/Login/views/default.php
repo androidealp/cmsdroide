@@ -15,7 +15,8 @@ $visitante = \Yii::$app->user->isGuest;
                  'template' => "{input}\n<div class=\"col-lg-12\">{error}</div>",
              ],
   ]);
-  ?>
+?>
+
    <div class="row">
      <div class="col-md-6">
        <div class="form-group">
@@ -39,6 +40,7 @@ $visitante = \Yii::$app->user->isGuest;
        <?= Html::submitButton('Entrar', ['class' => 'btn btn-brown-500', 'name' => 'login-button']) ?>
      </div>
    </div>
+   
    <?php ActiveForm::end(); ?>
 <?php else: ?>
   <div class="row">

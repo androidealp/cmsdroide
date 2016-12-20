@@ -38,6 +38,9 @@ $config = [
            ],
        ],
    ],
+   'SendMail' =>[ // nome sugestifo, aplicado unicamente por conta de ser facilmente lembrado, porém a classe instacia o swiftmailer
+     'class'=>'app\components\helpers\SendMail'
+   ],
       'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
@@ -105,9 +108,17 @@ $config = [
                 ],
                 [
                     'class'         => 'yii\log\FileTarget',
-                    'levels'        => ['error'],
+                    'levels'        => ['error','info','trace'],
                     'categories'    => ['mail'],
                     'logFile'       => '@app/runtime/logs/mail/erros.log',
+                    'maxFileSize'   => 1024 * 2,
+                    'maxLogFiles'   => 100,
+                ],
+                [
+                    'class'         => 'yii\log\FileTarget',
+                    'levels'        => ['error', 'warning'],
+                    'categories'    => ['acesso'],
+                    'logFile'       => '@app/runtime/logs/acesso/erros.log',
                     'maxFileSize'   => 1024 * 2,
                     'maxLogFiles'   => 100,
                 ],
@@ -125,11 +136,11 @@ if (YII_ENV_DEV) {
         'class' => 'yii\debug\Module',
     ];
 
-    $config['bootstrap'][] = 'gii';
-    $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
-        'allowedIPs' => ['*']
-    ];
+    // $config['bootstrap'][] = 'gii';
+    // $config['modules']['gii'] = [
+    //     'class' => 'yii\gii\Module',
+    //     'allowedIPs' => ['*']
+    // ];
 }
 
 return $config;

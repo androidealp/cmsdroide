@@ -8,7 +8,7 @@ class Module extends \yii\base\Module
 
     public function init()
     {
-      $this->defaultRoute = 'meucadastro';
+      $this->defaultRoute = 'painel/index';
 
       \Yii::$app->setComponents(
      [
@@ -19,7 +19,7 @@ class Module extends \yii\base\Module
          'user' => [
              'class' => 'yii\web\User',
              'identityClass' => 'app\painel\models\User',
-             'loginUrl' => \Yii::$app->urlManager->createUrl(['institucional/login']),
+             'loginUrl' => \Yii::$app->urlManager->createUrl(['painel/painel/login']),
          ],
      ]
    );

@@ -4,47 +4,51 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Login';
+$this->title = 'Login - administrator';
 
 
 ?>
 
-    <p class="login-box-msg">Acesso somente para administradores</p>
-     <?php
-    $form = ActiveForm::begin([
-                'id' => 'login-form',
-                'options' => ['class' => ''],
-                'fieldConfig' => [
-                    'template' => "{input}\n<div class=\"col-lg-8\">{error}</div>",
 
-                ],
-    ]);
-    ?>
-    <div class="form-group has-feedback">
-        <?=$form->field($model, 'username',[
-            'template'=>'{input}<span class="glyphicon glyphicon-envelope form-control-feedback"></span><div class=\"col-lg-8\">{error}</div>',
+<div class="panel-body">
+  <h1>Administrador </h1>
 
-        ])->textInput([
-            'placeholder'=>'Usuário'
-        ]); ?>
+
+  <?php if($model->HasErros()): ?>
+      <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <?=$model->HtmlErros()?>
+      </div>
+  <?php endif; ?>
+
+  <?php
+ $form = ActiveForm::begin([
+             'id' => 'login-form',
+             'options' => ['role' => 'form'],
+             'fieldConfig' => [
+                 'template' => "{input}\n<div class=\"col-lg-8\">{error}</div>",
+
+             ],
+ ]);
+ ?>
+
+  <?=$form->field($model, 'username',[
+      'template'=>'<div class="input-group"><span class="input-group-addon"><i class="fa fa-user"></i></span>{input}</div>',
+
+  ])->textInput([
+      'placeholder'=>'Usuário'
+  ]); ?>
+
+  <?=$form->field($model, 'password',[
+      'template'=>'<div class="input-group"><span class="input-group-addon"><i class="fa fa-shield"></i></span>{input}</div>'
+  ])->passwordInput([
+      'placeholder'=>'Senha'
+  ]) ?>
+
+    <div class="text-center">
+      <?= Html::submitButton('Login  <i class="fa fa-fw fa-unlock-alt"></i>', ['class' => 'btn btn-success', 'name' => 'login-button']) ?>
     </div>
-    <div class="form-group has-feedback">
-        <?=$form->field($model, 'password',[
-            'template'=>'{input}<span class="glyphicon glyphicon-lock form-control-feedback"></span><div class=\"col-lg-8\">{error}</div>'
-        ])->passwordInput([
-            'placeholder'=>'Senha'
-        ]) ?>
-    </div>
 
-   <div class="row">
-        <div class="col-xs-12">
-            <?= Html::submitButton('Acessar', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
-        </div>
-   </div>
+<?php ActiveForm::end(); ?>
 
-
-    <?php ActiveForm::end(); ?>
-
-
-
-</div><!-- /.login-box-body -->
+</div>

@@ -18,6 +18,8 @@ class AdmGrupos extends ModelHelper
 {
 
   public $teste;
+  public $count_users = 0;
+
 
     /**
      * @inheritdoc
@@ -31,7 +33,7 @@ class AdmGrupos extends ModelHelper
     public function getPermissoes() {
 
         $menus = \app\_adm\models\AdmMenu::find([ 'id', 'item_nome'])
-        ->where(['and','status = 1', "url <> '#'"])
+        ->where(['and','status = 1'])
         ->asArray()
         ->all();
 
@@ -39,8 +41,33 @@ class AdmGrupos extends ModelHelper
 
     }
 
+    public function getAttributes()
+    {
+      $permissoes = \app\_adm\models\ListPermissoes::find(['id','nome'])->asArray()->all();
+      return yii\helpers\ArrayHelper::map($permissoes, 'nome', 'nome');
+    }
+
+    public function CountUsers($id)
+    {
+      $count_usuarios = AdmUsuarios::find()->where(['grupos_id'=>$id])->count();
+
+      return $count_usuarios;
+    }
+
+    public function checkUsuarios($ids)
+    {
+      $findUsers = AdmUsuarios::find()->where(['grupos_id'=>$ids])->count();
+
+      return $findUsers;
+    }
+
     public function afterFind()
     {
+
+        $this->count_users = $this->CountUsers($this->id);
+
+
+
       if($this->atrib_permissoes){
 
         $this->atrib_permissoes = json_decode($this->atrib_permissoes,true);
@@ -72,8 +99,8 @@ class AdmGrupos extends ModelHelper
     public function rules()
     {
         return [
-            [['nome', 'atrib_permissoes', 'menu_permissoes'], 'required'],
-            [['atrib_permissoes','menu_permissoes'], 'string'],
+            [['nome', 'menu_permissoes'], 'required'],
+            [['atrib_permissoes','menu_permissoes'], 'safe'],
             [['nome'], 'string', 'max' => 45]
         ];
     }
@@ -94,8 +121,8 @@ class AdmGrupos extends ModelHelper
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCsdmAdmUsers()
+    public function getAdmUsers()
     {
-        return $this->hasMany(CsdmAdmUser::className(), ['grupos_id' => 'id']);
+        return $this->hasMany(AdmUser::className(), ['grupos_id' => 'id']);
     }
 }

@@ -6,7 +6,7 @@ class ModelHelper extends \yii\db\ActiveRecord{
 
 public function HtmlErros(){
 $mderros = $this->getErrors();
-$li = array();
+$li = [];
 foreach ($mderros as $k => $mderro) {
 	foreach ($mderro as $c => $erro) {
 		$li[] = $erro;
@@ -21,6 +21,37 @@ $ul = \yii\helpers\BaseHtml::ul($li,[
 	]);
 
 return $ul;
+
+}
+
+
+public function checkAcoes($acao)
+{
+	return in_array($acao, \Yii::$app->view->params['acoes']);
+}
+
+public function TextErros()
+{
+	$mderros = $this->getErrors();
+	$items = [];
+	foreach ($mderros as $k => $mderro) {
+		foreach ($mderro as $c => $erro) {
+			$items[] = $erro;
+		}
+	}
+
+	return implode(', ', $items);
+}
+
+public function HasErros()
+{
+	$mderros = $this->getErrors();
+	if(count($mderros))
+	{
+	 return true;
+	}
+
+	return false;
 }
 
 public function ArrayErros(){
@@ -33,6 +64,65 @@ public function ArrayErros(){
 		}
 	}
   return $lista;
+}
+
+/**
+ * Verifica as dimensões exatas da imagem, deve ser executado principalemnte no rules
+ * @author André Luiz Pereira <andre@next4.com.br>
+ * @param string $attribute - nome da coluna de imagem
+ * @param array $params - informar no array o width e height para validar
+ * @return bool - retorna verdadeiro ou falseo
+ */
+public function ValidateDimensoes($attribute, $params)
+{
+	$imagem = \yii\imagine\Image::getImagine();
+	$getimg = $imagem->open(\yii\helpers\Url::to('@webroot/'.$this->$attribute));
+	$size = $getimg->getSize();
+
+	if($params['width'] > $size->getWidth() || $params['height'] > $size->getHeight())
+      {
+				$this->addError($attribute, 'As dimensões da imagem são inferiores ao do limite exigido para: '.$attribute);
+        return false;
+      }
+
+	return true;
+}
+
+
+/**
+ * Redimenciona a Imagem se não estiver nas proporçoes desejadas
+ * @author André Luiz Pereira <andre@next4.com.br>
+ * @param string $image - path relativo da imagem partindo de media
+ * @param int $width - largura da imagem
+ * @param int $height - autura da imagem
+ * @return void - Aplica na url da imagem
+ */
+public function resizeCheckImage($image, $width, $height)
+{
+	$imagem = \yii\imagine\Image::getImagine();
+	$getimg = $imagem->open(\yii\helpers\Url::to('@webroot/'.$image));
+	$size = $getimg->getSize();
+	$WidthFinal = $size->getWidth();
+  $HeightFinal = $size->getHeight();
+	$crop = false;
+
+	if($width < $size->getWidth())
+  {
+    $WidthFinal = $width;
+    $crop = true;
+  }
+
+	if($height < $size->getHeight())
+  {
+    $HeightFinal = $height;
+    $crop = true;
+  }
+
+	if($crop){
+		$getimg->resize(new \Imagine\Image\Box($WidthFinal, $HeightFinal))->save(\yii\helpers\Url::to('@webroot/'.$image),array('flatten' => false));
+	}
+
+
 }
 
 

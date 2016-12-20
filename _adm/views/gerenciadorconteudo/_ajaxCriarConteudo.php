@@ -14,8 +14,8 @@ $form = ActiveForm::begin([
         'template' => "{label}\n{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
         'horizontalCssClasses' => [
             'label' => 'col-sm-3',
-            'offset' => 'col-sm-offset-4',
-            'wrapper' => 'col-sm-8',
+            'offset' => 'col-md-offset-8',
+            'wrapper' => 'col-sm-9',
             'error' => '',
             'hint' => '',
         ],
@@ -24,74 +24,69 @@ $form = ActiveForm::begin([
 
 ?>
 
-<div id="erros">
-</div>
-<div class="form-group">
-  <div class="col-md-12">
+
+
     <?= $form->field($model, 'titulo')->label(false)->textInput([
       'class'=>'form-control form-control-sm',
       'placeholder'=>$model->getAttributeLabel('titulo')
-    ]);?>
-  </div>
-</div>
-<div class="form-group">
+    ])?>
 
-    <div class="col-md-6">
-        <?=$form->field($model, 'linguagem_id')->label(false)->dropDownList($languages,[
-          'class'=>'form-control form-control-sm',
-          'placeholder'=>$model->getAttributeLabel('linguagem_id')
-        ]); ?>
-    </div>
-     <div class="col-md-6">
-        <?= $form->field($model, 'autor')
-        ->label(false)
-        ->textInput([
-          'class'=>'form-control form-control-sm',
-          'placeholder'=>$model->getAttributeLabel('autor')
-        ]);?>
-    </div>
-</div>
-
-<div class="form-group">
-    <div class="col-md-6">
-      <?=$form->field($model, 'categorias_conteudo_id')
-      ->label(false)
-      ->dropDownList($categorias,[
-        'class'=>'form-control form-control-sm']); ?>
-    </div>
-    <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-6">
         <?= $form->field($model, 'alias')
         ->label(false)
         ->textInput([
           'placeholder'=>$model->getAttributeLabel('alias'),
-          'class'=>'form-control form-control-sm','placeholder'=>'Alias (gera automaticamente)']);?>
-    </div>
-</div>
+          'class'=>'form-control form-control-sm','placeholder'=>'Alias (gera automaticamente)'])?>
+      </div>
 
-<div class="form-group">
-  <div class="col-md-12">
+      <div class="col-md-6">
+        <?=$form->field($model, 'linguagem_id')->label(false)->dropDownList($languages,[
+          'class'=>'form-control form-control-sm',
+          'placeholder'=>$model->getAttributeLabel('linguagem_id')
+        ]) ?>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <?= $form->field($model, 'autor')
+        ->label(false)
+        ->textInput([
+          'class'=>'form-control form-control-sm ',
+          'disabled'=>true,
+          'placeholder'=>$model->getAttributeLabel('autor')
+        ])?>
+      </div>
+      <div class="col-md-6">
+        <?=$form->field($model, 'categorias_conteudo_id')
+        ->label(false)
+        ->dropDownList($categorias,[
+          'class'=>'form-control form-control-sm']) ?>
+      </div>
+    </div>
+
     <?= $form->field($model, 'texto_introdutorio')
     ->label(false)
     ->textArea([
       'placeholder'=>$model->getAttributeLabel('texto_introdutorio'),
-      'class'=>'form-control']);?>
-  </div>
-</div>
-<div class="form-group">
-  <div class="col-md-12">
-     <?php /*$form->field($model, 'texto_completo')->widget(CKEditor::className(), [
-      'editorOptions' => ['height' => '500px']
-  ]);*/
-    echo Editor::widget([
-      'model'=>$model,
-      'id'=>'conteudo_total'
-      ]);
-       ?>
-  </div>
+      'class'=>'form-control'])?>
 
-</div>
+    <?php
+      echo Editor::widget([
+       'model'=>$model,
+       'id'=>'conteudo_total'
+       ])
+        ?>
 
-<div class="form-group">
-            <?=$form->field($model, 'status')->checkBox(['label'=>'Publicado']);?>
-        </div>
+    <?=$form->field($model, 'status')->label(false)->checkBox(['data-truefalse'=>'1','data-off-label'=>'Desativar','data-on-label'=>'Ativar'])?>
+
+
 <?php ActiveForm::end(); ?>
+
+<script type="text/javascript">
+invoqueForm({
+  'select2':1,
+  'truefalse':1
+});
+</script>

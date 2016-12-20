@@ -4,6 +4,7 @@ namespace app\_adm\models;
 
 use Yii;
 use yii\data\ActiveDataProvider;
+use app\_adm\components\helpers\ModelHelper;
 
 /**
  * This is the model class for table "csdm_categorias_conteudo".
@@ -19,7 +20,7 @@ use yii\data\ActiveDataProvider;
  * @property CsdmLinguagem $linguagem
  * @property CsdmConteudo[] $csdmConteudos
  */
-class AdmUserSearch extends \yii\db\ActiveRecord
+class AdmUserSearch extends ModelHelper
 {
 
   public $list_group = [];

@@ -18,7 +18,8 @@ class MeucadastroController extends ControllerHelper
       $cadastro = \app\painel\models\UserCadastro::find(['user_id'=>$userId])->one();
       $cadastro->scenario = \app\painel\models\UserCadastro::SCENARIO_EDITAR;
 	    $model->scenario = \app\painel\models\User::SCENARIO_EDITAR;
-	   if ($model->load(Yii::$app->request->post())){
+	  
+     if ($model->load(Yii::$app->request->post())){
 
          $session = Yii::$app->session;
 

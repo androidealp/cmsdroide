@@ -81,25 +81,12 @@ class WidgetEffectsController extends ControllerHelper
 
         if($add){
 
-          $session->addFlash('notify',[[
-              'icon'=>'glyphicon glyphicons-check',
-              'title'=>'<strong>Adicionar efeito</strong>',
-              'message'=>'Efeito ['.$model->nome.'] foi adicionado com sucesso, o sistema sobrescreveu '.$add.' bytes!'
-              ],[
-              'type'=>'success'
-              ]]);
+          $session->addFlash('alert',[
+            'type'=>'success',
+            'msn'=>'Efeito ['.$model->nome.'] foi adicionado com sucesso, o sistema sobrescreveu '.$add.' bytes!'
+          ]);
 
               return $this->redirect(['widget-effects/editar','widget'=>$widget,'key'=>$model->key]);
-        }else{
-
-          $session->addFlash('notify',[[
-              'icon'=>'glyphicon glyphicons-check',
-              'title'=>'<strong>Adicionar efeito</strong>',
-              'message'=>'Ocorreu um erro no processo de adição, verique se o json está editavel, ou com algum erro!'
-              ],[
-              'type'=>'danger'
-              ]]);
-
         }
 
 
@@ -135,23 +122,17 @@ class WidgetEffectsController extends ControllerHelper
 
         if($edit){
 
-          $session->addFlash('notify',[[
-              'icon'=>'glyphicon glyphicons-check',
-              'title'=>'<strong>Editar Item</strong>',
-              'message'=>'Item '.$model->nome.' foi adicionado com sucesso, o sistema sobrescreveu '.$edit.' bytes!'
-              ],[
-              'type'=>'success'
-              ]]);
+          $session->addFlash('alert',[
+            'type'=>'success',
+            'msn'=>'Efeito ['.$model->nome.'] foi editato com sucesso, o sistema sobrescreveu '.$edit.' bytes!'
+          ]);
 
         }else{
 
-          $session->addFlash('notify',[[
-              'icon'=>'glyphicon glyphicons-check',
-              'title'=>'<strong>Editar Item</strong>',
-              'message'=>'Ocorreu um erro no processo de edição, verique se o json está editavel, ou com algum erro!'
-              ],[
-              'type'=>'danger'
-              ]]);
+          $session->addFlash('alert',[
+            'type'=>'error',
+            'msn'=>'Ocorreu um erro no processo de edição! '.$widgets->TextErros()
+          ]);
 
         }
 

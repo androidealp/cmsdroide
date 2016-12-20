@@ -42,7 +42,7 @@ class CategoriasConteudoSearch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['linguagem_id', 'status'], 'integer'],
+            [['linguagem_id', 'status','parent'], 'integer'],
             [['dt_criacao'], 'safe'],
             [['nome', 'alias'], 'string', 'max' => 45]
         ];
@@ -60,6 +60,7 @@ class CategoriasConteudoSearch extends \yii\db\ActiveRecord
             'alias' => 'Alias',
             'dt_criacao' => 'Data Criacão',
             'status' => 'Publicar',
+            'parent'=>'Vinculado à'
         ];
     }
 
@@ -87,11 +88,14 @@ class CategoriasConteudoSearch extends \yii\db\ActiveRecord
     }
 
     public function search($params){
-        $query = CategoriasConteudo::find();
+        $query = CategoriasConteudo::find()
+        ->orderBy(['COALESCE(parent, id),parent is not null, id'=>SORT_ASC]);
+
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
 
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;

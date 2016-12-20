@@ -7,30 +7,45 @@ $form = ActiveForm::begin([
     'id'=>'form-admcriar',
     'layout' => 'horizontal',
     'fieldConfig' => [
-        'template' => "{label}\n{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
+        'template' => "{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
         'horizontalCssClasses' => [
             'label' => 'col-sm-3',
-            'offset' => 'col-sm-offset-4',
-            'wrapper' => 'col-sm-8',
+            'offset' => 'col-md-offset-8',
+            'wrapper' => 'col-sm-12',
             'error' => '',
             'hint' => '',
         ],
     ],
 ]);
+
 ?>
 
-<div id="erros">
-</div>
-
-
-<div class="form-group">
 <?= $form->field($model, 'nome')->textInput(['class'=>'form-control','placeholder'=>'Nome do grupo']);?>
-</div>
 
-<div class="form-group">
-<?=$form->field($model, 'atrib_permissoes')->checkBoxList($model->getPermissoes());?>
-</div>
+<?=$form->field($model, 'menu_permissoes')->dropDownList($model->getPermissoes(),[
+  'class'=>'form-control',
+  'placeholder'=>'Permissões do menu',
+  'multiple'=>true
 
+]);?>
+
+
+<?=$form->field($model, 'atrib_permissoes')->dropDownList($model->getAttributes(),[
+  'class'=>'form-control',
+  'placeholder'=>'Permissões Globais',
+  'multiple'=>true
+
+]);?>
 
 
 <?php ActiveForm::end(); ?>
+
+
+
+<script type="text/javascript">
+invoqueForm({
+  'select2':1,
+
+  'test_textarea':1
+});
+</script>

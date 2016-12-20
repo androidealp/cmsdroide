@@ -4,6 +4,7 @@ namespace app\_adm\models;
 use Yii;
 use app\_adm\components\helpers\ModelHelper;
 use app\components\helpers\WidgeteffectsHelper;
+use yii\imagine\Image;
 
 /**
  * Controlar os dados dos efeitos via json
@@ -14,6 +15,7 @@ class WidgetEffectsMap extends  ModelHelper
 
   const SLIDESHOW = 'slideshow';
   const PARALLAX = 'parallax';
+  const STATICS = 'static';
   const BD   = 'bd';
   public $path = '@app/temas/widgeteffects/';
   public $key = "";
@@ -41,7 +43,9 @@ class WidgetEffectsMap extends  ModelHelper
     return [
         self::SLIDESHOW =>  ['key','nome', 'desc','ativar','params','items'],
         self::PARALLAX  =>  ['key','nome', 'desc','ativar','params','items'],
+        self::STATICS =>    ['key','nome', 'desc','ativar','params','items'],
         self::BD =>    ['effect_key','nome_effect','icon'],
+
     ];
   }
 
@@ -66,7 +70,7 @@ class WidgetEffectsMap extends  ModelHelper
 
     $allscenarios[self::SLIDESHOW] = array_diff($allscenarios[self::SLIDESHOW], ['items']);
     $allscenarios[self::PARALLAX] = array_diff($allscenarios[self::PARALLAX], ['items']);
-
+    $allscenarios[self::STATICS] = array_diff($allscenarios[self::STATICS], ['items','params']);
     return $allscenarios;
 
   }
@@ -80,6 +84,7 @@ class WidgetEffectsMap extends  ModelHelper
         return [
           [$allscenarios[self::SLIDESHOW], 'required', 'on' => self::SLIDESHOW],
           [$allscenarios[self::PARALLAX], 'required', 'on' => self::PARALLAX],
+          [$allscenarios[self::STATICS], 'required', 'on' => self::STATICS],
           [$allscenarios[self::BD], 'required', 'on' => self::BD],
         ];
     }
@@ -133,6 +138,20 @@ class WidgetEffectsMap extends  ModelHelper
 
     }
 
+
+    public function resizeImage($items)
+    {
+
+      foreach ($items as $k => $field) {
+        if(isset($field['image']))
+        {
+
+          \app\components\helpers\Tools::ImagemProporcionalCrop($field['image'], $this->params['witht_default'], $this->params['height_default']);
+        }
+      }
+
+    }
+
     /**
      * Edita um efeito existente
      * @author André Luiz Pereira <andre@next4.com.br>
@@ -153,6 +172,13 @@ class WidgetEffectsMap extends  ModelHelper
             'params'=>$this->params,
             'items'=>$this->items
           ];
+
+          if(isset($this->params['witht_default']) && isset($this->params['height_default']) && $this->params['witht_default'] && $this->params['height_default'])
+          {
+              $this->resizeImage($this->items);
+          }
+
+
 
           $filejson = json_encode($this->json_all_items);
 

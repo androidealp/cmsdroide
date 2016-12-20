@@ -1,13 +1,8 @@
 <?php
 return [
-    'components' => [
-      'authManager' => [
-          //'class' => 'yii\rbac\DbManager',
-          'class' => 'yii\rbac\PhpManager',
-        //  'defaultRoles' => ['guest'],
-         ],
-    ],
+
     'params' => [
-        // list of parameters
+        'title-page' => "Administrador - AmorMeu",
+        'logo'=> '@web/temas/adm-common/img/logo-amormeu.png'
     ],
 ];

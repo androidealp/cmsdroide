@@ -1,0 +1,389 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,400i,700,900,900i');
+
+
+/*Definições da tipografia do tema font-family: 'Lato', sans-serif; */
+html{
+  font-size: 14px;
+}
+body{
+   font-family: 'Lato', sans-serif;
+   font-weight: 300;
+   font-size: 15px;
+   text-rendering: optimizeLegibility;
+   color: rgba(33, 33, 33, 0.80);
+   line-height: 1.52857;
+ }
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
+  font-weight: 500;
+}
+h1,h2{
+  color:#a8615c;
+}
+
+.bg-amormeu{
+  background: #A45751;
+  padding: 10px 0;
+}
+.avatar-menu{
+  height: auto;
+  width: 25px !important
+}
+.position-text-login{
+  position: relative;
+  top: 15px;
+}
+.text-linha{
+  font-size: 16px;
+  text-decoration: underline;
+}
+p.text-linha a:hover{
+  color: rgba(255, 215, 58, 0.76) !important;
+}
+.form-control{
+    border: 1px solid rgba(204, 198, 198, 0.78);
+    border-radius: 2px;
+    box-shadow:none;
+    position: relative;
+}
+.btn-outline{
+  background: none;
+  color: inherit;
+  border-style: solid;
+  border-color: #fff;
+}
+.btn-outline:hover{
+  color: #fff;
+}
+.panel-heading-success{
+    background-color: #7eb84f;
+    border-color: #82a944;
+    padding: 20px;
+    color: #fff;
+}
+
+.panel-heading-success h3 span{
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    font-weight: 300
+}
+.upper{
+  text-transform: uppercase;
+}
+
+.force-text-white,.force-text-white p,.force-text-white a, .force-text-white h1, .force-text-white h2{
+  color:#fff !important;
+}
+
+
+.text-large{
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.navbar-logo{
+  /*padding: 20px 0;*/
+}
+@media (max-width: 768px) {
+.navbar-collapse .navbar-nav{ float: none; margin:7.5px auto }
+.navbar-brand-amormeu img{ display: inline-block; text-align: center; }
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    background: #bb615e !important;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.navbar-collapse{
+  background: #a45751 none repeat scroll 0 0;
+}
+.navbar-collapse .navbar-nav > li > a{
+ 
+    color: #fff;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: normal;
+    padding: 10px 5px;
+    text-align: center;
+}
+}
+
+.navbar-brand-amormeu{
+  height: 96px;
+  position: relative;
+  font-size: 1.265rem;
+  font-weight: 700;
+  float: left;
+}
+
+.menu-amormeu{
+  height: 96px;
+}
+
+.box-topo-login{
+  margin-top: 30px;
+}
+
+ul.sm-nav li a{
+  padding: 5px 15px;
+}
+
+.navbar-nav > li > a{
+    font-size: 1.0rem;
+    font-weight: 400;
+    height: auto;
+    line-height: 65px;
+    text-transform: uppercase;
+    color: #465363;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    background-color: #ab5653;
+    color: #fff;
+}
+
+.footer-menu
+{
+  padding:20px 0;
+  color:#fff;
+}
+
+.footer-menu ul.nav li a{
+  color:#fff;
+}
+
+.footer-menu .col-md-3{
+  border-right: 1px solid #6f7375;
+  min-height: 130px;
+}
+
+.footer-menu .col-md-3:last-child{
+  border:none;
+}
+
+.footer-menu .nav > li > a:hover, .footer-menu .nav > li > a:focus{
+  text-decoration: none;
+  background-color: transparent;
+  color:#dddddd;
+}
+
+.footer-menu .social{
+  margin-top: 10px;
+}
+
+footer.footer{
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 14px;
+  text-align: left;
+}
+
+footer.footer a{
+  color: rgba(255, 255, 255, 0.45);
+}
+
+
+/*Customização do blog*/
+
+.blog-am .post-thumbnail{
+ overflow: hidden;
+    width: 100%;
+}
+.blog-am .post-thumbnail img{
+  max-width: 100%;
+  width: 100%;
+  transition: all 2s ease 0s;
+  -webkit-transition:all 2s ease 0s;
+}
+
+.blog-am .post-thumbnail:hover img{
+  transform: scale(1.2) rotate(4deg);
+   -webkit-transform: scale(1.2) rotate(4deg);
+}
+.blog-am .title-item-blog{
+  font-size: 22px;
+  font-weight: bold;
+  line-height: normal;
+  margin-top: 0;
+  text-transform: uppercase;
+}
+.blog-post-met-cat{
+  position: relative;
+  margin-bottom: 15px
+
+}
+.blog-post-met-cat span{
+    color: #a2a2a2;
+    margin-right: 10px;
+}
+.social-share{
+   display: inline-block;
+    position: relative;
+    top: 10px;
+}
+.social-share a{
+  color: rgba(38, 166, 155, 0.4);
+  text-decoration: none;
+}
+.social-share a:hover, .blog-post-met-cat span:hover i{
+  color: #e15258;
+}
+
+.shere-detalhe-item a{
+    background-color: #ffffff;
+    border: 1px solid rgba(174, 85, 82, 0.48);
+    color: #ae5452;
+    display: inline-block;
+    font-size: 18px;
+    padding: 2px 15px;
+}
+
+.sidebar-item-blog .panel-heading{
+  border-bottom: 0;
+}
+.sidebar-item-blog .panel-heading h3{
+  text-transform: uppercase;
+  color: #AE5452 ;
+  font-weight: bold;
+}
+.sidebar-item-blog .panel-heading h3:after{
+  background-color: #AE5452;
+    content: "";
+    display: block;
+    height: 2px;
+    position: relative;
+    top: 10px;
+    width: 40px;
+}
+
+/*Estilo parallax home page*/
+.parallax-home{
+  position: relative;
+}
+.overlay-containerparalax{
+  background-color: rgba(0, 0, 0, 0.75);
+  height: 100%;
+  display: block;
+  width: 100%;
+  position: absolute;
+}
+.text-midlle-center{
+   top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    position: absolute;
+}
+.box-cadastro {
+    margin-top: 50px;
+}
+
+
+/*Style campo section Post dp blog pagina inicial */
+.posts-blog{
+  padding: 20px 0;
+}
+.title-section{
+  line-height: 2.5;
+  margin: 0;
+
+}
+.defaul-size-item {
+  box-shadow: -5px 22px 14px rgba(0, 0, 0, 0.09);
+}
+/*Style campo newsletter */
+.field-newsletter{
+  padding: 25px 0;
+ 
+}
+.field-newsletter h1{
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 2.0;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.field-newsletter input[type='text']{
+  border:1px solid rgba(51, 51, 51, 0.36);
+  background-color: #fff;
+  box-shadow: none;
+
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+border-radius: 2px;
+}
+.btn-newsletter, .btn-login{
+   box-shadow: none;
+   position: relative;
+   line-height: 1.8;
+
+
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+.form-group{
+  position: relative;
+}
+.field-newsletter .help-block, 
+.form-compartilhe .help-block,
+.form-login-home .help-block{
+    top: -22px;
+    font-size: 12px;
+    font-weight: 600;
+    position: absolute;
+}
+/*Style campos Compartilhe */
+
+.form-compartilhe .form-group{
+  position: relative;
+}
+.form-compartilhe .help-block,
+.form-login-home .help-block{
+  color: rgba(255, 215, 58, 0.76) !important;
+}
+
+/*Efeito ao abrim modal*/
+.modal-sm{
+  position: relative;
+  top: 25px !important
+  
+}
+.modal {
+  transform: scale(0);
+  opacity: 0;
+  -webkit-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+
+.modal.in {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.header-modal-login{
+  background: #1c7d74 none repeat scroll 0 0;
+    border-bottom: 1px solid #17635d;
+    color: #fff;
+    font-weight: unset;
+    min-height: 16.4286px;
+    padding: 15px;
+    text-align: center;
+    text-transform: uppercase;
+}
+.form-control-feedback{
+  color: #1C7D74
+}
+
+/*Comentários*/
+.resp_item{
+    background-color: #fbfbfb;
+    border: 1px solid rgba(174, 174, 170, 0.34);
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-top: 5px;
+    padding: 10px;
+
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}

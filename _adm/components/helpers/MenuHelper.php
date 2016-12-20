@@ -13,8 +13,8 @@ class MenuHelper{
 
         $userId = \Yii::$app->user->identity->grupos_id;
 
-        $grupos = AdmGrupos::find()->where(['id'=>$userId])->one();
-        self::$menu_permissoes = $grupos->menu_permissoes;
+        //$grupos = AdmGrupos::find()->select(['menu_permissoes'])->where(['id'=>$userId])->one();
+        self::$menu_permissoes = \Yii::$app->view->params['menu'];
         return new MenuHelper;
     }
 
@@ -26,11 +26,13 @@ class MenuHelper{
 
           $icon = (!empty($item['icon']))?'<i class="'.$item['icon'].'"></i>':'';
           $secundarios = self::ListMenu($item['id']);
-          $icon2 = ($parente_id==0 && $secundarios)?'<i class="fa fa-angle-left pull-right"></i>':'';
-          $icon3 = ($parente_id>0)?'<i class="fa fa-angle-double-right pull-left"></i>':'';
+          $icon2 = ($parente_id==0 && $secundarios)?'':'';
+          $icon3 = ($parente_id>0)?'<i class="fa fa-angle-double-right"></i>':'';
           $itensReturn[$item['id']] = [
-          'label'=> $icon3.$icon.' <span>'.$item['item_nome'].'</span>'.$icon2,
-          'url' => [$item['url']]
+          'label'=> $icon3.$icon.' <span>'.$item['item_nome'].'</span>',
+          'url' => [$item['url']],
+          'controller'=>$item['controller'],
+          'action'=>$item['action'],
           ];
 
 
@@ -61,7 +63,5 @@ class MenuHelper{
         }
         return $itensReturn;
     }
-
-
 
 }

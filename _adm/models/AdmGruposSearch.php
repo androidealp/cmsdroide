@@ -16,6 +16,8 @@ use yii\data\ActiveDataProvider;
  */
 class AdmGruposSearch extends \yii\db\ActiveRecord
 {
+
+    public $count_users = 0;
     /**
      * @inheritdoc
      */
@@ -24,14 +26,28 @@ class AdmGruposSearch extends \yii\db\ActiveRecord
         return '{{%adm_grupos}}';
     }
 
+    public function CountUsers($id)
+    {
+      $count_usuarios = AdmUsuarios::find()->where(['grupos_id'=>$id])->count();
+
+      return $count_usuarios;
+    }
+
+    public function afterFind()
+    {
+      $this->count_users = $this->CountUsers($this->id);
+      return parent::afterFind();
+
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['nome', 'atrib_permissoes','menu_permissoes'], 'required'],
-            [['atrib_permissoes','menu_permissoes'], 'string'],
+            [['nome','menu_permissoes'], 'required'],
+            [['atrib_permissoes','menu_permissoes'], 'safe'],
             [['nome'], 'string', 'max' => 45]
         ];
     }
@@ -46,6 +62,7 @@ class AdmGruposSearch extends \yii\db\ActiveRecord
             'nome' => 'Nome',
             'atrib_permissoes' => 'Permissões de atributos',
             'menu_permissoes' => 'Permissões de menus',
+            'count_users' => 'Administradores',
         ];
     }
 

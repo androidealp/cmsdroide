@@ -1,0 +1,72 @@
+.login body.login-page{
+  position: initial;
+  background: url(../img/bg-banner.jpg);
+  padding-top: 0;
+}
+
+.form-control-line-tb{
+  border-top-style:solid;
+  border-bottom-style:solid;
+  border-width: 1px;
+}
+
+.form-control-line-lr{
+  border-left-style:solid;
+  border-right-style:solid;
+  border-width: 1px;
+}
+
+.form-control-line-all{
+  border-style:solid;
+  border-style:solid;
+  border-width: 1px;
+}
+
+.form-control-padding-tb{
+  padding: 10px 0;
+}
+
+.border-default{
+  border-color: #ddd;
+}
+
+.border-x2{
+  border-width: 2px;
+}
+
+.border-x3{
+  border-width: 3px;
+}
+
+.border-x4{
+  border-width: 4px;
+}
+
+.icon-select{
+  color:#aaa;
+  margin-right: 5px;
+}
+
+.text-color-default{
+  color:#333333;
+}
+
+.text-branco{
+  color:#fff !important;
+}
+
+.no-video{
+  background: #eee;
+}
+.no-video .cover-image-full{
+  margin: 0 !important;
+}
+
+.no-video .cover-image-full h1{
+  line-height: 250px;
+  font-size: 55px;
+}
+
+.label-check{
+  line-height: 49px;
+}

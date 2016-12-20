@@ -20,12 +20,24 @@ class Toastr extends Widget{
   public function run(){
   	if($this->session->hasFlash('alert')){
   		$toastr = $this->session->getFlash('alert',0);
-      $type = $toastr['type'];
-      $msn = $toastr['msn'];
+      $type = $toastr[0]['type'];
+      $msn = $toastr[0]['msn'];
   		if($toastr){
 
   			$js =<<<HTML
   			$(document).ready(function(){
+
+          toastr.options.onHidden = function()
+          {
+            console.log('evento reload desativado por conta do reflash da página');
+          }
+
+            if("$type" == 'success')
+            {
+              toastr.options.timeOut= 2500;
+            }else{
+              toastr.options.timeOut= 5000;
+            }
   				 toastr["$type"]("$msn")
   			});
 HTML;

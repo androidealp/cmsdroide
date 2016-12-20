@@ -6,7 +6,7 @@ use Yii;
 use app\_adm\components\helpers\ModelHelper;
 
 /**
- * This is the model class for table "csdm_adm_user".
+ * Somente para login
  *
  * @property integer $id
  * @property integer $grupos_id
@@ -22,18 +22,16 @@ use app\_adm\components\helpers\ModelHelper;
  * @property CsdmAdmHashAcess[] $csdmAdmHashAcesses
  * @property CsdmAdmGrupos $grupos
  */
-class AdmUser extends ModelHelper implements \yii\web\IdentityInterface
+ //\yii\db\ActiveRecord
+class AdmUser extends  ModelHelper  implements \yii\web\IdentityInterface
 {
-
-  const SCENARIO_LOGIN = 'login';
-  const SCENARIO_CRIAR = 'criar';
-  const SCENARIO_EDITAR = 'editar';
 
   public $AuthKey;
   public $list_group = [];
   public $redefinir_senha = '';
   public $real_data_criacao = '';
   public $real_data_acesso = '';
+
     /**
      * @inheritdoc
      */
@@ -42,56 +40,7 @@ class AdmUser extends ModelHelper implements \yii\web\IdentityInterface
         return '{{%adm_user}}';
     }
 
-    public function scenarios()
-    {
-        $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_LOGIN] = ['email', 'senha','dt_ult_acesso','avatar'];
-        $scenarios[self::SCENARIO_CRIAR] = ['id','grupos_id','cargo','nome', 'email', 'senha','redefinir_senha','status_acesso','parametros_extra','dt_cadastro','dt_ult_acesso','avatar'];
-        $scenarios[self::SCENARIO_EDITAR] = ['id','grupos_id','cargo','nome', 'email', 'senha','redefinir_senha','status_acesso','parametros_extra','avatar'];
-        return $scenarios;
-    }
 
-    public function GruposList(){
-      $grupos = AdmGrupos::find()->asArray()->all();
-
-      return yii\helpers\ArrayHelper::map($grupos, 'id', 'nome');
-  }
-
-    public function beforeValidate(){
-      if($this->scenario == 'criar')
-      {
-          $this->dt_cadastro = date('Y-m-d H:i:s');
-      }else{
-        $this->dt_cadastro = $this->real_data_criacao;
-        $this->dt_ult_acesso = $this->real_data_acesso;
-      }
-
-
-      return parent::beforeValidate();
-    }
-
-    public function afterValidate(){
-      $hash = Yii::$app->getSecurity()->generatePasswordHash($this->senha);
-      $this->senha = $hash;
-      return parent::afterValidate();
-    }
-
-
-
-    public function afterFind(){
-
-      $this->real_data_criacao = $this->dt_cadastro;
-      $this->real_data_acesso = $this->dt_ult_acesso;
-
-       $this->dt_cadastro = \Yii::$app->formatter->asDate($this->dt_cadastro, 'php:d/m/Y H:i:s');
-
-       if($this->dt_ult_acesso != '' && $this->dt_ult_acesso != '0000-00-00 00:00:00'){
-          $this->dt_ult_acesso = \Yii::$app->formatter->asDate($this->dt_ult_acesso, 'php:d/m/Y H:i:s');
-       }else{
-         $this->dt_ult_acesso = 'Nunca acessou';
-       }
-      return parent::afterFind();
-    }
 
     /**
      * @inheritdoc
@@ -99,9 +48,7 @@ class AdmUser extends ModelHelper implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['grupos_id', 'nome', 'email', 'senha', 'status_acesso', 'dt_cadastro'], 'required', 'on' => self::SCENARIO_CRIAR],
-            [['grupos_id', 'nome', 'email', 'senha', 'status_acesso'], 'required', 'on' => self::SCENARIO_EDITAR],
-            [['email', 'senha'], 'required', 'on' => self::SCENARIO_LOGIN],
+            [['email','senha'], 'required'],
             [['grupos_id', 'status_acesso'], 'integer'],
             [['parametros_extra'], 'string'],
             [['dt_cadastro', 'dt_ult_acesso'], 'safe'],
@@ -145,7 +92,7 @@ class AdmUser extends ModelHelper implements \yii\web\IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCsdmAdmHashAcesses()
+    public function getAdmHashAcesses()
     {
         return $this->hasMany(AdmHashAcess::className(), ['user_id' => 'id']);
     }

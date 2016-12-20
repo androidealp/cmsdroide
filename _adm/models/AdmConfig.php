@@ -4,6 +4,7 @@ namespace app\_adm\models;
 
 use Yii;
 use app\_adm\components\helpers\ModelHelper;
+use app\components\helpers\Tools;
 
 /**
  * Este model acessa a tabela "csdm_adm_config".
@@ -20,12 +21,25 @@ class AdmConfig extends ModelHelper
 {
 
   public $register_pass = '';
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
       return '{{%adm_config}}';
+    }
+
+
+
+    public function afterFind()
+    {
+
+      if(!$this->register_pass)
+      {
+        $this->register_pass = $this->password;
+      }
+
     }
 
 
@@ -56,7 +70,7 @@ class AdmConfig extends ModelHelper
       if(!$data){
         $data = $this->password;
       }
-      $quebrado = \Yii::$app->getSecurity()->decryptByPassword(utf8_decode($data),$key);
+      $quebrado =\Yii::$app->getSecurity()->decryptByPassword(utf8_decode($data),$key);
       return $quebrado;
     }
 
@@ -66,11 +80,11 @@ class AdmConfig extends ModelHelper
     public function rules()
     {
         return [
-            [['id', 'host', 'username', 'port', 'encryption', 'key_remote_acccess'], 'required'],
+            [['id', 'host', 'username', 'port', 'encryption', 'key_remote_access'], 'required'],
             [['id','port'], 'integer'],
             [['host'], 'string', 'max' => 50],
             [['username'], 'string', 'max' => 70],
-            [['password','key_remote_acccess'], 'string', 'max' => 500],
+            [['password','key_remote_access'], 'string', 'max' => 500],
             [['encryption'], 'string', 'max' => 7],
         ];
     }
@@ -87,7 +101,7 @@ class AdmConfig extends ModelHelper
             'password' => 'Senha',
             'port' => 'Porta',
             'encryption' => 'Encryption',
-            'key_remote_acccess' => 'Key para acesso remoto',
+            'key_remote_access' => 'Key para acesso remoto',
         ];
     }
 }

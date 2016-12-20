@@ -27,6 +27,31 @@ $ul = \yii\helpers\BaseHtml::ul($li,[
 return $ul;
 }
 
+
+public function TextErros()
+{
+	$mderros = $this->getErrors();
+	$items = [];
+	foreach ($mderros as $k => $mderro) {
+		foreach ($mderro as $c => $erro) {
+			$items[] = $erro;
+		}
+	}
+
+	return implode(', ', $items);
+}
+
+public function HasErros()
+{
+	$mderros = $this->getErrors();
+	if(count($mderros))
+	{
+	 return true;
+	}
+
+	return false;
+}
+
 /**
  * Trata os erros em array lista
  * @author André Luiz Pereira <andre@next4.com.br>
@@ -63,10 +88,15 @@ public function DateDiff($from, $to, $format = '%a')
 	$dtfinal = new \DateTime($to);
 	$intervalo = $dtfinal->diff($dtinicial);
 	if($intervalo->invert){
-			return $intervalo->format($format);
+		return $intervalo->format($format);
 	}else{
-			return -$intervalo->format($format);
+		return -$intervalo->format($format);
 	}
+}
+
+public function checkAcoes($acao)
+{
+	return in_array($acao, \Yii::$app->view->params['acoes']);
 }
 
 /**

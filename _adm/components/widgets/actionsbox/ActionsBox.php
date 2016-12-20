@@ -12,6 +12,8 @@ class ActionsBox extends Widget {
 	public $setview = 0; // custom layout em html
 	public $titulo = '';
 	public $icon = 'fa fa-book';
+
+
 	public $buttons = [
 	/*'default'=>[
 		'add'=>[],
@@ -23,7 +25,7 @@ class ActionsBox extends Widget {
 		'params'=>['class'=>'teste']
 	]*/
 	];
-
+	private $types = ['criar'=>'add', 'deletar'=>'del', 'editar'=>'edit'];
 
 	public function init(){
 
@@ -55,12 +57,29 @@ class ActionsBox extends Widget {
 
 	}
 
-	private function elementDetect(){
+	private function CheckPermissoes($type)
+	{
+		['editar'=>'add', 'deletar'=>'del'];
+		$return = false;
+		foreach (\Yii::$app->view->params['acoes'] as $k => $atributos) {
+			if(isset($this->types[$atributos]) && $this->types[$atributos] == $type)
+			{
+				$return = true;
+			}
+		}
 
+		return $return;
+
+	}
+
+	private function elementDetect(){
 		if(isset($this->buttons['default'])){
 			foreach ($this->buttons['default'] as $key => $bt) {
+				if($this->CheckPermissoes($key))
+				{
+					$this->insertInView['buttons'][] = $this->buttons($key, $bt);
+				}
 
-				$this->insertInView['buttons'][] = $this->buttons($key, $bt);
 			}
 		}
 

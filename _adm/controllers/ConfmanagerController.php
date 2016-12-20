@@ -10,7 +10,6 @@ public function actionIndex(){
 
     \Yii::$app->view->title = "Configurações";
     \Yii::$app->view->params['title-page'] = 'Configurações';
-    \Yii::$app->view->params['breadcrumbs-links'] =[['label'=>'Configurações',]];
 
 	return $this->render('index');
 }
@@ -19,7 +18,6 @@ public function actionTemas(){
 
      \Yii::$app->view->title = "Gerenciar Temas";
     \Yii::$app->view->params['title-page'] = 'Temas';
-    \Yii::$app->view->params['breadcrumbs-links'] =[['label'=>'Temas',]];
 
     //pego o arquio de layout
     $jsonfileLayout = \app\components\helpers\LayoutHelper::loadThemesJson();
@@ -33,6 +31,53 @@ public function actionTemas(){
     ]);
 
 }
+
+public function actionAjaxTesteEmail(){
+
+  \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+
+  $email = \Yii::$app->request->post('teste_mail');
+
+  if(!filter_var($email['email'], FILTER_VALIDATE_EMAIL)) {
+        return [
+          'type'=>'error',
+          'msg'=>'O campo e-mail deve ser válido'.$email['email'],
+          'bttruefalse'=>0
+        ];
+  }
+
+
+   $mail = \Yii::$app->SendMail;
+   $mail->sendto       =$email['email'];
+   $mail->from     = \Yii::$app->params['sys_mail'];
+   $mail->assunto  = 'Teste de envio de e-mail';
+   $mail->titulo   = 'Resultado do teste de e-mail.';
+   $mail->mensagem     = 'Teste de envio, não responda.';
+
+  $envio = $mail->send();
+
+  if($envio){
+    return [
+      'type'=>'success',
+      'msg'=>'Email de teste enviado com sucesso!',
+      'bttruefalse'=>1
+    ];
+  }else{
+    return [
+      'type'=>'error',
+      'msg'=>'Ocorreu um erro no envio acesse o log',
+      'bttruefalse'=>0
+    ];
+  }
+
+
+
+}
+
+
+
+
 /**
  * Abre o ssiema
  * @author André Luiz Pereira <andre@next4.com.br>
@@ -42,10 +87,9 @@ public function actionSistema(){
 
     \Yii::$app->view->title = "Gerenciar Sistema";
     \Yii::$app->view->params['title-page'] = 'Sistema';
-    \Yii::$app->view->params['breadcrumbs-links'] =[['label'=>'Gerenciar o sistema',]];
 
     $model = \app\_adm\models\AdmConfig::findOne(1);
-    $model->register_pass = $model->password;
+
     $model->password = '';
 
     if($model->load(\Yii::$app->request->post()))
@@ -70,6 +114,8 @@ public function actionSistema(){
           ]);
 
         }
+
+        return $this->redirect(['confmanager/sistema']);
 
     }
 

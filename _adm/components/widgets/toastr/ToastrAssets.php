@@ -19,7 +19,7 @@ class ToastrAssets extends AssetBundle
     //public $basePath = '@webroot';
     //public $baseUrl = '@web';
     public $css = [
-        'toastr.min.css',
+        'assets/toastr.min.css',
     ];
     public $js = [
         'assets/toastr.js'

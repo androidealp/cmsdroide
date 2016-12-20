@@ -16,7 +16,7 @@ $(document).ready(function(){
 
                 var yPos = ($window.scrollTop() / parallax.speed);
                 var coords = (parseInt(parallax.textoposicao) +yPos) + 'px';
-                $scroll.children('.container-fluid').children('.text-bottom').css("margin-top",coords );
+                $scroll.children('.parallax-home').children('.text-center').css("margin-top",coords );
             });
    });
 });
