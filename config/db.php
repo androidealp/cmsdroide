@@ -1,10 +1,10 @@
 <?php
 
-return [
-    'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=bd_cms_droide',
-    'username' => 'teste',
-    'password' => 'teste',
-    'charset' => 'utf8',
-    'tablePrefix'=>'csdm_'
-];
+    return [
+        'class' => 'yii\db\Connection',
+        'dsn' => 'mysql:host=localhost;dbname=db_cmsdroide',
+        'username' => 'teste',
+        'password' => 'and4563',
+        'charset' => 'utf8',
+        'tablePrefix'=>'xsdml_'
+    ];

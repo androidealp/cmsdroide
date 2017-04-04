@@ -20,7 +20,7 @@ MainAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <meta name="description" content="">
     <meta name="author" content="">
-    <title><?=(isset($this->title))?Html::encode($this->title):'AmorMeu'; ?></title>
+    <title><?=(isset($this->title))?Html::encode($this->title):'Admin - CMS'; ?></title>
       <?php $this->head() ?>
   </head>
 <body>
