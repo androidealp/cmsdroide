@@ -43,7 +43,7 @@ MainAsset::register($this);
             <span class="icon-bar"></span>
           </button>
           <a href="index.html" class="navbar-brand hidden-xs navbar-brand-primary">
-            <?=Html::img(\Yii::$app->getModule('_adm')->params['logo'], ['style'=>'width:160px;']);  ?>
+            <?="CMSDROIDE"  //Html::img(\Yii::$app->getModule('_adm')->params['logo'], ['style'=>'width:160px;']);  ?>
           </a>
         </div>
         <div class="navbar-collapse collapse" id="collapse">

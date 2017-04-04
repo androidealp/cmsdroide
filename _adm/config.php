@@ -2,7 +2,7 @@
 return [
 
     'params' => [
-        'title-page' => "Administrador - AmorMeu",
-        'logo'=> '@web/temas/adm-common/img/logo-amormeu.png'
+        'title-page' => "Administrador - CMSDROIDE",
+        'logo'=> '@web/temas/adm-common/img/'
     ],
 ];

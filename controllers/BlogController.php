@@ -35,13 +35,13 @@ use yii\data\ActiveDataProvider;
   public function actionIndex(){
 
     \Yii::$app->view->registerMetaTag([
-     'name' =>'Blog AmorMeu',
-     'content' => 'Noticias, entreterimento, eu concelhos para um bom relacionamento'
+     'name' =>'Blog',
+     'content' => 'noticias'
      ]);
 
     \Yii::$app->view->registerMetaTag([
-     'og_title' =>'Titulo blog AmorMeu',
-     'content' => 'Titulo blog AmorMeugfdg'
+     'og_title' =>'Titulo blog',
+     'content' => 'Titulo blog'
      ]);
 
      $Busca = new Busca;
@@ -60,7 +60,7 @@ use yii\data\ActiveDataProvider;
 
   public function actionDisplayCategoria(){
     \Yii::$app->view->registerMetaTag([
-     'name' =>'Blog AmorMeu sad afs',
+     'name' =>'Blog teste sad afs',
      'content' => 'Noticias, entreterimento, eu concelhos para um bom relacionamento'
      ]);
 
@@ -84,7 +84,7 @@ use yii\data\ActiveDataProvider;
       }
 
        \Yii::$app->view->registerMetaTag([
-     'name' =>'Blog AmorMeu',
+     'name' =>'Blog teste',
      'content' => 'Noticias, entreterimento, eu concelhos para um bom relacionamento'
      ]);
 

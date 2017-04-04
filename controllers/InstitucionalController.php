@@ -47,8 +47,8 @@ class InstitucionalController extends ControllerHelper {
 
 
        \Yii::$app->view->registerMetaTag([
-        'keywords' => 'Amormeu - Site de Encontros virtuais',
-        'description' => 'Para você que deseja um relacionamento sério e duradouro'
+        'keywords' => 'teste',
+        'description' => 'informacao'
         ]);
 
         return $this->render('index');
@@ -58,8 +58,8 @@ class InstitucionalController extends ControllerHelper {
     {
 
       \Yii::$app->view->registerMetaTag([
-       'keywords' => 'Login amor meu, acessar amormeu, amormeulogin',
-       'description' => 'Acessar o seu painel no amormeu, poder comentar e gerenciar sua conta'
+       'keywords' => 'Login teste',
+       'description' => 'teste informacao'
        ]);
 
       $model = new \app\painel\models\LoginForm();
