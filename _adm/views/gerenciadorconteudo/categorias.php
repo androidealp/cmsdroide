@@ -1,4 +1,4 @@
-<?php use \app\_adm\components\widgets\actionsbox\ActionsBox;
+<?php 
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Html;
@@ -14,23 +14,48 @@ HTML;
 
 ?>
 
-<div class="page-section">
+
+
+<div class="clearfix"></div>
+
   <div class="row">
-    <div class="col-md-10 col-lg-8 col-md-offset-1 col-lg-offset-2">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <?=ActionsBox::widget(['buttons'=>[
-             'default'=>[
-                 'add'=>['url'=>Url::to(['gerenciadorconteudo/ajax-criar-categoria']),'title'=>'Adicionar Categoria','formid'=>'form-catsave','pajaxid'=>'list-category'],
-                 'del'=>['url'=>Url::to(['gerenciadorconteudo/ajaxdeletar']),'confirm'=>'Deseja deletar a(s) categoria(s)', 'title'=>'Deletar Categoria(s)','gridid'=>'grid-categorias','pajaxid'=>'list-category'],
-             ]
-          ]]); ?>
-        </div>
-      </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
 
       <!-- <h4 class="page-section-heading">Responsive Table</h4> -->
-      <div class="panel panel-default">
-        <!-- Progress table -->
+      <div class="x_panel">
+
+      <div class="x_title">
+        <h2>Gerenciar Categorias</h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li>
+          <a  href="#" 
+                    class="btn btn-primary btn-sm"
+                    title='Adicionar Categoria' 
+                    data-formid="form-catsave"  
+                    data-pajaxid='list-category'
+                    data-modalsize='md'
+                    data-btaddurl="<?=Url::to(['gerenciadorconteudo/ajax-criar-categoria'])?>">Criar</a>
+          </li>
+         
+         
+          <li>
+              <a  href="#" 
+                    class="btn btn-danger btn-sm"
+                    data-confirm='Deseja deletar a(s) categoria(s)'
+                    title='Deletar Categoria(s)' 
+                    data-formid="form-catsave"  
+                    data-pajaxid='list-category'
+                    data-gridid='list-category'
+                    data-modalsize='md'
+                    data-addurl="<?=Url::to(['gerenciadorconteudo/ajaxdeletar'])?>">Deletar</a>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      
+      <div class="x_content">
+
+         <!-- Progress table -->
         <?php Pjax::begin(['id'=>'list-category',
         'options'=>['class'=>"dataTables_wrapper"]
       ]); ?>
@@ -111,11 +136,15 @@ HTML;
 
           <?php Pjax::end(); ?>
         <!-- // Progress table -->
+        
+      </div>
+
+
+       
       </div>
       <!-- table fim -->
     </div>
     <!-- alinhamento content -->
   </div>
   <!-- /row -->
-</div>
-<!-- /page-section -->
+

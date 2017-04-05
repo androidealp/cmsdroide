@@ -35,7 +35,7 @@ class ActionsBox extends Widget {
 
 
 		$viewfile = ($this->setview)?$this->setview:'ActionsBox';
-		$this->widview = LayoutHelper::loadThemesJson()->WidViews($viewfile,'admin');
+		//$this->widview = LayoutHelper::loadThemesJson()->WidViews($viewfile,'admin');
 
 		$this->insertInView = [
 			'titulo'=>$this->titulo,

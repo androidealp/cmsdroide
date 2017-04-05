@@ -34,6 +34,7 @@ class ControllerHelper extends Controller
         ];
         $this->layout = LayoutHelper::loadThemesJson()->admin();
 
+    
         return [
             'access' => [
                 'class' => AccessControl::className(),

@@ -27,9 +27,9 @@ class MenuHelper{
           $icon = (!empty($item['icon']))?'<i class="'.$item['icon'].'"></i>':'';
           $secundarios = self::ListMenu($item['id']);
           $icon2 = ($parente_id==0 && $secundarios)?'':'';
-          $icon3 = ($parente_id>0)?'<i class="fa fa-angle-double-right"></i>':'';
+          //$icon3 = ($parente_id>0)?'<i class="fa fa-angle-double-right"></i>':'';
           $itensReturn[$item['id']] = [
-          'label'=> $icon3.$icon.' <span>'.$item['item_nome'].'</span>',
+          'label'=> $icon.' <span>'.$item['item_nome'].'</span>',
           'url' => [$item['url']],
           'controller'=>$item['controller'],
           'action'=>$item['action'],
