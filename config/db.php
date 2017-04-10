@@ -6,5 +6,5 @@
         'username' => 'teste',
         'password' => '1111111',
         'charset' => 'utf8',
-        'tablePrefix'=>'xsdml_'
+        'tablePrefix'=>'sddssd_'
     ];
