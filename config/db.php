@@ -4,7 +4,7 @@
         'class' => 'yii\db\Connection',
         'dsn' => 'mysql:host=localhost;dbname=db_cmsdroide',
         'username' => 'teste',
-        'password' => 'and4563',
+        'password' => '1111111',
         'charset' => 'utf8',
         'tablePrefix'=>'xsdml_'
     ];
